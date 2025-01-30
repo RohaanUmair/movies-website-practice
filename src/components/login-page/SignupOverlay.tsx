@@ -1,8 +1,9 @@
+import Link from 'next/link'
 import React from 'react'
 
 function SignupOverlay() {
     return (
-        <div className='w-[440px] h-full mx-auto px-14 py-12' style={{backgroundColor: 'rgba(0, 0, 0, 0.8)'}}>
+        <div className='w-[440px] h-full mx-auto px-14 py-12' style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)' }}>
             <form className='flex flex-col gap-4'>
 
                 <h2 className='text-white text-4xl font-bold mb-5'>Sign In</h2>
@@ -19,7 +20,11 @@ function SignupOverlay() {
                     placeholder='Passwords'
                 />
 
-                <button className='h-10 bg-red-600 rounded text-white font-semibold'>Sign In</button>
+                <button className='h-10 flex bg-red-600 rounded text-white font-semibold'>
+                    <Link className='w-full h-full flex items-center justify-center' href={'/'}>
+                        <span >Sign In</span>
+                    </Link>
+                </button>
 
                 <p className='text-center text-white'>OR</p>
 

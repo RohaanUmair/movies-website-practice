@@ -1,32 +1,32 @@
+'use client';
+import SelectUser from "@/components/home-page/SelectUser";
+import { useState } from "react";
+
 export default function Home() {
+  const [selectUser, setSelectUser] = useState<boolean>(true);
+
+  if (selectUser) return <SelectUser setSelectUser={setSelectUser} />
+
   return (
-    <div className="h-screen w-screen bg-zinc-950 border flex justify-center items-center">
-      <div className="flex flex-col items-center justify-center gap-8">
+    <header className='h-20 bg-black flex items-center px-16'>
+      <h1 className='z-10 text-[#ff0000] text-5xl font-semibold'>Movies</h1>
 
-        <h1 className="text-white text-6xl">Who's watching?</h1>
+      <div>
 
-        <div className="flex gap-6">
+        <ul className="flex gap-6 text-white text-lg font-semibold">
+          <li>Home</li>
+          <li>Home</li>
+          <li>Home</li>
+          <li>Home</li>
+          <li>Home</li>
+          <li>Home</li>
+        </ul>
 
-          <div className="flex flex-col items-center gap-2 cursor-pointer">
-            <div className="w-36 h-36 bg-blue-500 rounded"></div>
-            <h2 className="text-[#aaa] font-semibold">Hamza Malik</h2>
-          </div>
-
-          <div className="flex flex-col items-center gap-2 cursor-pointer">
-            <div className="w-36 h-36 bg-blue-500 rounded"></div>
-            <h2 className="text-[#aaa] font-semibold">Hamza Malik</h2>
-          </div>
-
-          <div className="flex flex-col items-center gap-2 cursor-pointer">
-            <div className="w-36 h-36 bg-blue-500 rounded"></div>
-            <h2 className="text-[#aaa] font-semibold">Hamza Malik</h2>
-          </div>
-
+        <div>
+          
         </div>
 
-        <button className="border border-[#aaa] text-[#aaa] px-4 py-[6px] rounded-sm">Manage Profiles</button>
-
       </div>
-    </div>
-  )
+    </header>
+  );
 };
