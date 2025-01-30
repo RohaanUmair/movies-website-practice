@@ -1,12 +1,29 @@
+import Footer from '@/components/login-page/Footer';
 import SignupOverlay from '@/components/login-page/SignupOverlay';
+import Image from 'next/image';
 import React from 'react'
 
 function LoginPage() {
     return (
-        <div className='w-full min-h-screen h-full flex flex-col px-44 bg-zinc-900'>
-            <header className='h-24 flex items-center'><h1 className='text-red-700 text-5xl font-semibold'>Movies</h1></header>
+        <div className='w-full min-h-screen h-full flex flex-col px-40 bg-black'>
+            <div className='absolute top-0 left-0 w-full h-full z-10'>
+                <Image
+                    src='/login-page-bg.jpg'
+                    alt='background'
+                    layout='fill'
+                    objectFit='cover'
+                    objectPosition='center'
+                />
+                <div className='absolute top-0 left-0 w-full h-full bg-black opacity-65 z-10'></div>
+            </div>
 
-            <SignupOverlay />
+            <header className='h-24 flex items-center'><h1 className='z-10 text-[#ff0000] text-5xl font-semibold'>Movies</h1></header>
+
+            <div className='z-20'>
+                <SignupOverlay />
+            </div>
+
+            <Footer />
         </div>
     )
 }
