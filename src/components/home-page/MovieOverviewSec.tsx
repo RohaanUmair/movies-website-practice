@@ -63,6 +63,7 @@ function MovieOverviewSec({ setShowModal }: { setShowModal: Dispatch<SetStateAct
             <div className='pl-12 mt-12 z-10 relative flex flex-col gap-12'>
                 <MoviesList setShowModal={setShowModal} numOfMovies={8} title="Today's Top Picks for You" />
                 <MoviesList setShowModal={setShowModal} numOfMovies={3} title='Continue Watching for Hamza Malik' />
+                <MoviesList setShowModal={setShowModal} numOfMovies={7} title='Familiar TV Favorites' />
             </div>
 
             <div>asd</div>
