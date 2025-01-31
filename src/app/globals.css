@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+* {
+    font-family: "Montserrat";
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    /* for Internet Explorer */
+    scrollbar-width: none;
+    /* for Firefox */
+}

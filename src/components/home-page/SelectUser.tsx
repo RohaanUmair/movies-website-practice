@@ -7,7 +7,7 @@ function SelectUser({ setSelectUser }: { setSelectUser: Dispatch<SetStateAction<
         <div className="h-screen w-screen bg-zinc-950 flex justify-center items-center">
             <div className="flex flex-col items-center justify-center gap-8">
 
-                <h1 className="text-white text-6xl">Who's watching?</h1>
+                <h1 className="text-white text-6xl">{"Who's watching?"}</h1>
 
                 <div className="flex gap-6">
 
