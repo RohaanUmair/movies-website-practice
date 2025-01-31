@@ -9,7 +9,7 @@ import { useState } from "react";
 export default function Home() {
   const [selectUser, setSelectUser] = useState<boolean>(true);
 
-  const [showModal, setShowModal] = useState<boolean>(true);
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   if (selectUser) return <SelectUser setSelectUser={setSelectUser} />
 
