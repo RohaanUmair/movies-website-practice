@@ -1,4 +1,5 @@
-import React, { Dispatch, SetStateAction } from 'react'
+'use client';
+import React, { Dispatch, SetStateAction, useEffect, useRef } from 'react'
 import { BsChatSquareText } from 'react-icons/bs';
 import { GoPlus } from 'react-icons/go';
 import { HiOutlineHandThumbUp } from 'react-icons/hi2';
@@ -8,10 +9,31 @@ import MovieCard from '../modal/MovieCard';
 import MovieListPoster from './MovieListPoster';
 
 function Modal({ setShowModal }: { setShowModal: Dispatch<SetStateAction<boolean>> }) {
+
+    const modalRef = useRef(null);
+    const closeBtnRef = useRef(null);
+
+    useEffect(() => {
+        const handleClickOutside = (e: MouseEvent) => {
+            const a = modalRef?.current as any;
+            const b = closeBtnRef?.current as any;
+
+            if (a && !a.contains(e?.target) ||
+                b && !b.contains(e?.target)
+            ) {
+                setShowModal(false);
+            }
+        }
+
+        document.addEventListener('mousedown', handleClickOutside);
+
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    });
+
     return (
         <div className='text-white fixed w-full h-full pt-14 z-50 top-0 flex justify-center' style={{ backgroundColor: 'rgb(0, 0, 0, 0.7)' }}>
 
-            <div className='w-1/2 h-full overflow-y-scroll pb-10 bg-zinc-950 rounded-md'>
+            <div ref={modalRef} className='w-1/2 h-full overflow-y-scroll scrollbar-hide pb-10 bg-zinc-950 rounded-md'>
 
                 <div className='relative flex flex-col'>
                     <video
@@ -22,7 +44,7 @@ function Modal({ setShowModal }: { setShowModal: Dispatch<SetStateAction<boolean
                         muted
                     />
 
-                    <div onClick={() => setShowModal(false)} className='p-1 rounded-full absolute right-4 top-4 cursor-pointer' style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+                    <div ref={closeBtnRef} onClick={() => setShowModal(false)} className='p-1 rounded-full absolute right-4 top-4 cursor-pointer' style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
                         <IoIosClose className=' rounded-full text-4xl' />
                     </div>
 

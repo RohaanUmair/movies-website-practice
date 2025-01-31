@@ -3,10 +3,12 @@ import React from 'react'
 import { GoPlus } from 'react-icons/go'
 
 function MovieCard() {
+    let num = Math.ceil(Math.random() * 8);
+
     return (
         <div className='w-[32%] h-72 bg-zinc-800 rounded-sm'>
             <Image
-                src="/movie-poster3.jpg"
+                src={`/movie-poster${num}.jpg`}
                 alt="Movie Poster"
                 layout="omit"
                 objectFit="cover"
