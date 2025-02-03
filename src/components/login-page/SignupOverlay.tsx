@@ -3,7 +3,7 @@ import React from 'react'
 
 function SignupOverlay() {
     return (
-        <div className='w-[440px] h-full mx-auto px-14 py-12' style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)' }}>
+        <div className='w-[440px] h-full mx-auto px-14 py-12        max-md:w-[90%] max-md:max-w-[440px] max-sm:px-8' style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)' }}>
             <form className='flex flex-col gap-4'>
 
                 <h2 className='text-white text-4xl font-bold mb-5'>Sign In</h2>

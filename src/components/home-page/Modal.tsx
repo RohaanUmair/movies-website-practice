@@ -31,9 +31,9 @@ function Modal({ setShowModal }: { setShowModal: Dispatch<SetStateAction<boolean
     });
 
     return (
-        <div className='text-white fixed w-full h-full pt-14 z-50 top-0 flex justify-center' style={{ backgroundColor: 'rgb(0, 0, 0, 0.7)' }}>
+        <div className='text-white fixed w-full h-full pt-14 z-50 top-0 flex justify-center     max-sm:pt-2' style={{ backgroundColor: 'rgb(0, 0, 0, 0.7)' }}>
 
-            <div ref={modalRef} className='w-1/2 h-full overflow-y-scroll scrollbar-hide pb-10 bg-zinc-950 rounded-md'>
+            <div ref={modalRef} className='w-1/2 h-full overflow-y-scroll scrollbar-hide pb-10 bg-zinc-950 rounded-md       max-lg:w-full max-lg:max-w-[640px]'>
 
                 <div className='relative flex flex-col'>
                     <video
@@ -71,9 +71,9 @@ function Modal({ setShowModal }: { setShowModal: Dispatch<SetStateAction<boolean
                 </div>
 
 
-                <div className='flex p-10'>
+                <div className='flex p-10       max-xs:px-8 max-xs:py-4 max-xs:flex-col'>
 
-                    <div className='w-2/3 flex flex-col gap-1'>
+                    <div className='w-2/3 flex flex-col gap-1 pr-4      max-xs:w-full max-xs:gap-2'>
                         <div className='flex text-[12px] font-semibold items-center gap-2 text-[#aaa]'>
                             <p>2025</p>
                             <p>1h 54m</p>
@@ -87,9 +87,9 @@ function Modal({ setShowModal }: { setShowModal: Dispatch<SetStateAction<boolean
                         </div>
 
 
-                        <div className='flex items-center gap-2 mb-2'>
+                        <div className='flex items-center gap-2 mb-2        max-xs:mb-0'>
                             <div className='w-7 h-8 bg-[#ff0000] text-[10px] rounded leading-tight justify-center flex flex-col items-center font-bold'><p>Top</p><p>10</p></div>
-                            <h3 className='font-semibold'>#2 in Movies Today</h3>
+                            <h3 className='font-semibold        max-xs:text-lg'>#2 in Movies Today</h3>
                         </div>
 
 
@@ -97,7 +97,7 @@ function Modal({ setShowModal }: { setShowModal: Dispatch<SetStateAction<boolean
                     </div>
 
 
-                    <div className='w-1/3 flex flex-col text-[12px] gap-2'>
+                    <div className='w-1/3 flex flex-col text-[12px] gap-2       max-xs:w-full max-xs:mt-8'>
                         <p>
                             <span className='text-[#777] font-bold'>Cast:</span> Abcd Zxc, Opqrs Tuvw, Jkl Mnop, more
                         </p>
@@ -114,7 +114,7 @@ function Modal({ setShowModal }: { setShowModal: Dispatch<SetStateAction<boolean
                 </div>
 
 
-                <div className='flex flex-col px-10 font-semibold'>
+                <div className='flex flex-col px-10 font-semibold       max-xs:px-2'>
                     <h2 className='text-xl text-white'>More Like This</h2>
 
                     <div className='flex justify-between flex-wrap gap-y-5 mt-4 border-b'>

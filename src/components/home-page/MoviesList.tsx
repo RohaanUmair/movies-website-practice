@@ -1,7 +1,7 @@
-import React, { Dispatch, SetStateAction } from 'react'
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import MovieListPoster from './MovieListPoster';
 
-function MoviesList({ title, numOfMovies, setShowModal }: { title: string, numOfMovies: number, setShowModal: Dispatch<SetStateAction<boolean>> }) {
+function MoviesList({ title, numOfMovies, setShowModal, apiData }: { title: string, numOfMovies: number, setShowModal: Dispatch<SetStateAction<boolean>>, apiData: any }) {
     const a = [];
     for (let i = 0; i < numOfMovies; i++) {
         a.push(1);
@@ -9,11 +9,15 @@ function MoviesList({ title, numOfMovies, setShowModal }: { title: string, numOf
 
     return (
         <div className='flex flex-col'>
-            <h1 className='text-white font-semibold text-lg mb-2'>{title}</h1>
+            <h1 className='text-white font-semibold text-lg mb-2        max-xs:text-base'>{title}</h1>
 
             <div className='flex gap-2 overflow-x-scroll w-full scrollbar-hide pr-8'>
                 {
-                    a.map((movie, index) => <MovieListPoster setShowModal={setShowModal} key={index} />)
+                    apiData.map((movie: any) => {
+                        return (
+                            <MovieListPoster movieName={movie.title} movieImg={movie.backdrop_path} setShowModal={setShowModal} key={movie.title} />
+                        )
+                    })
                 }
             </div>
         </div>
