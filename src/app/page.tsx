@@ -11,15 +11,20 @@ export default function Home() {
 
   const [showModal, setShowModal] = useState<boolean>(false);
 
+  const [modalDetails, setModalDetails] = useState<{
+    movieName: string;
+    movieDesc: string;
+  }>({ movieName: '', movieDesc: '' });
+
   // if (selectUser) return <SelectUser setSelectUser={setSelectUser} />
 
   return (
     <div className={`relative min-h-screen bg-zinc-950 ${showModal && 'overflow-hidden h-screen'}`}>
       <Header />
-      <MovieOverviewSec setShowModal={setShowModal} />
+      <MovieOverviewSec setShowModal={setShowModal} setModalDetails={setModalDetails} />
 
       {
-        showModal && <Modal setShowModal={setShowModal} />
+        showModal && <Modal modalDetails={modalDetails} setShowModal={setShowModal} />
       }
     </div>
   );

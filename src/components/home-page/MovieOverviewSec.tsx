@@ -7,7 +7,12 @@ import MoviesList from './MoviesList';
 import { IoMdPlay } from 'react-icons/io';
 import { MdInfoOutline } from 'react-icons/md';
 
-function MovieOverviewSec({ setShowModal }: { setShowModal: Dispatch<SetStateAction<boolean>> }) {
+function MovieOverviewSec({ setShowModal, setModalDetails }: {
+    setShowModal: Dispatch<SetStateAction<boolean>>, setModalDetails: Dispatch<SetStateAction<{
+        movieName: string;
+        movieDesc: string;
+    }>>;
+}) {
     const options = {
         method: 'GET',
         headers: {
@@ -80,9 +85,9 @@ function MovieOverviewSec({ setShowModal }: { setShowModal: Dispatch<SetStateAct
             </div>
 
             <div className='pl-12 mt-12 z-10 relative flex flex-col gap-12      max-xs:gap-6 max-xs:pl-6 max-xs:mt-10'>
-                <MoviesList apiData={apiData.slice(0, 8)} setShowModal={setShowModal} numOfMovies={8} title="Today's Top Picks for You" />
-                <MoviesList apiData={apiData.slice(8, 11)} setShowModal={setShowModal} numOfMovies={3} title='Continue Watching for Hamza Malik' />
-                <MoviesList apiData={apiData.slice(11, 20)} setShowModal={setShowModal} numOfMovies={7} title='Familiar TV Favorites' />
+                <MoviesList setModalDetails={setModalDetails} apiData={apiData.slice(0, 8)} setShowModal={setShowModal} numOfMovies={8} title="Today's Top Picks for You" />
+                <MoviesList setModalDetails={setModalDetails} apiData={apiData.slice(8, 11)} setShowModal={setShowModal} numOfMovies={3} title='Continue Watching for Hamza Malik' />
+                <MoviesList setModalDetails={setModalDetails} apiData={apiData.slice(11, 20)} setShowModal={setShowModal} numOfMovies={7} title='Familiar TV Favorites' />
             </div>
 
             <div>asd</div>

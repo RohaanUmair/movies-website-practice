@@ -7,8 +7,14 @@ import { IoIosClose } from 'react-icons/io';
 import { TbPlayerPlayFilled } from 'react-icons/tb';
 import MovieCard from '../modal/MovieCard';
 import MovieListPoster from './MovieListPoster';
+import Image from 'next/image';
 
-function Modal({ setShowModal }: { setShowModal: Dispatch<SetStateAction<boolean>> }) {
+function Modal({ setShowModal, modalDetails }: {
+    setShowModal: Dispatch<SetStateAction<boolean>>, modalDetails: {
+        movieName: string;
+        movieDesc: string;
+    }
+}) {
 
     const modalRef = useRef(null);
     const closeBtnRef = useRef(null);
@@ -51,7 +57,7 @@ function Modal({ setShowModal }: { setShowModal: Dispatch<SetStateAction<boolean
                     <div className='absolute bottom-10 left-10'>
                         <h6 className='text-[#ff0000] text-3xl flex items-center font-bold translate-y-3 -translate-x-2'>N <span className='text-[12px] font-normal text-[#aaa]'>FILM</span></h6>
 
-                        <h1 className='text-4xl font-semibold mb-4'>MOVIE</h1>
+                        <h1 className='text-4xl font-semibold mb-4'>{modalDetails.movieName}</h1>
 
                         <div className='flex gap-2'>
                             <button className='text-xl font-bold h-10 w-28 gap-1 rounded justify-center flex items-center bg-white text-black'>
@@ -93,7 +99,7 @@ function Modal({ setShowModal }: { setShowModal: Dispatch<SetStateAction<boolean
                         </div>
 
 
-                        <p className='text-[13px]'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem itaque reiciendis rerum quod dolor! Architecto repudiandae dolorum consequatur quia voluptatum!</p>
+                        <p className='text-[13px]'>{modalDetails.movieDesc}</p>
                     </div>
 
 
@@ -136,13 +142,31 @@ function Modal({ setShowModal }: { setShowModal: Dispatch<SetStateAction<boolean
 
                     <div className='flex gap-3'>
                         <div className='flex flex-col gap-2'>
-                            <MovieListPoster setShowModal={setShowModal} />
-                            <h5 className='text-[12px] font-semibold pl-2'>Trailer: Lorem, ipsum dolor.</h5>
+                            <div className="w-48 h-28 bg-cover bg-center rounded flex-shrink-0 relative cursor-pointer      max-xs:w-44 max-xs:h-[104px]">
+                                <Image
+                                    src={`https://image.tmdb.org/t/p/w500/b3mdmjYTEL70j7nuXATUAD9qgu4.jpg`}
+                                    alt={'Straume'}
+                                    layout='omit'
+                                    height={112}
+                                    width={192}
+                                    className="rounded object-cover"
+                                />
+                            </div>
+                            <h5 className='text-[12px] font-semibold pl-2'>Trailer: Straume</h5>
                         </div>
 
                         <div className='flex flex-col gap-2'>
-                            <MovieListPoster setShowModal={setShowModal} />
-                            <h5 className='text-[12px] font-semibold pl-2'>Trailer: Lorem, ipsum dolor.</h5>
+                            <div className="w-48 h-28 bg-cover bg-center rounded flex-shrink-0 relative cursor-pointer      max-xs:w-44 max-xs:h-[104px]">
+                                <Image
+                                    src={`https://image.tmdb.org/t/p/w500/k24eZq5I3jyz4htPkZCRpnUmBzE.jpg`}
+                                    alt={'Culpa tuya'}
+                                    layout='omit'
+                                    height={112}
+                                    width={192}
+                                    className="rounded object-cover"
+                                />
+                            </div>
+                            <h5 className='text-[12px] font-semibold pl-2'>Trailer: Culpa tuya</h5>
                         </div>
                     </div>
                 </div>
