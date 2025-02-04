@@ -19,6 +19,14 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: 'Invalid Credentials' });
         }
 
+        const cookie = await cookies();
+
+        cookie.set("user", userExistence._id.toString(), {
+            httpOnly: true,
+            path: "/",
+            maxAge: 3600,
+        });
+
         return NextResponse.json({ message: 'Logged In' });
     } catch (error) {
         return NextResponse.json({ message: 'Error Logging In' })

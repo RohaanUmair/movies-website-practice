@@ -13,6 +13,7 @@ function LoginOverlay() {
         e.preventDefault();
 
         const res = await axios.post('/api/login', { email, password });
+        router.replace('/')
         console.log(res);
     };
 
