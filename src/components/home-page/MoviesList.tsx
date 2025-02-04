@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import MovieListPoster from './MovieListPoster';
 
 function MoviesList({ title, numOfMovies, setShowModal, apiData, setModalDetails }: {
@@ -7,7 +7,7 @@ function MoviesList({ title, numOfMovies, setShowModal, apiData, setModalDetails
         movieDesc: string;
     }>>;
 }) {
-    const a = [];
+    const a: Array<number> = [];
     for (let i = 0; i < numOfMovies; i++) {
         a.push(1);
     }

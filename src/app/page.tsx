@@ -16,7 +16,7 @@ export default function Home() {
     movieDesc: string;
   }>({ movieName: '', movieDesc: '' });
 
-  // if (selectUser) return <SelectUser setSelectUser={setSelectUser} />
+  if (selectUser) return <SelectUser setSelectUser={setSelectUser} />
 
   return (
     <div className={`relative min-h-screen bg-zinc-950 ${showModal && 'overflow-hidden h-screen'}`}>

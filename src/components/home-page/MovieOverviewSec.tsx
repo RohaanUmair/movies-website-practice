@@ -1,8 +1,6 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { BsDot } from 'react-icons/bs';
-import { HiOutlineDeviceMobile } from 'react-icons/hi';
 import { LiaVolumeOffSolid } from 'react-icons/lia';
-import { LuSend } from 'react-icons/lu';
 import MoviesList from './MoviesList';
 import { IoMdPlay } from 'react-icons/io';
 import { MdInfoOutline } from 'react-icons/md';

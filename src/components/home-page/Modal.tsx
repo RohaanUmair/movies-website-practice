@@ -6,7 +6,6 @@ import { HiOutlineHandThumbUp } from 'react-icons/hi2';
 import { IoIosClose } from 'react-icons/io';
 import { TbPlayerPlayFilled } from 'react-icons/tb';
 import MovieCard from '../modal/MovieCard';
-import MovieListPoster from './MovieListPoster';
 import Image from 'next/image';
 
 function Modal({ setShowModal, modalDetails }: {

@@ -3,7 +3,7 @@ import React from 'react'
 import { GoPlus } from 'react-icons/go'
 
 function MovieCard() {
-    let num = Math.ceil(Math.random() * 8);
+    const num = Math.ceil(Math.random() * 8);
 
     return (
         <div className='w-[32%] h-72 bg-zinc-800 rounded-sm     max-sm:w-[48%]'>
