@@ -1,26 +1,26 @@
 'use client';
+import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react'
+import React, { FormEvent, useState } from 'react'
 
 function SignupOverlay() {
     const router = useRouter();
 
-    const [signupUsername, setSignupUsername] = useState<string>('');
-    const [signupEmail, setSignupEmail] = useState<string>('');
-    const [signupPassword, setSignupPassword] = useState<string>('');
+    const [username, setUsername] = useState<string>('');
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+
+    const handleSubmit = async (e: FormEvent) => {
+        e.preventDefault();
+        const res = await axios.post('/api/signup', { username, email, password });
+        console.log(res);
+    };
 
     return (
         <div className='w-[440px] h-full mx-auto px-14 py-12        max-md:w-[90%] max-md:max-w-[440px] max-sm:px-8' style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)' }}>
             <form
                 className='flex flex-col gap-4'
-                onSubmit={(e) => {
-                    e.preventDefault();
-                    console.log({
-                        signupUsername,
-                        signupEmail,
-                        signupPassword
-                    });
-                }}
+                onSubmit={handleSubmit}
             >
 
                 <h2 className='text-white text-4xl font-bold mb-5       max-xs:text-3xl'>Create Account</h2>
@@ -29,24 +29,24 @@ function SignupOverlay() {
                     className='h-14 bg-zinc-900 rounded border border-[#777] px-4 text-[#ccc]'
                     type="text"
                     placeholder='Username'
-                    value={signupUsername}
-                    onChange={(e) => setSignupUsername(e.target.value)}
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                 />
 
                 <input
                     className='h-14 bg-zinc-900 rounded border border-[#777] px-4 text-[#ccc]'
                     type="email"
                     placeholder='Email'
-                    value={signupEmail}
-                    onChange={(e) => setSignupEmail(e.target.value)}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                 />
 
                 <input
                     className='h-14 bg-zinc-900 rounded border border-[#777] px-4 text-[#ccc]'
                     type="password"
                     placeholder='Passwords'
-                    value={signupPassword}
-                    onChange={(e) => setSignupPassword(e.target.value)}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                 />
 
                 <button className='h-10 flex justify-center items-center bg-red-600 rounded text-white font-semibold'>
