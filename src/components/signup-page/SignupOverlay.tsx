@@ -14,6 +14,9 @@ function SignupOverlay() {
         e.preventDefault();
         const res = await axios.post('/api/signup', { username, email, password });
         console.log(res);
+
+        const res2 = await axios.post('/api/verification-email', { to: email, text: '12312' });
+        console.log(res2);
     };
 
     return (

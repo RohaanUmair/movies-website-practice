@@ -28,6 +28,14 @@ function MovieOverviewSec({ setShowModal, setModalDetails }: {
             .catch(err => console.error(err));
     }, []);
 
+    if (!apiData) {
+        return (
+            <div className='h-screen w-screen bg-black flex justify-center items-center'>
+                <div className="w-16 h-16 border-4 border-t-4 border-gray-200 rounded-full animate-spin border-t-blue-500"></div>
+            </div>
+        )
+    }
+
     return (
         <div>
             <video

@@ -23,6 +23,7 @@ export async function POST(request: NextRequest) {
 
         return NextResponse.json({ message: 'User Account Created' });
     } catch (error) {
+        console.log(error);
         return NextResponse.json({ message: 'Error Creating Account' })
     }
 }
