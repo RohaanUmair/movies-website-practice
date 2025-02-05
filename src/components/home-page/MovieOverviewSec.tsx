@@ -4,6 +4,7 @@ import { LiaVolumeOffSolid } from 'react-icons/lia';
 import MoviesList from './MoviesList';
 import { IoMdPlay } from 'react-icons/io';
 import { MdInfoOutline } from 'react-icons/md';
+import NumberedMovieList from './NumberedMovieList';
 
 function MovieOverviewSec({ setShowModal, setModalDetails }: {
     setShowModal: Dispatch<SetStateAction<boolean>>, setModalDetails: Dispatch<SetStateAction<{
@@ -92,8 +93,8 @@ function MovieOverviewSec({ setShowModal, setModalDetails }: {
 
             <div className='pl-12 mt-12 z-10 relative flex flex-col gap-12      max-xs:gap-6 max-xs:pl-6 max-xs:mt-10'>
                 <MoviesList setModalDetails={setModalDetails} apiData={apiData.slice(0, 8)} setShowModal={setShowModal} numOfMovies={8} title="Today's Top Picks for You" />
-                <MoviesList setModalDetails={setModalDetails} apiData={apiData.slice(8, 11)} setShowModal={setShowModal} numOfMovies={3} title='Continue Watching for Hamza Malik' />
-                <MoviesList setModalDetails={setModalDetails} apiData={apiData.slice(11, 20)} setShowModal={setShowModal} numOfMovies={7} title='Familiar TV Favorites' />
+                <MoviesList setModalDetails={setModalDetails} apiData={apiData.slice(8, 10)} setShowModal={setShowModal} numOfMovies={3} title='Continue Watching for Hamza Malik' />
+                <NumberedMovieList setModalDetails={setModalDetails} apiData={apiData.slice(10, 20)} numOfMovies={10} setShowModal={setShowModal} title='Top 10 Shows Today' />
             </div>
 
             <div>asd</div>

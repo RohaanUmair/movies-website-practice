@@ -17,3 +17,8 @@
     scrollbar-width: none;
     /* for Firefox */
 }
+
+
+.text-outline {
+    -webkit-text-stroke: 2px black;
+}
