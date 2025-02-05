@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import React, { FormEvent, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast';
+import { SyncLoader } from 'react-spinners';
 
 function SignupOverlay() {
     const router = useRouter();
@@ -11,36 +12,55 @@ function SignupOverlay() {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [OTP, setOTP] = useState<string>('');
-    
+
     const [showOTPPage, setShowOTPPage] = useState<boolean>(true);
 
     const [sentOTP, setSentOTP] = useState<string>('');
 
+    const [creatingAccount, setCreatingAccount] = useState<boolean>(false);
+
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
+        setCreatingAccount(true);
+
         const res = await axios.post('/api/signup', { username, email, password });
         console.log(res);
-
+        setCreatingAccount(false);
+        toast.success('Account Created, Login Now!');
+        router.replace('/login');
     };
 
 
     const handleSendOTP = async (e: FormEvent) => {
         e.preventDefault();
+        if (!email.includes('@') || !email.includes('.')) return toast.error('Enter Valid Email');
+        setIsOTPSent(true);
         const text = String(Math.ceil(Math.random() * 9999));
         setSentOTP(text);
 
+        const toastId = toast.loading('Sending OTP')
         const res2 = await axios.post('/api/verification-email', { to: email, text });
         console.log(res2);
-        toast.success('OTP Sent!');
-    };
 
-    const handleProceed = (e: FormEvent) => {
-        e.preventDefault();
-
-        if (OTP === sentOTP) {
-            setShowOTPPage(false);
+        if (res2.data.message == 'User with this Email already exists') {
+            toast.error(res2.data.message, { id: toastId })
+        } else {
+            toast.success('OTP Sent!', { id: toastId });
         }
     };
+
+    const handleProceed = async (e: FormEvent) => {
+        e.preventDefault();
+
+        if (OTP === sentOTP && OTP !== '') {
+            setShowOTPPage(false);
+        } else {
+            toast.error('Please Enter OTP correctly');
+            setOTP('');
+        }
+    };
+
+    const [isOTPSent, setIsOTPSent] = useState<boolean>(false);
 
 
     return (
@@ -64,7 +84,7 @@ function SignupOverlay() {
 
                         <div className='flex'>
                             <input
-                                className='h-14 bg-zinc-900 rounded-l border border-[#777] px-4 text-[#ccc]'
+                                className='h-14 bg-zinc-900 rounded-l border-y border-l border-[#777] px-4 text-[#ccc]'
                                 type="password"
                                 placeholder='Enter OTP'
                                 value={OTP}
@@ -72,10 +92,17 @@ function SignupOverlay() {
                                 maxLength={4}
                             />
 
-                            <button className='w-full border h-14 rounded-r bg-red-500 text-white' onClick={handleSendOTP}>Send OTP</button>
+                            {isOTPSent ? (
+                                <button disabled className='disabled:cursor-not-allowed disabled:bg-red-900 w-full h-14 rounded-r border-r border-t border-b bg-red-500 text-white hover:bg-red-600 active:bg-red-400' onClick={handleSendOTP}>Send OTP</button>
+                            ) : (
+                                <button className='w-full h-14 rounded-r border-r border-t border-b bg-red-500 text-white hover:bg-red-600 active:bg-red-400' onClick={handleSendOTP}>Send OTP</button>
+                            )}
+
                         </div>
 
-                        <button className='h-10 flex justify-center items-center bg-red-600 rounded text-white font-semibold'>
+                        <button
+                            className='h-10 flex justify-center items-center bg-red-600 hover:bg-red-700 active:bg-red-500 rounded text-white font-semibold'
+                        >
                             Proceed
                         </button>
 
@@ -98,6 +125,7 @@ function SignupOverlay() {
                             placeholder='Username'
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
+                            required
                         />
 
                         <input
@@ -105,7 +133,8 @@ function SignupOverlay() {
                             type="email"
                             placeholder='Email'
                             value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            readOnly
+                            required
                         />
 
                         <input
@@ -114,11 +143,20 @@ function SignupOverlay() {
                             placeholder='Passwords'
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                            required
+                            minLength={6}
                         />
 
-                        <button className='h-10 flex justify-center items-center bg-red-600 rounded text-white font-semibold'>
-                            Create Account
-                        </button>
+                        {creatingAccount ? (
+                            <button disabled className='h-10 flex justify-center items-center disabled:bg-red-900 disabled:cursor-not-allowed bg-red-600 hover:bg-red-700 active:bg-red-500 rounded text-white font-semibold'>
+                                <SyncLoader color='#fff' size={8} />
+                            </button>
+                        ) : (
+                            <button className='h-10 flex justify-center items-center bg-red-600 hover:bg-red-700 active:bg-red-500 rounded text-white font-semibold'>
+                                Create Account
+                            </button>
+                        )}
+
 
                         <p className='text-[#aaa]'>Already have an Account? <span onClick={() => router.push('/login')} className='cursor-pointer hover:underline text-white font-semibold'>Login Now</span></p>
 

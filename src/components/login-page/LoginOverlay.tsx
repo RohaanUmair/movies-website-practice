@@ -2,6 +2,8 @@
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import React, { FormEvent, useState } from 'react'
+import toast, { Toaster } from 'react-hot-toast';
+import { SyncLoader } from 'react-spinners';
 
 function LoginOverlay() {
     const router = useRouter();
@@ -9,12 +11,18 @@ function LoginOverlay() {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
 
+    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
+        setIsSubmitting(true);
 
         const res = await axios.post('/api/login', { email, password });
         router.replace('/')
-        console.log(res);
+        if (res.data.error == 'Invalid Credentials') {
+            toast.error(res.data.error)
+        }
+        setIsSubmitting(false);
     };
 
     return (
@@ -24,7 +32,7 @@ function LoginOverlay() {
                 onSubmit={handleSubmit}
             >
 
-                <h2 className='text-white text-4xl font-bold mb-5'>Login In</h2>
+                <h2 className='text-white text-4xl font-bold mb-5'>Login</h2>
 
                 <input
                     className='h-14 bg-zinc-900 rounded border border-[#777] px-4 text-[#ccc]'
@@ -32,6 +40,7 @@ function LoginOverlay() {
                     placeholder='Email or mobile number'
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    required
                 />
 
                 <input
@@ -40,17 +49,25 @@ function LoginOverlay() {
                     placeholder='Passwords'
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    required
+                    minLength={6}
                 />
 
-                <button className='h-10 flex bg-red-600 rounded text-white font-semibold justify-center items-center'>
-                    Login In
-                </button>
+                {isSubmitting ? (
+                    <button disabled className='disabled:bg-red-900 h-10 flex bg-red-600 rounded text-white font-semibold justify-center items-center'>
+                        <SyncLoader color="#fff" size={8}/>
+                    </button>
+                ) : (
+                    <button className='h-10 flex bg-red-600 rounded text-white font-semibold justify-center items-center'>
+                        Login In
+                    </button>
+                )}
 
                 <p className='text-center text-white'>OR</p>
 
                 <button className='h-10 bg-zinc-600 rounded text-white font-semibold'>Use a Login-In Code</button>
 
-                <p className='text-center text-white'>Forgot password?</p>
+                <p className='text-center text-white hover:underline cursor-pointer' onClick={() => router.push('/reset-password')}>Forgot password?</p>
 
                 <div className='flex gap-3'>
                     <input type="checkbox" className='scale-150' />
@@ -62,6 +79,8 @@ function LoginOverlay() {
                 <p className='text-[#aaa] text-sm'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Maxime tempore distinctio.  <span className='text-blue-500 cursor-pointer'>Learn more</span></p>
 
             </form>
+
+            <Toaster />
         </div>
     )
 }

@@ -33,7 +33,6 @@ function NumberedMovieListPoster({ setShowModal, movieName, movieImg, setModalDe
                     width={192}
                     className="rounded object-cover w-full h-full"
                 />
-                <h1 className='absolute z-50 bottom-0 left-0 font-semibold text-white w-full' style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>{movieName}</h1>
             </div>
         </div>
     );

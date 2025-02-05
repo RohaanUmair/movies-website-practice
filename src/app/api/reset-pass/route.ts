@@ -7,15 +7,7 @@ import nodemailer from 'nodemailer';
 
 export async function POST(req: NextRequest) {
     try {
-        await connectToDb();
-
         const { to, text } = await req.json();
-
-        const userExistence = await User.findOne({ email: to });
-
-        if (userExistence) {
-            return NextResponse.json({ message: 'User with this Email already exists' });
-        }
 
         const transporter = nodemailer.createTransport({
             host: "smtp.gmail.com",
@@ -31,7 +23,7 @@ export async function POST(req: NextRequest) {
         await transporter.sendMail({
             from: process.env.EMAIL_USERNAME,
             to,
-            subject: "Verification Code",
+            subject: "Reset Passsword OTP",
             text,
             html: `<p>Your OTP is: <b>${text}</b></p>`,
         }).then(() => console.log('Email sent'))
@@ -39,5 +31,24 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ message: 'Email Sent' })
     } catch (error) {
         return NextResponse.json({ message: error })
+    }
+}
+
+
+export async function PUT(req: NextRequest) {
+    await connectToDb();
+
+    try {
+        const { email, password } = await req.json();
+
+        await User.findOneAndUpdate(
+            { email },
+            { password },
+            { new: true }
+        )
+
+        return NextResponse.json({ message: 'Password Updated' });
+    } catch (error) {
+        return NextResponse.json({ message: 'Error updating password' });
     }
 }

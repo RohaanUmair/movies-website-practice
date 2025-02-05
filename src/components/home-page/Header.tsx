@@ -51,13 +51,13 @@ function Header() {
                         {showMenu && (
                             <div className='w-56 h-fit absolute top-0 right-0 pt-10'>
                                 <ul className='text-white cursor-default overflow-hidden text-sm pt-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)' }}>
-                                    <li className='py-[6px] px-4 hover:bg-zinc-200 flex items-center gap-2'><div className='w-10 h-10 bg-blue-500 rounded'></div> Hamza</li>
-                                    <li className='py-[6px] px-4 hover:bg-zinc-200 flex items-center gap-2'><TiPencil className='text-2xl' />Manage Profiles</li>
-                                    <li className='py-[6px] px-4 hover:bg-zinc-200 flex items-center gap-2'><FiUsers className='text-2xl' />Transfer Profile</li>
-                                    <li className='py-[6px] px-4 hover:bg-zinc-200 flex items-center gap-2'><FaRegUser className='text-2xl' />Account</li>
-                                    <li className='py-[6px] px-4 hover:bg-zinc-200 flex items-center gap-2'><IoMdHelpCircleOutline className='text-2xl' />Help Center</li>
+                                    <li className='py-[6px] px-4 hover:bg-zinc-700 cursor-pointer flex items-center gap-2'><div className='w-10 h-10 bg-blue-500 rounded'></div> Hamza</li>
+                                    <li className='py-[6px] px-4 hover:bg-zinc-700 cursor-pointer flex items-center gap-2'><TiPencil className='text-2xl' />Manage Profiles</li>
+                                    <li className='py-[6px] px-4 hover:bg-zinc-700 cursor-pointer flex items-center gap-2'><FiUsers className='text-2xl' />Transfer Profile</li>
+                                    <li className='py-[6px] px-4 hover:bg-zinc-700 cursor-pointer flex items-center gap-2'><FaRegUser className='text-2xl' />Account</li>
+                                    <li className='py-[6px] px-4 hover:bg-zinc-700 cursor-pointer flex items-center gap-2'><IoMdHelpCircleOutline className='text-2xl' />Help Center</li>
                                     <li
-                                        className='hover:bg-zinc-200 flex items-center justify-center gap-2 border-t py-4   '
+                                        className='hover:bg-zinc-700 cursor-pointer flex items-center justify-center gap-2 border-t py-4   '
                                         onClick={handleLogout}
                                     >
                                         <TbUserMinus className='text-2xl' />Logout</li>
