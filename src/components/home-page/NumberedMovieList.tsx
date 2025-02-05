@@ -1,5 +1,4 @@
 import React, { Dispatch, SetStateAction } from 'react'
-import MovieListPoster from './MovieListPoster';
 import NumberedMovieListPoster from './NumberedMovieListPoster';
 
 function NumberedMovieList({ title, numOfMovies, setShowModal, apiData, setModalDetails }: {

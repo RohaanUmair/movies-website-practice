@@ -2,7 +2,7 @@
 import axios from 'axios'
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
-import { FaRegBell, FaRegUser, FaUserCircle } from 'react-icons/fa'
+import { FaRegBell, FaRegUser } from 'react-icons/fa'
 import { FiMenu, FiUsers } from 'react-icons/fi'
 import { GoSearch } from 'react-icons/go'
 import { IoMdArrowDropdown, IoMdHelpCircleOutline } from 'react-icons/io'

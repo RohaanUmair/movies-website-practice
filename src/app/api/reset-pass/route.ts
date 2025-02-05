@@ -49,6 +49,7 @@ export async function PUT(req: NextRequest) {
 
         return NextResponse.json({ message: 'Password Updated' });
     } catch (error) {
+        console.log(error);
         return NextResponse.json({ message: 'Error updating password' });
     }
 }

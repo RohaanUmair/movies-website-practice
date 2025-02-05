@@ -102,7 +102,12 @@ function ResetPasswordOverlay() {
                         />
                     </div>
 
-                    <button type='submit' className='bg-blue-500 hover:bg-blue-600 active:bg-blue-400 w-full h-10 text-white'>Submit</button>
+                    {resettingPass ? (
+                        <button disabled type='submit' className='disabled:bg-blue-900 cursor-not-allowed bg-blue-500 hover:bg-blue-600 active:bg-blue-400 w-full h-10 text-white'>Submit</button>
+                    ) : (
+                        <button type='submit' className='bg-blue-500 hover:bg-blue-600 active:bg-blue-400 w-full h-10 text-white'>Submit</button>
+                    )}
+
                 </form>
             ) : (
 
