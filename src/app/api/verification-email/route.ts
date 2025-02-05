@@ -10,9 +10,9 @@ export async function POST(req: NextRequest) {
         const { to, text } = await req.json();
 
         const transporter = nodemailer.createTransport({
-            host: "smtp-mail.outlook.com",
-            port: 587,
-            secure: false,
+            host: "smtp.gmail.com",
+            port: 465,
+            secure: true,
             auth: {
                 user: process.env.EMAIL_USERNAME,
                 pass: process.env.EMAIL_PASSWORD,
@@ -20,15 +20,13 @@ export async function POST(req: NextRequest) {
         });
 
 
-        const info = await transporter.sendMail({
+        await transporter.sendMail({
             from: process.env.EMAIL_USERNAME,
             to,
             subject: "Verification Code",
             text,
-            html: "<b>Verification Code</b>",
-        });
-
-        console.log("Message sent: %s", info.messageId);
+            html: `<p>Your OTP is: <b>${text}</b></p>`,
+        }).then(() => console.log('Email sent'))
 
         return NextResponse.json({ message: 'Email Sent' })
     } catch (error) {
