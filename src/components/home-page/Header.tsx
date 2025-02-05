@@ -2,11 +2,12 @@
 import axios from 'axios'
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
-import { FaRegBell, FaUserCircle } from 'react-icons/fa'
-import { FiMenu } from 'react-icons/fi'
+import { FaRegBell, FaRegUser, FaUserCircle } from 'react-icons/fa'
+import { FiMenu, FiUsers } from 'react-icons/fi'
 import { GoSearch } from 'react-icons/go'
-import { IoMdArrowDropdown } from 'react-icons/io'
+import { IoMdArrowDropdown, IoMdHelpCircleOutline } from 'react-icons/io'
 import { TbRobotFace, TbUserMinus } from 'react-icons/tb'
+import { TiPencil } from 'react-icons/ti';
 
 function Header() {
     const navs: string[] = ['TV Shows', 'Movies', 'New & Popular', 'My List', 'Browse by Language'];
@@ -48,11 +49,15 @@ function Header() {
                         <IoMdArrowDropdown className="text-2xl" />
 
                         {showMenu && (
-                            <div className='w-28 h-fit absolute top-0 right-0 pt-10'>
-                                <ul className='bg-white text-black rounded cursor-default overflow-hidden'>
-                                    <li className='p-2 hover:bg-zinc-200 flex items-center gap-2'><FaUserCircle className='text-2xl' />Profile</li>
+                            <div className='w-56 h-fit absolute top-0 right-0 pt-10'>
+                                <ul className='text-white cursor-default overflow-hidden text-sm pt-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)' }}>
+                                    <li className='py-[6px] px-4 hover:bg-zinc-200 flex items-center gap-2'><div className='w-10 h-10 bg-blue-500 rounded'></div> Hamza</li>
+                                    <li className='py-[6px] px-4 hover:bg-zinc-200 flex items-center gap-2'><TiPencil className='text-2xl' />Manage Profiles</li>
+                                    <li className='py-[6px] px-4 hover:bg-zinc-200 flex items-center gap-2'><FiUsers className='text-2xl' />Transfer Profile</li>
+                                    <li className='py-[6px] px-4 hover:bg-zinc-200 flex items-center gap-2'><FaRegUser className='text-2xl' />Account</li>
+                                    <li className='py-[6px] px-4 hover:bg-zinc-200 flex items-center gap-2'><IoMdHelpCircleOutline className='text-2xl' />Help Center</li>
                                     <li
-                                        className='p-2 hover:bg-zinc-200 flex items-center gap-2'
+                                        className='hover:bg-zinc-200 flex items-center justify-center gap-2 border-t py-4   '
                                         onClick={handleLogout}
                                     >
                                         <TbUserMinus className='text-2xl' />Logout</li>
