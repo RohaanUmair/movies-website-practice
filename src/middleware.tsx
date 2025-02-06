@@ -8,7 +8,7 @@ export function middleware(request: NextRequest) {
             return NextResponse.redirect(new URL('/', request.url))
         }
     } else if (!userId) {
-        if (request.nextUrl.pathname === '/') {
+        if (request.nextUrl.pathname === '/' || request.nextUrl.pathname === '/profile') {
             return NextResponse.redirect(new URL('/login', request.url))
         }
     }
@@ -16,5 +16,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-    matcher: ['/login', '/signup', '/']
+    matcher: ['/login', '/signup', '/', '/profile']
 }

@@ -12,20 +12,25 @@ interface Props {
         movieName: string;
         movieDesc: string;
     }>>;
+    hoveredMovieTitle: string;
+    setHoveredMovieTitle: Dispatch<SetStateAction<string>>
 }
 
-function MovieListPoster({ setShowModal, movieName, movieImg, setModalDetails, movieDesc }: Props) {
-    // const num = Math.ceil(Math.random() * 8);
-
+function MovieListPoster({ setShowModal, movieName, movieImg, setModalDetails, movieDesc, hoveredMovieTitle, setHoveredMovieTitle }: Props) {
     return (
         <div>
-            <div className="w-48 h-28 bg-cover bg-center rounded flex-shrink-0 relative cursor-pointer      max-xs:w-44 max-xs:h-[104px]" onClick={() => {
-                setShowModal(true);
-                setModalDetails({
-                    movieName,
-                    movieDesc
-                });
-            }}
+            <div
+                className="w-48 h-28 bg-cover bg-center cursor-pointer rounded flex-shrink-0 relative      max-xs:w-44 max-xs:h-[104px]"
+                onClick={() => {
+                    setShowModal(true);
+                    setModalDetails({
+                        movieName,
+                        movieDesc
+                    });
+                }}
+                onMouseEnter={() => {
+                    setHoveredMovieTitle(movieName);
+                }}
             >
                 <Image
                     src={`https://image.tmdb.org/t/p/w500${movieImg}`}

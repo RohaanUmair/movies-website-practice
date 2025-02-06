@@ -23,7 +23,7 @@ function Header() {
     }
 
     return (
-        <header className='h-20 flex items-center px-12 gap-8 relative z-10         max-md:px-6 max-md:h-16' style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }}>
+        <header className='h-20 flex items-center px-12 gap-8 relative z-50         max-md:px-6 max-md:h-16' style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }}>
             <h1 className='z-10 text-[#ff0000] text-3xl font-semibold'>Movies</h1>
 
             <div className="flex items-center justify-between w-full        max-lg:justify-end">
