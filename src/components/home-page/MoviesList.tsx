@@ -6,19 +6,20 @@ import { TbPlayerPlayFilled } from 'react-icons/tb';
 import { GoPlus } from 'react-icons/go';
 import { HiOutlineHandThumbUp } from 'react-icons/hi2';
 import { LiaVolumeOffSolid } from 'react-icons/lia';
+import { RootState } from '@/states/store';
+import { useSelector } from 'react-redux';
+import { MovieData } from '@/states/movies/moviesSlice';
 
-function MoviesList({ title, numOfMovies, setShowModal, apiData, setModalDetails }: {
-    title: string, numOfMovies: number, setShowModal: Dispatch<SetStateAction<boolean>>, apiData: any, setModalDetails: Dispatch<SetStateAction<{
+function MoviesList({ title, numOfMovies, setShowModal, setModalDetails }: {
+    title: string, numOfMovies: number, setShowModal: Dispatch<SetStateAction<boolean>>, setModalDetails: Dispatch<SetStateAction<{
         movieName: string;
         movieDesc: string;
     }>>;
 }) {
-    const a: Array<number> = [];
-    for (let i = 0; i < numOfMovies; i++) {
-        a.push(1);
-    }
-
     const [hoveredMovieTitle, setHoveredMovieTitle] = useState<string>('');
+
+    let movies: MovieData[] = useSelector((state: RootState) => state.movies.apiData);
+    movies = movies.slice(0, numOfMovies);
 
     return (
         <div className='flex flex-col'>
@@ -26,7 +27,7 @@ function MoviesList({ title, numOfMovies, setShowModal, apiData, setModalDetails
 
             <div className='flex gap-2 overflow-x-scroll w-full overflow-visible scrollbar-hide pr-8'>
                 {
-                    apiData.map((movie: any, index: number) => {
+                    movies.map((movie, index: number) => {
                         return (
                             <div key={index} onMouseLeave={() => setHoveredMovieTitle('')}>
                                 <MovieListPoster hoveredMovieTitle={hoveredMovieTitle} setHoveredMovieTitle={setHoveredMovieTitle} setModalDetails={setModalDetails} movieName={movie.title} movieImg={movie.backdrop_path} setShowModal={setShowModal} movieDesc={movie.overview} key={movie.title} />

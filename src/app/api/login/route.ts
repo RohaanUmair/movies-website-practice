@@ -26,8 +26,7 @@ export async function POST(request: NextRequest) {
 
         const cookie = await cookies();
 
-        cookie.set("user", userExistence._id.toString(), {
-            httpOnly: true,
+        cookie.set("user", userExistence.username, {
             path: "/",
             maxAge: 3600,
         });

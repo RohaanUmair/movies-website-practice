@@ -1,10 +1,13 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import { BsDot } from 'react-icons/bs';
 import { LiaVolumeOffSolid } from 'react-icons/lia';
 import MoviesList from './MoviesList';
 import { IoMdPlay } from 'react-icons/io';
 import { MdInfoOutline } from 'react-icons/md';
 import NumberedMovieList from './NumberedMovieList';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/states/store';
+import { MovieData } from '@/states/movies/moviesSlice';
 
 function MovieOverviewSec({ setShowModal, setModalDetails }: {
     setShowModal: Dispatch<SetStateAction<boolean>>, setModalDetails: Dispatch<SetStateAction<{
@@ -12,26 +15,11 @@ function MovieOverviewSec({ setShowModal, setModalDetails }: {
         movieDesc: string;
     }>>;
 }) {
-    const options = {
-        method: 'GET',
-        headers: {
-            accept: 'application/json',
-            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhZmJjMDM5N2MyN2RkYjJmM2U4ODI4N2U1NTU5NTUyMSIsIm5iZiI6MTczODU4MDE1MC43OTAwMDAyLCJzdWIiOiI2N2EwYTBiNmU5OWRmMjNhOWYyNjc1MjEiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.dG7wxvB4UCX128gdM4dJ6eO84r0DNYe0jzuk3orNCvQ'
-        }
-    };
+    const movies: MovieData[] = useSelector((state: RootState) => state.movies.apiData);
 
-    const [apiData, setApiData] = useState<any>([]);
-
-    useEffect(() => {
-        fetch('https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1', options)
-            .then(res => res.json())
-            .then(res => setApiData(res.results))
-            .catch(err => console.error(err));
-    }, []);
-
-    if (apiData.length == 0) {
+    if (movies.length == 0) {
         return (
-            <div className='h-screen w-screen bg-black flex justify-center items-center'>
+            <div className='h-screen w-full bg-black flex justify-center items-center'>
                 <div className="w-16 h-16 border-4 border-t-4 border-gray-200 rounded-full animate-spin border-t-blue-500"></div>
             </div>
         )
@@ -53,7 +41,7 @@ function MovieOverviewSec({ setShowModal, setModalDetails }: {
                     <div className={`w-28 h-28 rounded-2xl bg-[url("https://image.tmdb.org/t/p/w500/zOpe0eHsq0A2NvNyBbtT6sj53qV.jpg")] bg-cover bg-center         max-md:w-24 max-md:h-24 max-xs:w-20 max-xs:h-20`} style={{ boxShadow: '1px 1px 25px 2px #111' }}></div>
                     <div className='flex flex-col h-28 justify-center       max-md:h-24 max-xs:h-20'>
                         <h3 className='flex items-center font-mono tracking-widest gap-1'><span className='text-3xl text-[#ff0000] font-bold'>N</span> MOVIE</h3>
-                        <h4 className='text-[22px] font-bold        max-md:text-xl max-xs:text-base'>{apiData[0].title}</h4>
+                        <h4 className='text-[22px] font-bold        max-md:text-xl max-xs:text-base'>{movies[0].title}</h4>
                     </div>
                 </div>
 
@@ -76,8 +64,8 @@ function MovieOverviewSec({ setShowModal, setModalDetails }: {
                         <button onClick={() => {
                             setShowModal(true);
                             setModalDetails({
-                                movieName: apiData[0].title,
-                                movieDesc: apiData[0].overview
+                                movieName: movies[0].title,
+                                movieDesc: movies[0].overview
                             })
                         }}
                             className='flex items-center w-40 h-[52px] rounded justify-center text-lg font-semibold gap-2       max-md:text-lg max-md:w-36 max-md:font-normal max-md:h-[40px] max-xs:text-[15px] max-xs:gap-1 max-xs:h-[33px] max-xs:w-28' style={{ backgroundColor: 'rgba(255, 255, 255, 0.3)' }}>
@@ -99,9 +87,9 @@ function MovieOverviewSec({ setShowModal, setModalDetails }: {
             </div>
 
             <div className='pl-12 mt-12 z-20 relative flex flex-col gap-12 overflow-visible      max-xs:gap-6 max-xs:pl-6 max-xs:mt-10'>
-                <MoviesList setModalDetails={setModalDetails} apiData={apiData.slice(0, 6)} setShowModal={setShowModal} numOfMovies={8} title="Today's Top Picks for You" />
+                <MoviesList setModalDetails={setModalDetails} setShowModal={setShowModal} numOfMovies={6} title="Today's Top Picks for You" />
                 {/* <MoviesList setModalDetails={setModalDetails} apiData={apiData.slice(8, 10)} setShowModal={setShowModal} numOfMovies={3} title='Continue Watching for Hamza Malik' /> */}
-                <NumberedMovieList setModalDetails={setModalDetails} apiData={apiData.slice(10, 20)} numOfMovies={10} setShowModal={setShowModal} title='Top 10 Shows Today' />
+                <NumberedMovieList setModalDetails={setModalDetails} apiData={movies.slice(10, 20)} numOfMovies={10} setShowModal={setShowModal} title='Top 10 Shows Today' />
             </div>
 
             <div>asd</div>

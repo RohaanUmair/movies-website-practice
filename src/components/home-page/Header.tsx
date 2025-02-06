@@ -1,5 +1,7 @@
 'use client';
+import { RootState } from '@/states/store';
 import axios from 'axios'
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import { FaRegBell, FaRegUser } from 'react-icons/fa'
@@ -8,6 +10,7 @@ import { GoSearch } from 'react-icons/go'
 import { IoMdArrowDropdown, IoMdHelpCircleOutline } from 'react-icons/io'
 import { TbRobotFace, TbUserMinus } from 'react-icons/tb'
 import { TiPencil } from 'react-icons/ti';
+import { useSelector } from 'react-redux';
 
 function Header() {
     const navs: string[] = ['TV Shows', 'Movies', 'New & Popular', 'My List', 'Browse by Language'];
@@ -21,6 +24,10 @@ function Header() {
         router.replace('/login')
         console.log(res);
     }
+
+    const username = useSelector((state: RootState) => state.user.username);
+
+    const liStyles = 'py-[6px] px-4 hover:bg-zinc-700 cursor-pointer flex items-center gap-2';
 
     return (
         <header className='h-20 flex items-center px-12 gap-8 relative z-50         max-md:px-6 max-md:h-16' style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }}>
@@ -51,11 +58,13 @@ function Header() {
                         {showMenu && (
                             <div className='w-56 h-fit absolute top-0 right-0 pt-10'>
                                 <ul className='text-white cursor-default overflow-hidden text-sm pt-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)' }}>
-                                    <li className='py-[6px] px-4 hover:bg-zinc-700 cursor-pointer flex items-center gap-2'><div className='w-10 h-10 bg-blue-500 rounded'></div> Hamza</li>
-                                    <li className='py-[6px] px-4 hover:bg-zinc-700 cursor-pointer flex items-center gap-2'><TiPencil className='text-2xl' />Manage Profiles</li>
-                                    <li className='py-[6px] px-4 hover:bg-zinc-700 cursor-pointer flex items-center gap-2'><FiUsers className='text-2xl' />Transfer Profile</li>
-                                    <li className='py-[6px] px-4 hover:bg-zinc-700 cursor-pointer flex items-center gap-2'><FaRegUser className='text-2xl' />Account</li>
-                                    <li className='py-[6px] px-4 hover:bg-zinc-700 cursor-pointer flex items-center gap-2'><IoMdHelpCircleOutline className='text-2xl' />Help Center</li>
+                                    <Link href={'/profile'}>
+                                        <li className={liStyles}><div className='w-10 h-10 bg-blue-500 rounded'></div> {username}</li>
+                                    </Link>
+                                    <li className={liStyles}><TiPencil className='text-2xl' />Manage Profiles</li>
+                                    <li className={liStyles}><FiUsers className='text-2xl' />Transfer Profile</li>
+                                    <li className={liStyles}><FaRegUser className='text-2xl' />Account</li>
+                                    <li className={liStyles}><IoMdHelpCircleOutline className='text-2xl' />Help Center</li>
                                     <li
                                         className='hover:bg-zinc-700 cursor-pointer flex items-center justify-center gap-2 border-t py-4   '
                                         onClick={handleLogout}

@@ -38,6 +38,6 @@ export async function POST(req: NextRequest) {
 
         return NextResponse.json({ message: 'Email Sent' })
     } catch (error) {
-        return NextResponse.json({ message: error })
+        return NextResponse.json({ message: 'not sent', error })
     }
 }

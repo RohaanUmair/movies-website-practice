@@ -1,8 +1,20 @@
+import { RootState } from '@/states/store';
 import React, { Dispatch, SetStateAction } from 'react'
 import { BiSolidPlusCircle } from 'react-icons/bi';
 import { TbRobotFace } from 'react-icons/tb';
+import { useSelector } from 'react-redux';
 
 function SelectUser({ setSelectUser }: { setSelectUser: Dispatch<SetStateAction<boolean>> }) {
+    const username = useSelector((state: RootState) => state.user.username);
+
+    if (!username) {
+        return (
+            <div className='h-screen w-full bg-black flex justify-center items-center'>
+                <div className="w-16 h-16 border-4 border-t-4 border-gray-200 rounded-full animate-spin border-t-blue-500"></div>
+            </div>
+        )
+    }
+
     return (
         <div className="h-screen w-screen bg-zinc-950 flex justify-center items-center">
             <div className="flex flex-col items-center justify-center gap-8">
@@ -13,7 +25,7 @@ function SelectUser({ setSelectUser }: { setSelectUser: Dispatch<SetStateAction<
 
                     <div onClick={() => setSelectUser(false)} className="flex flex-col items-center gap-2 cursor-pointer hover:scale-105 transition-all duration-200">
                         <div className="w-36 h-36 bg-blue-500 rounded flex       max-sm:w-28 max-sm:h-28"><TbRobotFace className="text-white text-9xl m-auto     max-sm:text-8xl" /></div>
-                        <h2 className="text-[#aaa] font-semibold">Hamza Malik</h2>
+                        <h2 className="text-[#aaa] font-semibold">{username}</h2>
                     </div>
 
                     <div onClick={() => setSelectUser(false)} className="flex flex-col items-center gap-2 cursor-pointer hover:scale-105 transition-all duration-200">

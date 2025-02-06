@@ -1,14 +1,18 @@
+'use client';
 import Header from "@/components/profile-page/Header";
+import { RootState } from "@/states/store";
 import Link from "next/link";
 import { GoCreditCard, GoShieldCheck } from "react-icons/go";
 import { HiMiniUsers } from "react-icons/hi2";
 import { IoIosArrowForward, IoIosArrowRoundBack } from "react-icons/io";
 import { LuUsers } from "react-icons/lu";
 import { PiDevicesBold, PiHouseBold, PiWarningOctagonBold } from "react-icons/pi";
+import { useSelector } from "react-redux";
 
 function ProfilePage() {
     const liStyles = "flex items-center cursor-pointer gap-2 font-sans font-bold text-zinc-600";
 
+    const username = useSelector((state: RootState) => state.user.username);
 
     return (
         <div className='w-full h-screen bg-zinc-100'>
@@ -76,7 +80,7 @@ function ProfilePage() {
                             <div className="flex justify-between items-center">
                                 <div className="flex items-center gap-4 py-4">
                                     <div className="w-10 h-10 bg-blue-500 rounded"></div>
-                                    <h2 className="text-[17px] font-sans font-semibold">Hamza Malik</h2>
+                                    <h2 className="text-[17px] font-sans font-semibold">{username}</h2>
                                 </div>
 
                                 <IoIosArrowForward className="text-lg" />
