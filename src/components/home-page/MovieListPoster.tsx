@@ -12,11 +12,10 @@ interface Props {
         movieName: string;
         movieDesc: string;
     }>>;
-    hoveredMovieTitle: string;
     setHoveredMovieTitle: Dispatch<SetStateAction<string>>
 }
 
-function MovieListPoster({ setShowModal, movieName, movieImg, setModalDetails, movieDesc, hoveredMovieTitle, setHoveredMovieTitle }: Props) {
+function MovieListPoster({ setShowModal, movieName, movieImg, setModalDetails, movieDesc, setHoveredMovieTitle }: Props) {
     return (
         <div>
             <div

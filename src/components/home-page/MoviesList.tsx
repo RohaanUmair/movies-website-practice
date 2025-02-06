@@ -30,7 +30,7 @@ function MoviesList({ title, numOfMovies, setShowModal, setModalDetails }: {
                     movies.map((movie, index: number) => {
                         return (
                             <div key={index} onMouseLeave={() => setHoveredMovieTitle('')}>
-                                <MovieListPoster hoveredMovieTitle={hoveredMovieTitle} setHoveredMovieTitle={setHoveredMovieTitle} setModalDetails={setModalDetails} movieName={movie.title} movieImg={movie.backdrop_path} setShowModal={setShowModal} movieDesc={movie.overview} key={movie.title} />
+                                <MovieListPoster setHoveredMovieTitle={setHoveredMovieTitle} setModalDetails={setModalDetails} movieName={movie.title} movieImg={movie.backdrop_path} setShowModal={setShowModal} movieDesc={movie.overview} key={movie.title} />
                                 {movie.title == hoveredMovieTitle && (
                                     <div style={{ boxShadow: '2px 2px 6px 3px #111' }} className='rounded overflow-hidden w-80 flex flex-col absolute -top-52 z-50'>
                                         <Image

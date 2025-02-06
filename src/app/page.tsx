@@ -40,7 +40,7 @@ export default function Home() {
       .then(res => res.json())
       .then(res => dispatch(setApiData(res.results)))
       .catch(err => console.error(err));
-  }, []);
+  }, [dispatch]);
 
 
   if (selectUser) return <SelectUser setSelectUser={setSelectUser} />
