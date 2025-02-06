@@ -3,6 +3,11 @@ import User from "@/models/User";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
+
+export async function GET() {
+    return NextResponse.json({ message: 'API Working' });
+}
+
 export async function POST(request: NextRequest) {
     try {
         await connectToDb();
