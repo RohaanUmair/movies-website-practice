@@ -4,10 +4,12 @@ import axios from 'axios'
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
-import { FaRegBell, FaRegUser } from 'react-icons/fa'
-import { FiMenu, FiUsers } from 'react-icons/fi'
+import { BiHeart } from 'react-icons/bi';
+import { FaRegBell } from 'react-icons/fa'
+import { FiMenu } from 'react-icons/fi'
 import { GoSearch } from 'react-icons/go'
 import { IoMdArrowDropdown, IoMdHelpCircleOutline } from 'react-icons/io'
+import { MdLiveTv } from 'react-icons/md';
 import { TbRobotFace, TbUserMinus } from 'react-icons/tb'
 import { TiPencil } from 'react-icons/ti';
 import { useSelector } from 'react-redux';
@@ -62,8 +64,12 @@ function Header() {
                                         <li className={liStyles}><div className='w-10 h-10 bg-blue-500 rounded'></div> {username}</li>
                                     </Link>
                                     <li className={liStyles}><TiPencil className='text-2xl' />Manage Profiles</li>
-                                    <li className={liStyles}><FiUsers className='text-2xl' />Transfer Profile</li>
-                                    <li className={liStyles}><FaRegUser className='text-2xl' />Account</li>
+
+                                    <Link href={'/liked-movies'}>
+                                        <li className={liStyles}><BiHeart className='text-2xl' />Liked Movies</li>
+                                    </Link>
+
+                                    <li className={liStyles}><MdLiveTv className='text-2xl' />Watchlist</li>
                                     <li className={liStyles}><IoMdHelpCircleOutline className='text-2xl' />Help Center</li>
                                     <li
                                         className='hover:bg-zinc-700 cursor-pointer flex items-center justify-center gap-2 border-t py-4   '

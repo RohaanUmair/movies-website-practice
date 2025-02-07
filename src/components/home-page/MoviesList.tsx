@@ -1,14 +1,17 @@
 'use client';
-import React, { Dispatch, SetStateAction, useState } from 'react'
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import MovieListPoster from './MovieListPoster';
 import Image from 'next/image';
 import { TbPlayerPlayFilled } from 'react-icons/tb';
 import { GoPlus } from 'react-icons/go';
 import { HiOutlineHandThumbUp } from 'react-icons/hi2';
 import { LiaVolumeOffSolid } from 'react-icons/lia';
-import { RootState } from '@/states/store';
-import { useSelector } from 'react-redux';
-import { MovieData } from '@/states/movies/moviesSlice';
+import { AppDispatch, RootState } from '@/states/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { addLikedMovie, MovieData } from '@/states/movies/moviesSlice';
+import axios from 'axios';
+import toast, { Toaster } from 'react-hot-toast';
+
 
 function MoviesList({ title, numOfMovies, setShowModal, setModalDetails }: {
     title: string, numOfMovies: number, setShowModal: Dispatch<SetStateAction<boolean>>, setModalDetails: Dispatch<SetStateAction<{
@@ -20,6 +23,27 @@ function MoviesList({ title, numOfMovies, setShowModal, setModalDetails }: {
 
     let movies: MovieData[] = useSelector((state: RootState) => state.movies.apiData);
     movies = movies.slice(0, numOfMovies);
+
+    const dispatch = useDispatch<AppDispatch>();
+
+    const likedMoviesArr = useSelector((state: RootState) => state.movies.likedMovies);
+
+    const email = useSelector((state: RootState) => state.user.userEmail)
+
+    const handleLikeMovie = async (title: string) => {
+        dispatch(addLikedMovie(title));
+        toast.success('Saved to Liked Movies');
+        console.log(likedMoviesArr)
+    }
+
+    async function abcd() {
+        await axios.put('/api/like-movie', { email, likedMoviesArr })
+    }
+
+    useEffect(() => {
+        abcd();
+
+    }, [likedMoviesArr]);
 
     return (
         <div className='flex flex-col'>
@@ -56,7 +80,12 @@ function MoviesList({ title, numOfMovies, setShowModal, setModalDetails }: {
                                                     <GoPlus />
                                                 </div>
 
-                                                <div className='border rounded-full w-10 h-10 flex cursor-pointer justify-center items-center text-white bg-zinc-800 text-[22px]'>
+                                                <div
+                                                    className='border rounded-full w-10 h-10 flex cursor-pointer justify-center items-center text-white bg-zinc-800 text-[22px]'
+                                                    onClick={() => {
+                                                        handleLikeMovie(movie.title)
+                                                    }}
+                                                >
                                                     <HiOutlineHandThumbUp />
                                                 </div>
                                             </div>
@@ -78,6 +107,8 @@ function MoviesList({ title, numOfMovies, setShowModal, setModalDetails }: {
                     })
                 }
             </div>
+
+            <Toaster />
         </div>
     );
 }

@@ -4,11 +4,12 @@ import Modal from "@/components/home-page/Modal";
 import MovieOverviewSec from "@/components/home-page/MovieOverviewSec";
 import SelectUser from "@/components/home-page/SelectUser";
 import { AppDispatch } from "@/states/store";
-import { setUsername } from "@/states/user/userSlice";
+import { setUserEmail, setUsername } from "@/states/user/userSlice";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import Cookies from 'js-cookie';
-import { setApiData } from "@/states/movies/moviesSlice";
+import { setApiData, setLikedMovies } from "@/states/movies/moviesSlice";
+import axios from "axios";
 
 
 
@@ -28,6 +29,9 @@ export default function Home() {
     const username = Cookies.get('user');
     dispatch(setUsername(username));
 
+    const email = Cookies.get('userEmail');
+    dispatch(setUserEmail(email))
+
     const options = {
       method: 'GET',
       headers: {
@@ -40,6 +44,16 @@ export default function Home() {
       .then(res => res.json())
       .then(res => dispatch(setApiData(res.results)))
       .catch(err => console.error(err));
+
+
+    axios.get('/api/like-movie', {
+      params: { email }
+    })
+      .then((data) => {
+        const a = data.data.data.likedMoviesArr || []
+        dispatch(setLikedMovies(a))
+      })
+
   }, [dispatch]);
 
 

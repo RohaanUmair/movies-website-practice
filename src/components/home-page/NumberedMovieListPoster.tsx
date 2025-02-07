@@ -4,20 +4,21 @@ import { Dispatch, SetStateAction } from 'react';
 
 
 interface Props {
-    setShowModal: Dispatch<SetStateAction<boolean>>;
+    setShowModal?: Dispatch<SetStateAction<boolean>> | undefined;
     movieName: string;
     movieImg: string;
     movieDesc: string
-    setModalDetails: Dispatch<SetStateAction<{
+    setModalDetails?: Dispatch<SetStateAction<{
         movieName: string;
         movieDesc: string;
-    }>>;
+    }>> | undefined;
 }
 
 function NumberedMovieListPoster({ setShowModal, movieName, movieImg, setModalDetails, movieDesc }: Props) {
     return (
         <div>
             <div className="w-32 h-40 bg-cover bg-center rounded flex-shrink-0 relative cursor-pointer" onClick={() => {
+                if (!setShowModal || !setModalDetails) return
                 setShowModal(true);
                 setModalDetails({
                     movieName,

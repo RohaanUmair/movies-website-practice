@@ -31,6 +31,11 @@ export async function POST(request: NextRequest) {
             maxAge: 3600,
         });
 
+        cookie.set("userEmail", userExistence.email, {
+            path: '/',
+            maxAge: 3600
+        });
+
         return NextResponse.json({ message: 'Logged In' });
     } catch (error) {
         console.log(error);
