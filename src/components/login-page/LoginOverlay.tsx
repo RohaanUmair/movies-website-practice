@@ -19,7 +19,7 @@ function LoginOverlay() {
 
         const res = await axios.post('/api/login', { email, password });
         router.replace('/')
-        if (res.data.error == 'Invalid Credentials') {
+        if (res.data.error) {
             toast.error(res.data.error)
         }
         setIsSubmitting(false);
