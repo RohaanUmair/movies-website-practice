@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 const LikedMovieSchema = new mongoose.Schema({
     email: { type: String, required: true },
+    accType: { type: String },
     likedMoviesArr: { type: [String], required: true },
 });
 

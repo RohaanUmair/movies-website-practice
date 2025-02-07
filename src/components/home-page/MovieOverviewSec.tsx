@@ -17,6 +17,8 @@ function MovieOverviewSec({ setShowModal, setModalDetails }: {
 }) {
     const movies: MovieData[] = useSelector((state: RootState) => state.movies.apiData);
 
+    const accType = useSelector((state: RootState) => state.user.userAccType);
+
     if (movies.length == 0) {
         return (
             <div className='h-screen w-full bg-black flex justify-center items-center'>
@@ -25,11 +27,13 @@ function MovieOverviewSec({ setShowModal, setModalDetails }: {
         )
     }
 
+    const vidUrl = accType == 'adult' ? '/bg-video.mp4' : 'k-bg-video.mp4';
+
     return (
         <div>
             <video
-                src="/bg-video.mp4"
-                className='absolute h-screen w-full object-cover inset-0 z-10       max-md:h-[60dvh]'
+                src={vidUrl}
+                className='absolute h-screen w-full object-cover inset-0 z-10 opacity-75       max-md:h-[60dvh]'
                 autoPlay
                 loop
                 muted

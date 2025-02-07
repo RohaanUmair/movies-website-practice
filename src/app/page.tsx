@@ -3,10 +3,10 @@ import Header from "@/components/home-page/Header";
 import Modal from "@/components/home-page/Modal";
 import MovieOverviewSec from "@/components/home-page/MovieOverviewSec";
 import SelectUser from "@/components/home-page/SelectUser";
-import { AppDispatch } from "@/states/store";
-import { setUserEmail, setUsername } from "@/states/user/userSlice";
+import { AppDispatch, RootState } from "@/states/store";
+import { setUserAccType, setUserEmail, setUsername } from "@/states/user/userSlice";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Cookies from 'js-cookie';
 import { setApiData, setLikedMovies } from "@/states/movies/moviesSlice";
 import axios from "axios";
@@ -14,7 +14,7 @@ import axios from "axios";
 
 
 export default function Home() {
-  const [selectUser, setSelectUser] = useState<boolean>(true);
+  // const [selectUser, setSelectUser] = useState<boolean>(true);
 
   const [showModal, setShowModal] = useState<boolean>(false);
 
@@ -25,12 +25,17 @@ export default function Home() {
 
   const dispatch = useDispatch<AppDispatch>();
 
+  const accType = useSelector((state: RootState) => state.user.userAccType);
+
   useEffect(() => {
     const username = Cookies.get('user');
     dispatch(setUsername(username));
 
     const email = Cookies.get('userEmail');
-    dispatch(setUserEmail(email))
+    dispatch(setUserEmail(email));
+
+    const accType = Cookies.get('accType');
+    dispatch(setUserAccType(accType));
 
     const options = {
       method: 'GET',
@@ -44,20 +49,32 @@ export default function Home() {
       .then(res => res.json())
       .then(res => dispatch(setApiData(res.results)))
       .catch(err => console.error(err));
-
-
-    axios.get('/api/like-movie', {
-      params: { email }
-    })
-      .then((data) => {
-        const a = data.data.data.likedMoviesArr || []
-        dispatch(setLikedMovies(a))
-      })
-
   }, [dispatch]);
 
+  useEffect(() => {
+    const email = Cookies.get('userEmail');
+    dispatch(setUserEmail(email));
 
-  if (selectUser) return <SelectUser setSelectUser={setSelectUser} />
+    const accType = Cookies.get('accType');
+    dispatch(setUserAccType(accType));
+
+    if (!accType || !email) return;
+
+    axios.get('/api/like-movie', {
+      params: { email, accType }
+    })
+      .then((data) => {
+        console.log(data)
+        console.log(email, accType)
+        const a = data.data.data.likedMoviesArr
+        dispatch(setLikedMovies(a))
+        console.log(a)
+      })
+  }, [accType])
+
+
+  // if (selectUser) return <SelectUser setSelectUser={setSelectUser} />
+  if (!accType) return <SelectUser />
 
   return (
     <div className={`relative min-h-screen bg-zinc-950 ${showModal && 'overflow-hidden h-screen'}`}>

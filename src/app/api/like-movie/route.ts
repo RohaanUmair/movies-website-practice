@@ -6,11 +6,13 @@ export async function PUT(req: NextRequest) {
     await connectToDb();
 
     try {
-        const { email, likedMoviesArr } = await req.json();
+        const { email, accType, likedMoviesArr } = await req.json();
         console.log(likedMoviesArr)
 
+        if (likedMoviesArr.length == 0) return NextResponse.json({ message: 'not updated' })
+
         const updatedDoc = await LikedMovie.findOneAndUpdate(
-            { email },
+            { email, accType },
             { likedMoviesArr },
             { new: true, upsert: true }
         )
@@ -29,7 +31,8 @@ export async function GET(req: NextRequest) {
 
     try {
         const email = req.nextUrl.searchParams.get('email');
-        const likedMovies = await LikedMovie.findOne({ email });
+        const accType = req.nextUrl.searchParams.get('accType');
+        const likedMovies = await LikedMovie.findOne({ email, accType });
 
         return NextResponse.json({ data: likedMovies });
     } catch (error) {

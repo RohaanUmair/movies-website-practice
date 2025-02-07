@@ -1,10 +1,13 @@
 import { RootState } from '@/states/store';
-import React, { Dispatch, SetStateAction } from 'react'
+import React from 'react'
 import { BiSolidPlusCircle } from 'react-icons/bi';
 import { TbRobotFace } from 'react-icons/tb';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import Cookies from 'js-cookie';
+import { setUserAccType } from '@/states/user/userSlice';
 
-function SelectUser({ setSelectUser }: { setSelectUser: Dispatch<SetStateAction<boolean>> }) {
+function SelectUser() {
+    const dispatch = useDispatch();
     const username = useSelector((state: RootState) => state.user.username);
 
     if (!username) {
@@ -15,6 +18,12 @@ function SelectUser({ setSelectUser }: { setSelectUser: Dispatch<SetStateAction<
         )
     }
 
+    const handleSelectAccType = (type: 'adult' | 'kids') => {
+        Cookies.set('accType', type);
+        dispatch(setUserAccType(type));
+    };
+
+
     return (
         <div className="h-screen w-screen bg-zinc-950 flex justify-center items-center">
             <div className="flex flex-col items-center justify-center gap-8">
@@ -23,12 +32,12 @@ function SelectUser({ setSelectUser }: { setSelectUser: Dispatch<SetStateAction<
 
                 <div className="flex gap-6      max-sm:gap-3">
 
-                    <div onClick={() => setSelectUser(false)} className="flex flex-col items-center gap-2 cursor-pointer hover:scale-105 transition-all duration-200">
+                    <div onClick={() => handleSelectAccType('adult')} className="flex flex-col items-center gap-2 cursor-pointer hover:scale-105 transition-all duration-200">
                         <div className="w-36 h-36 bg-blue-500 rounded flex       max-sm:w-28 max-sm:h-28"><TbRobotFace className="text-white text-9xl m-auto     max-sm:text-8xl" /></div>
                         <h2 className="text-[#aaa] font-semibold">{username}</h2>
                     </div>
 
-                    <div onClick={() => setSelectUser(false)} className="flex flex-col items-center gap-2 cursor-pointer hover:scale-105 transition-all duration-200">
+                    <div onClick={() => handleSelectAccType('kids')} className="flex flex-col items-center gap-2 cursor-pointer hover:scale-105 transition-all duration-200">
                         <div className="w-36 h-36 rounded flex overflow-hidden relative     max-sm:w-28 max-sm:h-28">
                             <div className="absolute w-full h-full backdrop-blur-sm flex justify-center items-center"><h4 className="text-5xl font-bold text-white      max-sm:text-4xl">kids</h4></div>
                             <div className="w-[20%] h-full bg-gradient-to-b from-green-500 to-purple-500"></div>

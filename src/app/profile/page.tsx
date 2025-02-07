@@ -1,5 +1,5 @@
 'use client';
-import Header from "@/components/profile-page/Header";
+import Header from "@/components/home-page/Header";
 import { RootState } from "@/states/store";
 import Link from "next/link";
 import { GoCreditCard, GoShieldCheck } from "react-icons/go";
@@ -90,8 +90,13 @@ function ProfilePage() {
                         <div className="flex flex-col">
                             <div className="flex justify-between border-t items-center">
                                 <div className="flex items-center gap-4 py-4">
-                                    <div className="w-10 h-10 bg-blue-500 rounded"></div>
-                                    <h2 className="text-[17px] font-sans font-semibold">Kids</h2>
+                                    <div className="w-10 h-10 rounded flex overflow-hidden relative">
+                                        <div className="absolute w-full h-full backdrop-blur-sm flex justify-center items-center"><h4 className="text-sm font-bold text-white      max-sm:text-4xl">kids</h4></div>
+                                        <div className="w-[20%] h-full bg-gradient-to-b from-green-500 to-purple-500"></div>
+                                        <div className="w-[25%] h-full bg-gradient-to-b from-yellow-500 to-orange-700"></div>
+                                        <div className="w-[35%] h-full bg-gradient-to-b from-purple-500 to-purple-500"></div>
+                                        <div className="w-[20%] h-full bg-gradient-to-b from-blue-200 to-blue-500"></div>
+                                    </div>                                    <h2 className="text-[17px] font-sans font-semibold">Kids</h2>
                                 </div>
 
                                 <IoIosArrowForward className="text-lg" />

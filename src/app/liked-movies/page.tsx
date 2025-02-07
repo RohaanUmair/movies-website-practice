@@ -24,11 +24,13 @@ export default function LikedMoviesPage() {
     //     const likedMoviesArr = likedMoviesNames;
     //     await axios.put('/api/like-movie', { email, likedMoviesArr })
     // }
+    const accType = Cookies.get('accType');
+
 
     useEffect(() => {
         if (movies.length == 0) {
             axios.get('/api/like-movie', {
-                params: { email }
+                params: { email, accType }
             })
                 .then((data) => {
                     dispatch(setLikedMovies(data.data.data.likedMoviesArr))
@@ -69,11 +71,14 @@ export default function LikedMoviesPage() {
                     Liked Movies
                 </h1>
 
-                <div className='grid grid-cols-5 mt-8'>
+                <div className='flex gap-4 flex-wrap mt-8'>
                     {
                         likedMovies.map((movie, i: number) => {
                             return (
-                                <NumberedMovieListPoster key={i} movieName={movie.title} movieDesc={movie.overview} movieImg={movie.backdrop_path} />
+                                <div className='relative' key={i}>
+                                    <NumberedMovieListPoster movieName={movie.title} movieDesc={movie.overview} movieImg={movie.backdrop_path} />
+                                    <h2 className='absolute bottom-0'>{movie.title}</h2>
+                                </div>
                             )
                         })
                     }

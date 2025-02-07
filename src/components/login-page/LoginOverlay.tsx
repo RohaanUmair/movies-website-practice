@@ -58,7 +58,7 @@ function LoginOverlay() {
                         <SyncLoader color="#fff" size={8}/>
                     </button>
                 ) : (
-                    <button className='h-10 flex bg-red-600 rounded text-white font-semibold justify-center items-center'>
+                    <button className='h-10 flex bg-red-600 hover:bg-red-700 active:bg-red-500 rounded text-white font-semibold justify-center items-center'>
                         Login In
                     </button>
                 )}

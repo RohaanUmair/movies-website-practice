@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface UserState {
     username: string;
@@ -24,9 +24,16 @@ const userSlice = createSlice({
         },
         setUserEmail: (state, action: PayloadAction<string | null>) => {
             state.userEmail = action.payload;
-        }
+        },
     }
 })
+
+export const changeAccAsync = createAsyncThunk(
+    "changeAccType/changeAccAsync",
+    async () => {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+    }
+);
 
 
 export const { setUsername, setUserAccType, setUserEmail } = userSlice.actions;

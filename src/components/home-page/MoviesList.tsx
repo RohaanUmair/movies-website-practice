@@ -33,11 +33,14 @@ function MoviesList({ title, numOfMovies, setShowModal, setModalDetails }: {
     const handleLikeMovie = async (title: string) => {
         dispatch(addLikedMovie(title));
         toast.success('Saved to Liked Movies');
-        console.log(likedMoviesArr)
+        console.log(likedMoviesArr);
+        setHoveredMovieTitle('');
     }
 
+    const accType = useSelector((state: RootState) => state.user.userAccType);
+
     async function abcd() {
-        await axios.put('/api/like-movie', { email, likedMoviesArr })
+        await axios.put('/api/like-movie', { email, accType, likedMoviesArr })
     }
 
     useEffect(() => {
