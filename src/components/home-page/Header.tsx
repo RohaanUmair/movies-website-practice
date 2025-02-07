@@ -15,6 +15,7 @@ import { TiPencil } from 'react-icons/ti';
 import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
 import { setUserAccType } from '@/states/user/userSlice';
+import { setLikedMovies } from '@/states/movies/moviesSlice';
 
 function Header() {
     const navs: string[] = ['TV Shows', 'Movies', 'New & Popular', 'My List', 'Browse by Language'];
@@ -41,16 +42,18 @@ function Header() {
     const handleAccTypeChange = () => {
         if (accType == 'adult') {
             setShowMenu(false);
+            dispatch(setLikedMovies([]))
+
             Cookies.set('accType', 'kids');
             dispatch(setUserAccType('kids'));
-
-            router.refresh();
+            router.push('/');
         } else {
             setShowMenu(false);
+            dispatch(setLikedMovies([]))
+
             Cookies.set('accType', 'adult')
             dispatch(setUserAccType('adult'));
-
-            router.refresh();
+            router.push('/;')
         }
     };
 
@@ -107,7 +110,8 @@ function Header() {
                                                 <div className="w-[20%] h-full bg-gradient-to-b from-blue-200 to-blue-500"></div>
                                             </div>
                                         )}
-                                        {accType == 'kids' ? (username) : (accType)}</li>
+                                        {accType == 'kids' ? (username) : ('kids')}
+                                    </li>
 
                                     <Link href={'/profile'}>
                                         <li className={liStyles}><TiPencil className='text-2xl' />Manage Profiles</li>

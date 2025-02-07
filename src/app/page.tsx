@@ -67,6 +67,8 @@ export default function Home() {
         console.log(data)
         console.log(email, accType)
         const a = data.data.data.likedMoviesArr
+
+        if (!a) return;
         dispatch(setLikedMovies(a))
         console.log(a)
       })
