@@ -95,7 +95,7 @@ function SelectUser() {
 
                 <div className="flex gap-6 max-sm:gap-3">
 
-                    {accNames.map((accName) => {
+                    {accNames?.map((accName) => {
                         return (
                             <>
                                 {accName === 'kids' ? (
