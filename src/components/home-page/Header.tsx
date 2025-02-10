@@ -40,24 +40,17 @@ function Header() {
     const username = useSelector((state: RootState) => state.user.username);
     const accType = useSelector((state: RootState) => state.user.userAccType);
 
+    const accNames = useSelector((state: RootState) => state.user.accNames);
+
     const liStyles = 'py-[6px] px-4 hover:bg-zinc-700 cursor-pointer flex items-center gap-2';
 
-    const handleAccTypeChange = () => {
-        if (accType == 'adult') {
-            setShowMenu(false);
-            dispatch(setLikedMovies([]))
+    const handleAccTypeChange = (type: string) => {
+        setShowMenu(false);
+        dispatch(setLikedMovies([]));
 
-            Cookies.set('accType', 'kids');
-            dispatch(setUserAccType('kids'));
-            router.push('/');
-        } else {
-            setShowMenu(false);
-            dispatch(setLikedMovies([]))
-
-            Cookies.set('accType', 'adult')
-            dispatch(setUserAccType('adult'));
-            router.push('/');
-        }
+        Cookies.set('accType', type);
+        dispatch(setUserAccType(type));
+        router.push('/');
     };
 
     return (
@@ -85,7 +78,7 @@ function Header() {
                     <FaRegBell className="text-3xl      max-md:text-2xl max-sm:text-xl" />
                     <FiMenu className='lg:hidden text-2xl       max-sm:text-[22px]' />
                     <div className="flex items-center relative gap-1" onMouseEnter={() => setShowMenu(true)} onMouseLeave={() => setShowMenu(false)}>
-                        {accType == 'adult' ? (
+                        {accType !== 'kids' ? (
                             <div className="w-10 h-10 bg-blue-500 rounded-sm flex       max-sm:w-6 max-sm:h-6"><TbRobotFace className="text-white text-3xl m-auto       max-sm:text-2xl" /></div>
                         ) : (
                             <div className="w-10 h-10 rounded flex overflow-hidden relative     max-sm:w-6 max-sm:h-6">
@@ -101,22 +94,26 @@ function Header() {
                         {showMenu && (
                             <div className='w-56 h-fit absolute top-0 right-0 pt-10'>
                                 <ul className='text-white cursor-default overflow-hidden text-sm pt-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)' }}>
-                                    {username !== 'noAcc' && (
-                                        <li className={liStyles} onClick={handleAccTypeChange}>
-                                            {accType == 'kids' ? (
-                                                <div className='w-10 h-10 bg-blue-500 rounded-sm flex justify-center items-center'><TbRobotFace className="text-white text-3xl m-auto" /></div>
-                                            ) : (
-                                                <div className="w-10 h-10 rounded flex overflow-hidden relative">
-                                                    <div className="absolute w-full h-full backdrop-blur-sm flex justify-center items-center"><h4 className="text-sm font-bold text-white      max-sm:text-4xl">kids</h4></div>
-                                                    <div className="w-[20%] h-full bg-gradient-to-b from-green-500 to-purple-500"></div>
-                                                    <div className="w-[25%] h-full bg-gradient-to-b from-yellow-500 to-orange-700"></div>
-                                                    <div className="w-[35%] h-full bg-gradient-to-b from-purple-500 to-purple-500"></div>
-                                                    <div className="w-[20%] h-full bg-gradient-to-b from-blue-200 to-blue-500"></div>
-                                                </div>
-                                            )}
-                                            {accType == 'kids' ? (username) : ('kids')}
-                                        </li>
-                                    )}
+                                    <li className={liStyles} onClick={() =>
+                                        accType == 'kids' ? (
+                                            handleAccTypeChange(accNames[1])
+                                        ) : (
+                                            handleAccTypeChange('kids')
+                                        )
+                                    }>
+                                        {accType == 'kids' ? (
+                                            <div className='w-10 h-10 bg-blue-500 rounded-sm flex justify-center items-center'><TbRobotFace className="text-white text-3xl m-auto" /></div>
+                                        ) : (
+                                            <div className="w-10 h-10 rounded flex overflow-hidden relative">
+                                                <div className="absolute w-full h-full backdrop-blur-sm flex justify-center items-center"><h4 className="text-sm font-bold text-white      max-sm:text-4xl">kids</h4></div>
+                                                <div className="w-[20%] h-full bg-gradient-to-b from-green-500 to-purple-500"></div>
+                                                <div className="w-[25%] h-full bg-gradient-to-b from-yellow-500 to-orange-700"></div>
+                                                <div className="w-[35%] h-full bg-gradient-to-b from-purple-500 to-purple-500"></div>
+                                                <div className="w-[20%] h-full bg-gradient-to-b from-blue-200 to-blue-500"></div>
+                                            </div>
+                                        )}
+                                        {accType == 'kids' ? (accNames[1]) : ('kids')}
+                                    </li>
 
                                     <Link href={'/profile'}>
                                         <li className={liStyles}><TiPencil className='text-2xl' />Manage Profiles</li>

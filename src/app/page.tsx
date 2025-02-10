@@ -4,7 +4,7 @@ import Modal from "@/components/home-page/Modal";
 import MovieOverviewSec from "@/components/home-page/MovieOverviewSec";
 import SelectUser from "@/components/home-page/SelectUser";
 import { AppDispatch, RootState } from "@/states/store";
-import { setUserAccType, setUserEmail, setUsername } from "@/states/user/userSlice";
+import { setAccNames, setUserAccType, setUserEmail, setUsername } from "@/states/user/userSlice";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from 'js-cookie';
@@ -55,6 +55,9 @@ export default function Home() {
 
     const accType = Cookies.get('accType');
     dispatch(setUserAccType(accType));
+
+    const accNames = JSON.parse(Cookies.get('accNames'));
+    dispatch(setAccNames(accNames))
 
     if (!accType || !email) return;
 

@@ -2,14 +2,16 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface UserState {
     username: string;
-    userAccType: 'kids' | 'adult' | null;
+    userAccType: string | null;
     userEmail: string | null;
+    accNames: string[];
 }
 
 const initialState: UserState = {
     username: '',
     userAccType: null,
-    userEmail: null
+    userEmail: null,
+    accNames: []
 }
 
 const userSlice = createSlice({
@@ -19,12 +21,18 @@ const userSlice = createSlice({
         setUsername: (state, action: PayloadAction<string>) => {
             state.username = action.payload;
         },
-        setUserAccType: (state, action: PayloadAction<'kids' | 'adult' | null>) => {
+        setUserAccType: (state, action: PayloadAction<string | null>) => {
             state.userAccType = action.payload;
         },
         setUserEmail: (state, action: PayloadAction<string | null>) => {
             state.userEmail = action.payload;
         },
+        setAccNames: (state, action: PayloadAction<string[]>) => {
+            state.accNames = action.payload;
+        },
+        addAccName: (state, action: PayloadAction<string>) => {
+            state.accNames.push(action.payload);
+        }
     }
 })
 
@@ -36,6 +44,6 @@ export const changeAccAsync = createAsyncThunk(
 );
 
 
-export const { setUsername, setUserAccType, setUserEmail } = userSlice.actions;
+export const { setUsername, setUserAccType, setUserEmail, setAccNames } = userSlice.actions;
 
 export default userSlice.reducer;

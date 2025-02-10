@@ -11,7 +11,7 @@ export async function PUT(req: NextRequest) {
 
         await User.findOneAndUpdate(
             { email },
-            { accName },
+            { $addToSet: { accNames: accName } },
             { new: true }
         )
 

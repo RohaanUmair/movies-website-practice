@@ -25,19 +25,17 @@ export async function POST(request: NextRequest) {
 
         const cookie = await cookies();
 
-        if (!userExistence.accName) {
-            cookie.set("user", "noAcc", {
-                path: "/",
-                maxAge: 3600,
-            });
-        } else {
-            cookie.set("user", userExistence.accName, {
-                path: "/",
-                maxAge: 3600,
-            });
-        }
+        cookie.set("user", userExistence.username, {
+            path: "/",
+            maxAge: 3600,
+        });
 
         cookie.set("userEmail", userExistence.email, {
+            path: '/',
+            maxAge: 3600
+        });
+
+        cookie.set('accNames', JSON.stringify(userExistence.accNames), {
             path: '/',
             maxAge: 3600
         });

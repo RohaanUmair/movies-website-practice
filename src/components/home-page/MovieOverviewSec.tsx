@@ -27,7 +27,7 @@ function MovieOverviewSec({ setShowModal, setModalDetails }: {
         )
     }
 
-    const vidUrl = accType == 'adult' ? '/bg-video.mp4' : 'k-bg-video.mp4';
+    const vidUrl = accType !== 'kids' ? '/bg-video.mp4' : 'k-bg-video.mp4';
 
     return (
         <div>
