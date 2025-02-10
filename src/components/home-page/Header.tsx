@@ -28,10 +28,10 @@ function Header() {
 
     const handleLogout = async () => {
         try {
+            setShowMenu(false);
             await axios.post('/api/logout');
             window.location.reload();
             router.replace('/login');
-            setShowMenu(false);
         } catch (error) {
             console.log(error);
         }
@@ -56,7 +56,7 @@ function Header() {
 
             Cookies.set('accType', 'adult')
             dispatch(setUserAccType('adult'));
-            router.push('/;')
+            router.push('/');
         }
     };
 
