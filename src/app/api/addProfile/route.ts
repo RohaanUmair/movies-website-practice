@@ -28,3 +28,18 @@ export async function PUT(req: NextRequest) {
         return NextResponse.json({ message: 'Error updating accName' });
     }
 }   
+
+
+export async function GET() {
+    await connectToDb();
+
+    try {
+        const email = (await cookies()).get('userEmail')?.value;
+        const accNames = await User.findOne({ email })
+
+        return NextResponse.json({ data: accNames });
+    } catch (error) {
+        console.error('GET Error:', error);
+        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    }
+}

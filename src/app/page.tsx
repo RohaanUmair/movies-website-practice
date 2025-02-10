@@ -56,7 +56,7 @@ export default function Home() {
     const accType = Cookies.get('accType');
     dispatch(setUserAccType(accType));
 
-    const accNames = JSON.parse(Cookies.get('accNames'));
+    const accNames = Cookies.get('accNames').split(',');
     dispatch(setAccNames(accNames))
 
     if (!accType || !email) return;

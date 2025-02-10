@@ -1,11 +1,12 @@
 import { RootState } from '@/states/store';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BiSolidPlusCircle } from 'react-icons/bi';
 import { TbRobotFace } from 'react-icons/tb';
 import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
-import { setUserAccType, setUsername } from '@/states/user/userSlice';
+import { setAccNames, setUserAccType } from '@/states/user/userSlice';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 function SelectUser() {
     const [newProfileName, setNewProfileName] = useState('');
@@ -13,8 +14,27 @@ function SelectUser() {
     const username = useSelector((state: RootState) => state.user.username);
     const [showAddProfileModal, setShowAddProfileModal] = useState(false);
 
+    const router = useRouter();
+
     const accNames = useSelector((state: RootState) => state.user.accNames);
     console.log(accNames);
+
+    useEffect(() => {
+        async function getData() {
+            try {
+                const res = await axios.get('/api/addProfile');
+                console.log(res.data.data.accNames);
+
+                Cookies.set('accNames', res.data.data.accNames);
+                dispatch(setAccNames(res.data.data.accNames));
+
+            } catch (error: any) {
+                console.log(error);
+            }
+        }
+
+        getData();
+    }, []);
 
 
     if (!username) {
@@ -40,10 +60,23 @@ function SelectUser() {
             const res = await axios.put('/api/addProfile', { email, accName: newProfileName })
 
             if (res.status == 200) {
-                dispatch(setUserAccType('adult'));
                 setShowAddProfileModal(false);
 
-                dispatch(setUsername(newProfileName));
+                try {
+                    const res = await axios.get('/api/addProfile');
+                    console.log(res.data.data.accNames);
+
+                    Cookies.set('accNames', res.data.data.accNames);
+                    dispatch(setAccNames(res.data.data.accNames));
+
+                    router.refresh();
+
+                    setNewProfileName('');
+
+                } catch (error: any) {
+                    console.log(error);
+                }
+
             } else {
                 console.error(res.data.message);
             }
@@ -86,20 +119,7 @@ function SelectUser() {
                         )
                     })}
 
-                    <div
-                        className="flex flex-col items-center gap-2 cursor-pointer hover:scale-105 transition-all duration-200"
-                        onClick={() => setShowAddProfileModal(true)}
-                    >
-                        <div className="w-36 h-36 rounded flex justify-center items-center max-sm:w-28 max-sm:h-28">
-                            <BiSolidPlusCircle className="text-[#aaa] text-8xl" />
-                        </div>
-                        <h2 className="text-[#aaa] font-semibold">Add Profile</h2>
-                    </div>
-
-
-
-
-                    {/* {username == 'noAcc' ? (
+                    {accNames?.length < 5 && (
                         <div
                             className="flex flex-col items-center gap-2 cursor-pointer hover:scale-105 transition-all duration-200"
                             onClick={() => setShowAddProfileModal(true)}
@@ -109,14 +129,7 @@ function SelectUser() {
                             </div>
                             <h2 className="text-[#aaa] font-semibold">Add Profile</h2>
                         </div>
-                    ) : (
-                        <div onClick={() => handleSelectAccType('adult')} className="flex flex-col items-center gap-2 cursor-pointer hover:scale-105 transition-all duration-200">
-                            <div className="w-36 h-36 bg-blue-500 rounded flex max-sm:w-28 max-sm:h-28"><TbRobotFace className="text-white text-9xl m-auto max-sm:text-8xl" /></div>
-                            <h2 className="text-[#aaa] font-semibold">{username}</h2>
-                        </div>
-                    )} */}
-
-
+                    )}
 
                 </div>
 
