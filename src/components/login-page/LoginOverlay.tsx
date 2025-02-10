@@ -17,12 +17,23 @@ function LoginOverlay() {
         e.preventDefault();
         setIsSubmitting(true);
 
-        const res = await axios.post('/api/login', { email, password });
-        if (res.data.error) {
-            toast.error(res.data.error)
+        try {
+            const res = await axios.post('/api/login', { email, password });
+        
+            if (res.status === 200) { 
+                console.log('Logged in');
+                router.push('/');
+            } else {
+                toast.error('Login failed');
+            }
+        } catch (error: any) {
+            console.log('Not logged in', error);
+            toast.error(error.response.data.error);
+        } finally {
+            setIsSubmitting(false);
         }
-        router.push('/')
-        setIsSubmitting(false);
+        
+
     };
 
     return (
@@ -55,7 +66,7 @@ function LoginOverlay() {
 
                 {isSubmitting ? (
                     <button disabled className='disabled:bg-red-900 h-10 flex bg-red-600 rounded text-white font-semibold justify-center items-center'>
-                        <SyncLoader color="#fff" size={8}/>
+                        <SyncLoader color="#fff" size={8} />
                     </button>
                 ) : (
                     <button className='h-10 flex bg-red-600 hover:bg-red-700 active:bg-red-500 rounded text-white font-semibold justify-center items-center'>

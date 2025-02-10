@@ -27,11 +27,14 @@ function Header() {
     const router = useRouter();
 
     const handleLogout = async () => {
-        const res = await axios.post('/api/logout');
-        router.replace('/login');
-        window.location.reload();
-
-        console.log(res);
+        try {
+            await axios.post('/api/logout');
+            window.location.reload();
+            router.replace('/login');
+            setShowMenu(false);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     const username = useSelector((state: RootState) => state.user.username);
@@ -98,20 +101,22 @@ function Header() {
                         {showMenu && (
                             <div className='w-56 h-fit absolute top-0 right-0 pt-10'>
                                 <ul className='text-white cursor-default overflow-hidden text-sm pt-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)' }}>
-                                    <li className={liStyles} onClick={handleAccTypeChange}>
-                                        {accType == 'kids' ? (
-                                            <div className='w-10 h-10 bg-blue-500 rounded-sm flex justify-center items-center'><TbRobotFace className="text-white text-3xl m-auto" /></div>
-                                        ) : (
-                                            <div className="w-10 h-10 rounded flex overflow-hidden relative">
-                                                <div className="absolute w-full h-full backdrop-blur-sm flex justify-center items-center"><h4 className="text-sm font-bold text-white      max-sm:text-4xl">kids</h4></div>
-                                                <div className="w-[20%] h-full bg-gradient-to-b from-green-500 to-purple-500"></div>
-                                                <div className="w-[25%] h-full bg-gradient-to-b from-yellow-500 to-orange-700"></div>
-                                                <div className="w-[35%] h-full bg-gradient-to-b from-purple-500 to-purple-500"></div>
-                                                <div className="w-[20%] h-full bg-gradient-to-b from-blue-200 to-blue-500"></div>
-                                            </div>
-                                        )}
-                                        {accType == 'kids' ? (username) : ('kids')}
-                                    </li>
+                                    {username !== 'noAcc' && (
+                                        <li className={liStyles} onClick={handleAccTypeChange}>
+                                            {accType == 'kids' ? (
+                                                <div className='w-10 h-10 bg-blue-500 rounded-sm flex justify-center items-center'><TbRobotFace className="text-white text-3xl m-auto" /></div>
+                                            ) : (
+                                                <div className="w-10 h-10 rounded flex overflow-hidden relative">
+                                                    <div className="absolute w-full h-full backdrop-blur-sm flex justify-center items-center"><h4 className="text-sm font-bold text-white      max-sm:text-4xl">kids</h4></div>
+                                                    <div className="w-[20%] h-full bg-gradient-to-b from-green-500 to-purple-500"></div>
+                                                    <div className="w-[25%] h-full bg-gradient-to-b from-yellow-500 to-orange-700"></div>
+                                                    <div className="w-[35%] h-full bg-gradient-to-b from-purple-500 to-purple-500"></div>
+                                                    <div className="w-[20%] h-full bg-gradient-to-b from-blue-200 to-blue-500"></div>
+                                                </div>
+                                            )}
+                                            {accType == 'kids' ? (username) : ('kids')}
+                                        </li>
+                                    )}
 
                                     <Link href={'/profile'}>
                                         <li className={liStyles}><TiPencil className='text-2xl' />Manage Profiles</li>

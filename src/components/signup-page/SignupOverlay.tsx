@@ -23,11 +23,16 @@ function SignupOverlay() {
         e.preventDefault();
         setCreatingAccount(true);
 
-        const res = await axios.post('/api/signup', { username, email, password });
-        console.log(res);
-        setCreatingAccount(false);
-        toast.success('Account Created, Login Now!');
-        router.replace('/login');
+        try {
+            const res = await axios.post('/api/signup', { username, email, password });
+            toast.success('Account Created, Login Now!');
+            console.log(res);
+            router.replace('/login');
+        } catch (error: any) {
+            console.log(error)
+        } finally {
+            setCreatingAccount(false);
+        }
     };
 
 
@@ -38,14 +43,19 @@ function SignupOverlay() {
         const text = String(Math.ceil(Math.random() * 9999));
         setSentOTP(text);
 
-        const toastId = toast.loading('Sending OTP')
-        const res2 = await axios.post('/api/verification-email', { to: email, text });
-        console.log(res2);
+        const toastId = toast.loading('Sending OTP');
 
-        if (res2.data.message == 'User with this Email already exists') {
-            toast.error(res2.data.message, { id: toastId })
-        } else {
-            toast.success('OTP Sent!', { id: toastId });
+        try {
+            const res2 = await axios.post('/api/verification-email', { to: email, text });
+            console.log(res2);
+            
+            if (res2.data.message == 'User with this Email already exists') {
+                toast.error(res2.data.message, { id: toastId })
+            } else {
+                toast.success('OTP Sent!', { id: toastId });
+            }
+        } catch (error) {
+            console.log(error)
         }
     };
 

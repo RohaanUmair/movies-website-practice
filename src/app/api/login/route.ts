@@ -3,7 +3,6 @@ import User from "@/models/User";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
-
 export async function GET() {
     return NextResponse.json({ message: 'API Working' });
 }
@@ -17,19 +16,26 @@ export async function POST(request: NextRequest) {
         const userExistence = await User.findOne({ email });
 
         if (!userExistence) {
-            return NextResponse.json({ error: 'Invalid Email' });
+            return NextResponse.json({ error: 'Invalid Email' }, { status: 401 });
         }
 
         if (userExistence.password !== password) {
-            return NextResponse.json({ error: 'Invalid Credentials' });
+            return NextResponse.json({ error: 'Invalid Credentials' }, { status: 401 });
         }
 
         const cookie = await cookies();
 
-        cookie.set("user", userExistence.username, {
-            path: "/",
-            maxAge: 3600,
-        });
+        if (!userExistence.accName) {
+            cookie.set("user", "noAcc", {
+                path: "/",
+                maxAge: 3600,
+            });
+        } else {
+            cookie.set("user", userExistence.accName, {
+                path: "/",
+                maxAge: 3600,
+            });
+        }
 
         cookie.set("userEmail", userExistence.email, {
             path: '/',
@@ -39,6 +45,6 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ message: 'Logged In' });
     } catch (error) {
         console.log(error);
-        return NextResponse.json({ message: 'Error Logging In' })
+        return NextResponse.json({ message: 'Error Logging In' });
     }
 }
