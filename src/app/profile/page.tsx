@@ -72,34 +72,16 @@ function ProfilePage() {
                 } catch (error: any) {
                     console.log(error);
                 } finally {
-                    if (typeof window === "undefined") return;
+                    const accAvatars = JSON.parse(Cookies.get('accAvatars'));
 
-                    const accAvatarsStr = Cookies.get('accAvatars');
+                    const avatarNumbers = accAvatars.map((av: { avatar: number }) => av.avatar);
 
-                    if (!accAvatarsStr) {
-                        console.warn('No accAvatars cookie found');
-                        setAvatars([]);
-                        return;
-                    }
+                    setAvatars(avatarNumbers);
 
-                    try {
-                        const accAvatars = JSON.parse(accAvatarsStr);
+                    console.log(avatarNumbers, 'avatarssss');
 
-                        if (!Array.isArray(accAvatars)) {
-                            throw new Error('Invalid accAvatars format');
-                        }
-
-                        const avatarNumbers = accAvatars.map((av: { avatar: number }) => av.avatar);
-                        setAvatars(avatarNumbers);
-
-                        console.log(avatarNumbers, 'avatarssss');
-                        router.refresh();
-                    } catch (error) {
-                        console.error('Error parsing accAvatars:', error);
-                        setAvatars([]);
-                    }
+                    router.refresh();
                 }
-
 
             } else {
                 console.error(res.data.message);
@@ -155,40 +137,22 @@ function ProfilePage() {
         } finally {
             setShowEditProfileModal(false);
             setEditedProfileName('');
-        
+
             dispatch(setLikedMovies([]));
-        
+
             Cookies.set('accType', 'kids');
             dispatch(setUserAccType('kids'));
-        
-            if (typeof window === "undefined") return;
-        
-            const accAvatarsStr = Cookies.get('accAvatars');
-        
-            if (!accAvatarsStr) {
-                console.warn('No accAvatars cookie found');
-                setAvatars([]);
-                return;
-            }
-        
-            try {
-                const accAvatars = JSON.parse(accAvatarsStr);
-        
-                if (!Array.isArray(accAvatars)) {
-                    throw new Error('Invalid accAvatars format');
-                }
-        
-                const avatarNumbers = accAvatars.map((av: { avatar: number }) => av.avatar);
-                setAvatars(avatarNumbers);
-        
-                console.log(avatarNumbers, 'avatarssss');
-                router.refresh();
-            } catch (error) {
-                console.error('Error parsing accAvatars:', error);
-                setAvatars([]);
-            }
+
+            const accAvatars = JSON.parse(Cookies.get('accAvatars'));
+
+            const avatarNumbers = accAvatars.map((av: { avatar: number }) => av.avatar);
+
+            setAvatars(avatarNumbers);
+
+            console.log(avatarNumbers, 'avatarssss');
+
+            router.refresh();
         }
-        
     };
 
 
@@ -196,31 +160,16 @@ function ProfilePage() {
 
     useEffect(() => {
         try {
-            if (typeof window === "undefined") return;    
-        
-            const accAvatarsStr = Cookies.get('accAvatars');
-        
-            if (!accAvatarsStr) {
-                console.warn('No accAvatars cookie found');
-                setAvatars([]);
-                return;
-            }
-        
-            const accAvatars = JSON.parse(accAvatarsStr);
-        
-            if (!Array.isArray(accAvatars)) {
-                throw new Error('Invalid accAvatars format');
-            }
-        
+            const accAvatars = JSON.parse(Cookies.get('accAvatars'));
+    
             const avatarNumbers = accAvatars.map((av: { avatar: number }) => av.avatar);
+    
             setAvatars(avatarNumbers);
-        
+    
             console.log(avatarNumbers, 'avatarssss');
         } catch (error) {
-            console.error('Error parsing accAvatars:', error);
-            setAvatars([]);    
+            console.log(error)
         }
-        
     }, []);
 
 
@@ -234,8 +183,6 @@ function ProfilePage() {
 
     const accType = Cookies.get('accType');
     console.log(accType)
-
-    if (!avatars) return <p>loading</p>
 
     return (
         <div className='w-full min-h-screen bg-zinc-100'>
