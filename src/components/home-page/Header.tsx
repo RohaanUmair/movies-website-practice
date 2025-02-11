@@ -38,7 +38,6 @@ function Header() {
         }
     }
 
-    const username = useSelector((state: RootState) => state.user.username);
     const accType = useSelector((state: RootState) => state.user.userAccType);
 
     const accNames = useSelector((state: RootState) => state.user.accNames);
@@ -54,20 +53,17 @@ function Header() {
         router.push('/');
     };
 
-    const [avatar, setAvatar] = useState<number | null>(null);
+    const [avatar, setAvatar] = useState<number>();
 
+    const accAvatars = JSON.parse(Cookies.get('accAvatars'));
     useEffect(() => {
-        const accAvatars = JSON.parse(Cookies.get('accAvatars'));
 
-        console.log(accAvatars, 'avatarssss');
+        const avatarNumbers = accAvatars.map((av: { avatar: number }) => av.avatar);
 
-        if (accType === "kids") {
-            setAvatar(accAvatars[1]?.avatar || null);
-        } else {
-            const currentAcc = accAvatars.find((acc: { accName: string; avatar: number }) => acc.accName === accType);
-            setAvatar(currentAcc ? currentAcc.avatar : null);
-        }
-    }, [accType]);
+        console.log(avatarNumbers, 'avatarssss');
+
+        setAvatar(avatarNumbers[1]);
+    }, [accAvatars]);
 
 
     return (
@@ -91,7 +87,7 @@ function Header() {
 
                 <div className="flex text-white items-center gap-4      max-sm:gap-2">
                     <GoSearch className="text-3xl       max-md:text-2xl max-sm:text-xl" />
-                    <h6>{accType == 'adult' ? (username) : (accType)}</h6>
+                    <h6>{accType}</h6>
                     <FaRegBell className="text-3xl      max-md:text-2xl max-sm:text-xl" />
                     <FiMenu className='lg:hidden text-2xl       max-sm:text-[22px]' />
                     <div className="flex items-center relative gap-1" onMouseEnter={() => setShowMenu(true)} onMouseLeave={() => setShowMenu(false)}>
@@ -115,30 +111,32 @@ function Header() {
                         {showMenu && (
                             <div className='w-56 h-fit absolute top-0 right-0 pt-10'>
                                 <ul className='text-white cursor-default overflow-hidden text-sm pt-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)' }}>
-                                    <li className={liStyles} onClick={() =>
-                                        accType == 'kids' ? (
-                                            handleAccTypeChange(accNames[1])
-                                        ) : (
-                                            handleAccTypeChange('kids')
-                                        )
-                                    }>
-                                        {accType == 'kids' ? (
-                                            <div className='w-10 h-10 bg-blue-500 rounded-full flex justify-center items-center'>
-                                                {avatar !== null && (
-                                                    <Image alt='avatar' src={`/avatar${avatar}.png`} layout='omit' width={80} height={80} className='w-10 h-10 object-cover' />
-                                                )}
-                                            </div>
-                                        ) : (
-                                            <div className="w-10 h-10 rounded flex overflow-hidden relative">
-                                                <div className="absolute w-full h-full backdrop-blur-sm flex justify-center items-center"><h4 className="text-sm font-bold text-white      max-sm:text-4xl">kids</h4></div>
-                                                <div className="w-[20%] h-full bg-gradient-to-b from-green-500 to-purple-500"></div>
-                                                <div className="w-[25%] h-full bg-gradient-to-b from-yellow-500 to-orange-700"></div>
-                                                <div className="w-[35%] h-full bg-gradient-to-b from-purple-500 to-purple-500"></div>
-                                                <div className="w-[20%] h-full bg-gradient-to-b from-blue-200 to-blue-500"></div>
-                                            </div>
-                                        )}
-                                        {accType == 'kids' ? (accNames[1]) : ('kids')}
-                                    </li>
+                                    {accNames[1] && (
+                                        <li className={liStyles} onClick={() =>
+                                            accType == 'kids' ? (
+                                                handleAccTypeChange(accNames[1])
+                                            ) : (
+                                                handleAccTypeChange('kids')
+                                            )
+                                        }>
+                                            {accType == 'kids' ? (
+                                                <div className='w-10 h-10 bg-blue-500 rounded-full flex justify-center items-center'>
+                                                    {avatar !== null && (
+                                                        <Image alt='avatar' src={`/avatar${avatar}.png`} layout='omit' width={80} height={80} className='w-10 h-10 object-cover' />
+                                                    )}
+                                                </div>
+                                            ) : (
+                                                <div className="w-10 h-10 rounded flex overflow-hidden relative">
+                                                    <div className="absolute w-full h-full backdrop-blur-sm flex justify-center items-center"><h4 className="text-sm font-bold text-white      max-sm:text-4xl">kids</h4></div>
+                                                    <div className="w-[20%] h-full bg-gradient-to-b from-green-500 to-purple-500"></div>
+                                                    <div className="w-[25%] h-full bg-gradient-to-b from-yellow-500 to-orange-700"></div>
+                                                    <div className="w-[35%] h-full bg-gradient-to-b from-purple-500 to-purple-500"></div>
+                                                    <div className="w-[20%] h-full bg-gradient-to-b from-blue-200 to-blue-500"></div>
+                                                </div>
+                                            )}
+                                            {accType == 'kids' ? (accNames[1]) : ('kids')}
+                                        </li>
+                                    )}
 
                                     <Link href={'/profile'}>
                                         <li className={liStyles}><TiPencil className='text-2xl' />Manage Profiles</li>

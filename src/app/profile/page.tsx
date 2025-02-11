@@ -9,19 +9,20 @@ import { PiDevicesBold, PiHouseBold, PiWarningOctagonBold } from "react-icons/pi
 import Cookies from 'js-cookie';
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setAccNames, setUserAccType } from "@/states/user/userSlice";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import { Toaster } from "react-hot-toast";
 import { setLikedMovies } from "@/states/movies/moviesSlice";
 import Image from "next/image";
+import { RootState } from "@/states/store";
 
 
 function ProfilePage() {
     const liStyles = "flex items-center cursor-pointer gap-2 font-sans font-bold text-zinc-600";
 
-    const accNames = Cookies.get('accNames')?.split(',');
+    const accNames = useSelector((state: RootState) => state.user.accNames);
 
     const [newProfileName, setNewProfileName] = useState('');
     const [showAddProfileModal, setShowAddProfileModal] = useState(false);
@@ -44,17 +45,15 @@ function ProfilePage() {
                 console.log(error);
             }
         }
-
         getData();
     }, []);
 
-    const email = Cookies.get('userEmail');
+    const email = useSelector((state: RootState) => state.user.userEmail);
     const handleCreateProfile = async () => {
         if (!newProfileName.trim()) return;
 
         try {
-
-            const res = await axios.put('/api/addProfile', { email, accName: newProfileName })
+            const res = await axios.put('/api/addProfile', { email, accName: newProfileName, selectedAvatar })
 
             if (res.status == 200) {
                 setShowAddProfileModal(false);
@@ -72,6 +71,16 @@ function ProfilePage() {
 
                 } catch (error: any) {
                     console.log(error);
+                } finally {
+                    const accAvatars = JSON.parse(Cookies.get('accAvatars'));
+
+                    const avatarNumbers = accAvatars.map((av: { avatar: number }) => av.avatar);
+
+                    setAvatars(avatarNumbers);
+
+                    console.log(avatarNumbers, 'avatarssss');
+
+                    router.refresh();
                 }
 
             } else {
@@ -113,6 +122,8 @@ function ProfilePage() {
     };
 
     const handleEditProfile = async () => {
+        if (!editedProfileName) return;
+
         try {
             const res = await axios.put('/api/editProfile', { email, accName: toBeUpdatedName, newAccName: editedProfileName, selectedAvatar });
             console.log(res);
@@ -148,13 +159,17 @@ function ProfilePage() {
     const [avatars, setAvatars] = useState<number[]>([]);
 
     useEffect(() => {
-        const accAvatars = JSON.parse(Cookies.get('accAvatars'));
-
-        const avatarNumbers = accAvatars.map((av: { avatar: number }) => av.avatar);
-
-        setAvatars(avatarNumbers);
-
-        console.log(avatarNumbers, 'avatarssss');
+        try {
+            const accAvatars = JSON.parse(Cookies.get('accAvatars'));
+    
+            const avatarNumbers = accAvatars.map((av: { avatar: number }) => av.avatar);
+    
+            setAvatars(avatarNumbers);
+    
+            console.log(avatarNumbers, 'avatarssss');
+        } catch (error) {
+            console.log(error)
+        }
     }, []);
 
 
@@ -376,6 +391,53 @@ function ProfilePage() {
             {showAddProfileModal && (
                 <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
                     <div className="bg-zinc-900 p-8 rounded-lg w-full max-w-md">
+                        <h2 className="text-white text-2xl mb-4">Select Avatar</h2>
+                        <div className="flex gap-4 mb-3">
+                            <div className={`h-12 w-12 flex justify-center items-center border-blue-500 rounded-full ${selectedAvatar == 1 && ' border-2 '}`} onClick={() => setSelectedAvatar(1)}>
+                                <Image
+                                    layout="omit"
+                                    width={100}
+                                    height={100}
+                                    alt="avatar1"
+                                    src={'/avatar1.png'}
+                                    className="w-10 h-10"
+                                />
+                            </div>
+
+                            <div className={`h-12 w-12 flex justify-center items-center border-blue-500 rounded-full ${selectedAvatar == 2 && ' border-2 '}`} onClick={() => setSelectedAvatar(2)}>
+                                <Image
+                                    layout="omit"
+                                    width={100}
+                                    height={100}
+                                    alt="avatar1"
+                                    src={'/avatar2.png'}
+                                    className="w-10 h-10"
+                                />
+                            </div>
+
+                            <div className={`h-12 w-12 flex justify-center items-center border-blue-500 rounded-full ${selectedAvatar == 3 && ' border-2 '}`} onClick={() => setSelectedAvatar(3)}>
+                                <Image
+                                    layout="omit"
+                                    width={100}
+                                    height={100}
+                                    alt="avatar1"
+                                    src={'/avatar3.png'}
+                                    className="w-10 h-10"
+                                />
+                            </div>
+
+                            <div className={`h-12 w-12 flex justify-center items-center border-blue-500 rounded-full ${selectedAvatar == 4 && ' border-2 '}`} onClick={() => setSelectedAvatar(4)}>
+                                <Image
+                                    layout="omit"
+                                    width={100}
+                                    height={100}
+                                    alt="avatar1"
+                                    src={'/avatar4.png'}
+                                    className="w-10 h-10"
+                                />
+                            </div>
+
+                        </div>
                         <h2 className="text-white text-2xl mb-4">Add New Profile</h2>
                         <input
                             type="text"

@@ -13,19 +13,22 @@ function SelectUser() {
 
     useEffect(() => {
         const accAvatars = JSON.parse(Cookies.get('accAvatars'));
+        console.log('ACC AVATARS => ', accAvatars)
 
         const avatarNumbers = accAvatars.map((av: { avatar: number }) => av.avatar);
+        console.log('ACC NUMBERS => ', avatarNumbers)
 
         setAvatars(avatarNumbers);
-
-        console.log(avatarNumbers, 'avatarssss');
+        console.log('AVATAR => ', avatars);
     }, []);
 
 
     const [newProfileName, setNewProfileName] = useState('');
     const dispatch = useDispatch();
-    const username = useSelector((state: RootState) => state.user.username);
+    const username = Cookies.get('user');
     const [showAddProfileModal, setShowAddProfileModal] = useState(false);
+
+    console.log('username =>', username)
 
     const router = useRouter();
 
@@ -111,9 +114,9 @@ function SelectUser() {
 
                     {accNames?.map((accName, index: number) => {
                         return (
-                            <>
+                            <div key={accName}>
                                 {accName === 'kids' ? (
-                                    <div key={accName} onClick={() => handleSelectAccType('kids')} className="flex flex-col items-center gap-2 cursor-pointer hover:scale-105 transition-all duration-200">
+                                    <div onClick={() => handleSelectAccType('kids')} className="flex flex-col items-center gap-2 cursor-pointer hover:scale-105 transition-all duration-200">
                                         <div className="w-36 h-36 rounded flex overflow-hidden relative max-sm:w-28 max-sm:h-28">
                                             <div className="absolute w-full h-full backdrop-blur-sm flex justify-center items-center"><h4 className="text-5xl font-bold text-white max-sm:text-4xl">kids</h4></div>
                                             <div className="w-[20%] h-full bg-gradient-to-b from-green-500 to-purple-500"></div>
@@ -126,14 +129,21 @@ function SelectUser() {
                                 ) : (
                                     <div key={accName} onClick={() => handleSelectAccType(accName)} className="flex flex-col items-center gap-2 cursor-pointer hover:scale-105 transition-all duration-200">
                                         <div className="w-36 h-36 bg-blue-500 rounded-full flex max-sm:w-28 max-sm:h-28">
-                                            {avatars[index] !== null || avatars[index] !== undefined && (
-                                                <Image alt='avatar' src={`/avatar${avatars[index]}.png`} layout='omit' width={80} height={80} className='w-full h-full object-cover' />
+                                            {avatars.length > 0 && avatars[index] !== undefined && (
+                                                <Image
+                                                    alt='avatar'
+                                                    src={`/avatar${avatars[index]}.png`}
+                                                    layout='omit'
+                                                    width={80}
+                                                    height={80}
+                                                    className='w-full h-full object-cover'
+                                                />
                                             )}
                                         </div>
                                         <h2 className="text-[#aaa] font-semibold">{accName}</h2>
                                     </div>
                                 )}
-                            </>
+                            </div>
                         )
                     })}
 
