@@ -1,7 +1,7 @@
 import { connectToDb } from "@/lib/mongoDb";
 import User from "@/models/User";
 import { NextRequest, NextResponse } from "next/server";
-
+import bcrypt from "bcrypt";
 import nodemailer from 'nodemailer';
 
 
@@ -41,9 +41,11 @@ export async function PUT(req: NextRequest) {
     try {
         const { email, password } = await req.json();
 
+        const hashedPassword: string = await bcrypt.hash(password, 10);
+
         await User.findOneAndUpdate(
             { email },
-            { password },
+            { password: hashedPassword },
             { new: true }
         )
 

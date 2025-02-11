@@ -2,6 +2,8 @@ import { connectToDb } from "@/lib/mongoDb";
 import User from "@/models/User";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
+import bcrypt from "bcrypt";
+
 
 export async function GET() {
     return NextResponse.json({ message: 'API Working' });
@@ -19,7 +21,9 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: 'Invalid Email' }, { status: 401 });
         }
 
-        if (userExistence.password !== password) {
+        const checkPass = await bcrypt.compare(password, String(userExistence.password));
+
+        if (!checkPass) {
             return NextResponse.json({ error: 'Invalid Credentials' }, { status: 401 });
         }
 
@@ -39,6 +43,18 @@ export async function POST(request: NextRequest) {
             path: '/',
             maxAge: 3600
         });
+
+
+        const accAvatars = userExistence.accNames.map(accName => ({
+            accName,
+            avatar: userExistence.avatars?.find(av => av.accName === accName)?.avatar || null
+        }));
+
+        cookie.set('accAvatars', JSON.stringify(accAvatars), {
+            path: '/',
+            maxAge: 3600
+        });
+        
 
         return NextResponse.json({ message: 'Logged In' });
     } catch (error) {

@@ -1,14 +1,27 @@
 import { RootState } from '@/states/store';
 import React, { useEffect, useState } from 'react';
 import { BiSolidPlusCircle } from 'react-icons/bi';
-import { TbRobotFace } from 'react-icons/tb';
 import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
 import { setAccNames, setUserAccType } from '@/states/user/userSlice';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 function SelectUser() {
+    const [avatars, setAvatars] = useState<number[]>([]);
+
+    useEffect(() => {
+        const accAvatars = JSON.parse(Cookies.get('accAvatars'));
+
+        const avatarNumbers = accAvatars.map((av: { avatar: number }) => av.avatar);
+
+        setAvatars(avatarNumbers);
+
+        console.log(avatarNumbers, 'avatarssss');
+    }, []);
+
+
     const [newProfileName, setNewProfileName] = useState('');
     const dispatch = useDispatch();
     const username = useSelector((state: RootState) => state.user.username);
@@ -87,6 +100,7 @@ function SelectUser() {
 
 
 
+
     return (
         <div className="h-screen w-screen bg-zinc-950 flex justify-center items-center">
             <div className="flex flex-col items-center justify-center gap-8">
@@ -95,7 +109,7 @@ function SelectUser() {
 
                 <div className="flex gap-6 max-sm:gap-3">
 
-                    {accNames?.map((accName) => {
+                    {accNames?.map((accName, index: number) => {
                         return (
                             <>
                                 {accName === 'kids' ? (
@@ -111,7 +125,11 @@ function SelectUser() {
                                     </div>
                                 ) : (
                                     <div key={accName} onClick={() => handleSelectAccType(accName)} className="flex flex-col items-center gap-2 cursor-pointer hover:scale-105 transition-all duration-200">
-                                        <div className="w-36 h-36 bg-blue-500 rounded flex max-sm:w-28 max-sm:h-28"><TbRobotFace className="text-white text-9xl m-auto max-sm:text-8xl" /></div>
+                                        <div className="w-36 h-36 bg-blue-500 rounded-full flex max-sm:w-28 max-sm:h-28">
+                                            {avatars[index] !== null || avatars[index] !== undefined && (
+                                                <Image alt='avatar' src={`/avatar${avatars[index]}.png`} layout='omit' width={80} height={80} className='w-full h-full object-cover' />
+                                            )}
+                                        </div>
                                         <h2 className="text-[#aaa] font-semibold">{accName}</h2>
                                     </div>
                                 )}

@@ -3,19 +3,20 @@ import { RootState } from '@/states/store';
 import axios from 'axios'
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BiHeart } from 'react-icons/bi';
 import { FaRegBell } from 'react-icons/fa'
 import { FiMenu } from 'react-icons/fi'
 import { GoSearch } from 'react-icons/go'
 import { IoMdArrowDropdown, IoMdHelpCircleOutline } from 'react-icons/io'
 import { MdLiveTv } from 'react-icons/md';
-import { TbRobotFace, TbUserMinus } from 'react-icons/tb'
+import { TbUserMinus } from 'react-icons/tb'
 import { TiPencil } from 'react-icons/ti';
 import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
 import { setUserAccType } from '@/states/user/userSlice';
 import { setLikedMovies } from '@/states/movies/moviesSlice';
+import Image from 'next/image';
 
 function Header() {
     const navs: string[] = ['TV Shows', 'Movies', 'New & Popular', 'My List', 'Browse by Language'];
@@ -53,9 +54,25 @@ function Header() {
         router.push('/');
     };
 
+    const [avatar, setAvatar] = useState<number | null>(null);
+
+    useEffect(() => {
+        const accAvatars = JSON.parse(Cookies.get('accAvatars'));
+
+        console.log(accAvatars, 'avatarssss');
+
+        if (accType === "kids") {
+            setAvatar(accAvatars[1]?.avatar || null);
+        } else {
+            const currentAcc = accAvatars.find((acc: { accName: string; avatar: number }) => acc.accName === accType);
+            setAvatar(currentAcc ? currentAcc.avatar : null);
+        }
+    }, [accType]);
+
+
     return (
         <header className='h-20 flex items-center px-12 gap-8 relative z-50         max-md:px-6 max-md:h-16' style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }}>
-            <h1 className='z-10 text-[#ff0000] text-3xl font-semibold'>Movies</h1>
+            <h1 className='z-10 text-[#ff0000] text-3xl font-semibold' onClick={() => console.log('avatar', avatar)}>Movies</h1>
 
             <div className="flex items-center justify-between w-full        max-lg:justify-end">
 
@@ -79,7 +96,11 @@ function Header() {
                     <FiMenu className='lg:hidden text-2xl       max-sm:text-[22px]' />
                     <div className="flex items-center relative gap-1" onMouseEnter={() => setShowMenu(true)} onMouseLeave={() => setShowMenu(false)}>
                         {accType !== 'kids' ? (
-                            <div className="w-10 h-10 bg-blue-500 rounded-sm flex       max-sm:w-6 max-sm:h-6"><TbRobotFace className="text-white text-3xl m-auto       max-sm:text-2xl" /></div>
+                            <div className="w-10 h-10 bg-blue-500 rounded-full flex       max-sm:w-6 max-sm:h-6">
+                                {avatar !== null && (
+                                    <Image alt='avatar' src={`/avatar${avatar}.png`} layout='omit' width={80} height={80} className='w-10 h-10 object-cover' />
+                                )}
+                            </div>
                         ) : (
                             <div className="w-10 h-10 rounded flex overflow-hidden relative     max-sm:w-6 max-sm:h-6">
                                 <div className="absolute w-full h-full backdrop-blur-sm flex justify-center items-center"><h4 className="text-sm font-bold text-white      max-sm:text-4xl">kids</h4></div>
@@ -102,7 +123,11 @@ function Header() {
                                         )
                                     }>
                                         {accType == 'kids' ? (
-                                            <div className='w-10 h-10 bg-blue-500 rounded-sm flex justify-center items-center'><TbRobotFace className="text-white text-3xl m-auto" /></div>
+                                            <div className='w-10 h-10 bg-blue-500 rounded-full flex justify-center items-center'>
+                                                {avatar !== null && (
+                                                    <Image alt='avatar' src={`/avatar${avatar}.png`} layout='omit' width={80} height={80} className='w-10 h-10 object-cover' />
+                                                )}
+                                            </div>
                                         ) : (
                                             <div className="w-10 h-10 rounded flex overflow-hidden relative">
                                                 <div className="absolute w-full h-full backdrop-blur-sm flex justify-center items-center"><h4 className="text-sm font-bold text-white      max-sm:text-4xl">kids</h4></div>

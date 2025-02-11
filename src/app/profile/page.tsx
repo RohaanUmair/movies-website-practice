@@ -9,11 +9,11 @@ import { PiDevicesBold, PiHouseBold, PiWarningOctagonBold } from "react-icons/pi
 import Cookies from 'js-cookie';
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setAccNames, setUserAccType } from "@/states/user/userSlice";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import { setLikedMovies } from "@/states/movies/moviesSlice";
 import Image from "next/image";
 
@@ -114,7 +114,7 @@ function ProfilePage() {
 
     const handleEditProfile = async () => {
         try {
-            const res = await axios.put('/api/editProfile', { email, accName: toBeUpdatedName, newAccName: editedProfileName });
+            const res = await axios.put('/api/editProfile', { email, accName: toBeUpdatedName, newAccName: editedProfileName, selectedAvatar });
             console.log(res);
 
             Cookies.set('accNames', res.data.data.accNames);
@@ -131,8 +131,32 @@ function ProfilePage() {
 
             Cookies.set('accType', 'kids');
             dispatch(setUserAccType('kids'));
+
+            const accAvatars = JSON.parse(Cookies.get('accAvatars'));
+
+            const avatarNumbers = accAvatars.map((av: { avatar: number }) => av.avatar);
+
+            setAvatars(avatarNumbers);
+
+            console.log(avatarNumbers, 'avatarssss');
+
+            router.refresh();
         }
     };
+
+
+    const [avatars, setAvatars] = useState<number[]>([]);
+
+    useEffect(() => {
+        const accAvatars = JSON.parse(Cookies.get('accAvatars'));
+
+        const avatarNumbers = accAvatars.map((av: { avatar: number }) => av.avatar);
+
+        setAvatars(avatarNumbers);
+
+        console.log(avatarNumbers, 'avatarssss');
+    }, []);
+
 
 
 
@@ -141,6 +165,9 @@ function ProfilePage() {
     const [showEditProfileModal, setShowEditProfileModal] = useState<boolean>(false);
 
     const [selectedAvatar, setSelectedAvatar] = useState<number | null>(null);
+
+    const accType = Cookies.get('accType');
+    console.log(accType)
 
     return (
         <div className='w-full min-h-screen bg-zinc-100'>
@@ -151,7 +178,7 @@ function ProfilePage() {
                 <div className="flex flex-col gap-10 w-[29%]        max-xs:w-fit">
 
                     <Link href={'/'}>
-                        <button className="flex items-center text-sm font-semibold gap-2 hover:underline        max-xs:hidden"><IoIosArrowRoundBack className="text-3xl" /> Back to Movies</button>
+                        <button onClick={() => router.push('/')} className="flex items-center text-sm font-semibold gap-2 hover:underline        max-xs:hidden"><IoIosArrowRoundBack className="text-3xl" /> Back to Movies</button>
                         <IoIosArrowRoundBack className="text-3xl xs:hidden" />
                     </Link>
 
@@ -219,22 +246,29 @@ function ProfilePage() {
                             </div>
                         </div>
 
-                        {accNames?.slice(1).map((accName) => {
+                        {accNames?.slice(1).map((accName, index: number) => {
                             return (
                                 <div className="flex flex-col  border-t" key={accName}>
                                     <div className="flex justify-between items-center">
                                         <div className="flex items-center gap-4 py-4">
-                                            <div className="w-10 h-10 bg-blue-500 rounded"></div>
-                                            <h2 className="text-[17px] font-sans font-semibold">{accName}</h2>
+                                            <div className="w-10 h-10 bg-blue-500 rounded-full">{avatars[index + 1] == null ? (
+                                                <></>
+                                            ) : (
+                                                <Image alt='avatar' src={`/avatar${avatars[index + 1]}.png`} layout='omit' width={80} height={80} className='w-10 h-10 object-cover' />
+                                            )}
+                                            </div>
+                                            <h2 className="text-[17px] font-sans font-semibold" onClick={() => console.log(avatars)}>{accName}</h2>
                                         </div>
 
-                                        <div className="text-white rounded overflow-hidden">
-                                            <button onClick={() => {
-                                                setToBeUpdatedName(accName);
-                                                setShowEditProfileModal(true);
-                                            }} className="bg-green-500 px-3 py-1 hover:bg-green-600 active:bg-green-400">Edit</button>
-                                            <button onClick={() => handleDeleteProfile(accName)} className="bg-red-500 px-3 py-1 hover:bg-red-600 active:bg-red-400">delete</button>
-                                        </div>
+                                        {accType !== accName && (
+                                            <div className="text-white rounded overflow-hidden">
+                                                <button onClick={() => {
+                                                    setToBeUpdatedName(accName);
+                                                    setShowEditProfileModal(true);
+                                                }} className="bg-green-500 px-3 py-1 hover:bg-green-600 active:bg-green-400">Edit</button>
+                                                <button onClick={() => handleDeleteProfile(accName)} className="bg-red-500 px-3 py-1 hover:bg-red-600 active:bg-red-400">delete</button>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             )

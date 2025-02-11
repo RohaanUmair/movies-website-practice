@@ -34,15 +34,7 @@ const userSlice = createSlice({
             state.accNames.push(action.payload);
         }
     }
-})
-
-export const changeAccAsync = createAsyncThunk(
-    "changeAccType/changeAccAsync",
-    async () => {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-    }
-);
-
+});
 
 export const { setUsername, setUserAccType, setUserEmail, setAccNames } = userSlice.actions;
 

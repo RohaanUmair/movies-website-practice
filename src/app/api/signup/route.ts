@@ -1,7 +1,7 @@
 import { connectToDb } from "@/lib/mongoDb";
 import User from "@/models/User";
 import { NextRequest, NextResponse } from "next/server";
-// const bcrypt = require ('bcrypt');
+import bcrypt from "bcrypt";
 
 
 export async function POST(request: NextRequest) {
@@ -16,13 +16,12 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ message: 'User with this Email already exists' });
         }
 
-        // const hashedPassword: string = bcrypt.hash(password, 10);
+        const hashedPassword: string = await bcrypt.hash(password, 10);
 
         const newUser = new User({
             username,
             email,
-            password
-            // password: hashedPassword
+            password: hashedPassword
         });
         await newUser.save();
 
