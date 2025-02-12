@@ -20,6 +20,8 @@ function SelectUser() {
 
         setAvatars(avatarNumbers);
         console.log('AVATAR => ', avatars);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
 
@@ -48,7 +50,7 @@ function SelectUser() {
                 console.log(error);
             }
         }
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         getData();
     }, []);
 

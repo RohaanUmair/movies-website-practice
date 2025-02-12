@@ -55,7 +55,8 @@ function Header() {
 
     const [avatar, setAvatar] = useState<number>();
 
-    const accAvatars = JSON.parse(Cookies.get('accAvatars'));
+    const accAvatarsCookie = Cookies.get('accAvatars');
+    const accAvatars = accAvatarsCookie ? JSON.parse(accAvatarsCookie) : [];
     useEffect(() => {
 
         const avatarNumbers = accAvatars.map((av: { avatar: number }) => av.avatar);

@@ -45,7 +45,7 @@ function MoviesList({ title, numOfMovies, setShowModal, setModalDetails }: {
 
     useEffect(() => {
         abcd();
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [likedMoviesArr]);
 
     return (

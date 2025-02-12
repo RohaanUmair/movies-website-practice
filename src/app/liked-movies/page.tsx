@@ -49,6 +49,7 @@ export default function LikedMoviesPage() {
                 .then(res => dispatch(setApiData(res.results)))
                 .catch(err => console.error(err));
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [likedMoviesNames]);
 
     return (
