@@ -2,7 +2,7 @@
 import React, { Dispatch, SetStateAction, useEffect, useRef } from 'react'
 import { BsChatSquareText } from 'react-icons/bs';
 import { GoPlus } from 'react-icons/go';
-import { HiOutlineHandThumbUp } from 'react-icons/hi2';
+import { HiMiniHandThumbUp } from 'react-icons/hi2';
 import { IoIosClose } from 'react-icons/io';
 import { TbPlayerPlayFilled } from 'react-icons/tb';
 import MovieCard from '../modal/MovieCard';
@@ -73,7 +73,7 @@ function Modal({ setShowModal, modalDetails, setShowVideoPlayer, setPlayerMovieN
                             </div>
 
                             <div className='border rounded-full w-10 h-10 flex cursor-pointer justify-center items-center text-[22px]' style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)' }}>
-                                <HiOutlineHandThumbUp />
+                                <HiMiniHandThumbUp />
                             </div>
                         </div>
                     </div>

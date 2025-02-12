@@ -1,15 +1,18 @@
+import { addLikedMovie } from '@/states/movies/moviesSlice';
+import { RootState } from '@/states/store';
+import axios from 'axios';
 import { useRef, useState, useEffect, Dispatch, SetStateAction } from 'react';
-import { CiLock } from 'react-icons/ci';
+import toast, { Toaster } from 'react-hot-toast';
 import { FaPlay, FaPause, FaVolumeUp, FaVolumeMute } from 'react-icons/fa';
 import { GoPlus } from 'react-icons/go';
 import { GrMultiple } from 'react-icons/gr';
 import { HiOutlineThumbDown } from 'react-icons/hi';
-import { HiOutlineHandThumbUp } from 'react-icons/hi2';
+import { HiMiniHandThumbDown, HiMiniHandThumbUp } from 'react-icons/hi2';
 import { IoIosClose } from 'react-icons/io';
 import { MdForward10, MdReplay10, MdVoiceChat } from 'react-icons/md';
-import { RiForward10Fill } from 'react-icons/ri';
 import { SlLock, SlLockOpen } from 'react-icons/sl';
 import { TbBrandSpeedtest, TbPlayerSkipForwardFilled } from 'react-icons/tb';
+import { useDispatch, useSelector } from 'react-redux';
 
 const VideoPlayer = ({ src, setShowVideoPlayer, playerMovieName }: { src: string, setShowVideoPlayer: Dispatch<SetStateAction<boolean>>, playerMovieName: string }) => {
     const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -140,31 +143,54 @@ const VideoPlayer = ({ src, setShowVideoPlayer, playerMovieName }: { src: string
     const curDurationSecs = Math.floor(videoRef.current?.currentTime as number % 60) || 0;
 
 
+    const dispatch = useDispatch();
+    const likedMoviesArr = useSelector((state: RootState) => state.movies.likedMovies);
+    const email = useSelector((state: RootState) => state.user.userEmail)
+
+
+    const handleLikeMovie = async (title: string) => {
+        dispatch(addLikedMovie(title));
+        toast.success('Saved to Liked Movies');
+    }
+
+    const accType = useSelector((state: RootState) => state.user.userAccType);
+
+    async function abcd() {
+        await axios.put('/api/like-movie', { email, accType, likedMoviesArr })
+    }
+
+    useEffect(() => {
+        abcd();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [likedMoviesArr]);
+
+
+
     return (
         <div className='w-full h-screen fixed inset-0 z-[9999999] bg-black'>
             {!lockedMode && (
                 <>
-                    <div className='absolute top-10 flex left-1/2 gap-3 -translate-x-1/2'>
+                    <div className='absolute top-10 flex left-1/2 gap-3 -translate-x-1/2 z-[99999999999]'>
                         <div className='border rounded-full w-14 h-14 flex cursor-pointer justify-center items-center text-white bg-zinc-800 text-[39px]'>
                             <GoPlus />
                         </div>
 
                         <div
-                            className='border rounded-full w-14 h-14 flex cursor-pointer justify-center items-center text-white bg-zinc-800 text-3xl'
-                        // onClick={() => {
-                        //     handleLikeMovie(movie.title);
-                        // }}
+                            className='border rounded-full w-14 h-14 flex cursor-pointer justify-center items-center text-white bg-zinc-800 text-3xl hover:scale-110 z-[9999999999]'
+                            // onClick={() => {
+                            //     handleLikeMovie(playerMovieName);
+                            // }}
                         >
-                            <HiOutlineThumbDown />
+                            <HiMiniHandThumbDown />
                         </div>
 
                         <div
-                            className='border rounded-full w-14 h-14 flex cursor-pointer justify-center items-center text-white bg-zinc-800 text-3xl'
-                        // onClick={() => {
-                        //     handleLikeMovie(movie.title);
-                        // }}
+                            className='border rounded-full w-14 h-14 flex cursor-pointer justify-center items-center text-white bg-zinc-800 text-3xl hover:scale-110 z-[99999999999]'
+                            onClick={() => {
+                                handleLikeMovie(playerMovieName);
+                            }}
                         >
-                            <HiOutlineHandThumbUp />
+                            <HiMiniHandThumbUp />
                         </div>
                     </div>
 
@@ -296,6 +322,8 @@ const VideoPlayer = ({ src, setShowVideoPlayer, playerMovieName }: { src: string
                     )
                 )}
             </div>
+
+            <Toaster />
         </div>
     );
 };

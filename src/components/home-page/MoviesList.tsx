@@ -4,7 +4,7 @@ import MovieListPoster from './MovieListPoster';
 import Image from 'next/image';
 import { TbPlayerPlayFilled } from 'react-icons/tb';
 import { GoPlus } from 'react-icons/go';
-import { HiOutlineHandThumbUp } from 'react-icons/hi2';
+import { HiMiniHandThumbUp } from 'react-icons/hi2';
 import { LiaVolumeOffSolid } from 'react-icons/lia';
 import { AppDispatch, RootState } from '@/states/store';
 import { useDispatch, useSelector } from 'react-redux';
@@ -95,7 +95,7 @@ function MoviesList({ title, numOfMovies, setShowModal, setModalDetails, setPlay
                                                         handleLikeMovie(movie.title);
                                                     }}
                                                 >
-                                                    <HiOutlineHandThumbUp />
+                                                    <HiMiniHandThumbUp />
                                                 </div>
                                             </div>
 
