@@ -10,12 +10,14 @@ export interface MovieData {
 interface MovieState {
     apiData: MovieData[];
     likedMovies: string[];
+    disLikedMovies: string[];
     watchlistMovies: string[];
 }
 
 const initialState: MovieState = {
     apiData: [],
     likedMovies: [],
+    disLikedMovies: [],
     watchlistMovies: []
 }
 
@@ -29,11 +31,17 @@ const moviesSlice = createSlice({
         setLikedMovies: (state, action: PayloadAction<string[]>) => {
             state.likedMovies = action.payload;
         },
+        setDislikedMovies: (state, action: PayloadAction<string[]>) => {
+            state.disLikedMovies = action.payload;
+        },
         setWatchlistMovies: (state, action: PayloadAction<string[]>) => {
             state.watchlistMovies = action.payload;
         },
         addLikedMovie: (state, action: PayloadAction<string>) => {
             state.likedMovies.push(action.payload);
+        },
+        addDislikedMovie: (state, action: PayloadAction<string>) => {
+            state.disLikedMovies.push(action.payload);
         },
         addWatchlistedMovie: (state, action: PayloadAction<string>) => {
             state.watchlistMovies.push(action.payload);
@@ -70,6 +78,6 @@ export const fetchMovies = createAsyncThunk(
 
 
 
-export const { setApiData, setLikedMovies, setWatchlistMovies, addLikedMovie, addWatchlistedMovie } = moviesSlice.actions;
+export const { setApiData, setLikedMovies, setDislikedMovies, setWatchlistMovies, addLikedMovie, addDislikedMovie, addWatchlistedMovie } = moviesSlice.actions;
 
 export default moviesSlice.reducer;

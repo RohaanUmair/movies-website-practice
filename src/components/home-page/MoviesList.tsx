@@ -4,11 +4,11 @@ import MovieListPoster from './MovieListPoster';
 import Image from 'next/image';
 import { TbPlayerPlayFilled } from 'react-icons/tb';
 import { GoPlus } from 'react-icons/go';
-import { HiMiniHandThumbUp } from 'react-icons/hi2';
+import { HiMiniHandThumbDown, HiMiniHandThumbUp } from 'react-icons/hi2';
 import { LiaVolumeOffSolid } from 'react-icons/lia';
 import { AppDispatch, RootState } from '@/states/store';
 import { useDispatch, useSelector } from 'react-redux';
-import { addLikedMovie, MovieData } from '@/states/movies/moviesSlice';
+import { addDislikedMovie, addLikedMovie, MovieData } from '@/states/movies/moviesSlice';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 
@@ -29,6 +29,7 @@ function MoviesList({ title, numOfMovies, setShowModal, setModalDetails, setPlay
     const dispatch = useDispatch<AppDispatch>();
 
     const likedMoviesArr = useSelector((state: RootState) => state.movies.likedMovies);
+    const dislikedMoviesArr = useSelector((state: RootState) => state.movies.disLikedMovies);
 
     const email = useSelector((state: RootState) => state.user.userEmail)
 
@@ -36,6 +37,13 @@ function MoviesList({ title, numOfMovies, setShowModal, setModalDetails, setPlay
         dispatch(addLikedMovie(title));
         toast.success('Saved to Liked Movies');
         console.log(likedMoviesArr);
+        setHoveredMovieTitle('');
+    }
+
+    const handleDislikeMovie = async (title: string) => {
+        dispatch(addDislikedMovie(title));
+        toast.success('Saved to Disliked Movies');
+        console.log(dislikedMoviesArr);
         setHoveredMovieTitle('');
     }
 
@@ -49,6 +57,16 @@ function MoviesList({ title, numOfMovies, setShowModal, setModalDetails, setPlay
         abcd();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [likedMoviesArr]);
+
+
+    async function abcde() {
+        await axios.put('/api/dislike-movie', { email, accType, dislikedMoviesArr })
+    }
+
+    useEffect(() => {
+        abcde();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [dislikedMoviesArr]);
 
     return (
         <div className='flex flex-col'>
@@ -86,7 +104,7 @@ function MoviesList({ title, numOfMovies, setShowModal, setModalDetails, setPlay
                                                 </button>
 
                                                 <div className='border rounded-full w-10 h-10 flex cursor-pointer justify-center items-center text-white bg-zinc-800 text-3xl'>
-                                                    <GoPlus />
+                                                    <HiMiniHandThumbDown />
                                                 </div>
 
                                                 <div
