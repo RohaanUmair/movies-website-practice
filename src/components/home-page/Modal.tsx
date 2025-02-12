@@ -8,32 +8,32 @@ import { TbPlayerPlayFilled } from 'react-icons/tb';
 import MovieCard from '../modal/MovieCard';
 import Image from 'next/image';
 
-function Modal({ setShowModal, modalDetails }: {
+function Modal({ setShowModal, modalDetails, setShowVideoPlayer, setPlayerMovieName }: {
     setShowModal: Dispatch<SetStateAction<boolean>>, modalDetails: {
         movieName: string;
         movieDesc: string;
-    }
+    }, setShowVideoPlayer: Dispatch<SetStateAction<boolean>>, setPlayerMovieName: Dispatch<SetStateAction<string>>
 }) {
 
     const modalRef = useRef(null);
     const closeBtnRef = useRef(null);
 
-    useEffect(() => {
-        const handleClickOutside = (e: MouseEvent) => {
-            const a = modalRef?.current as any;
-            const b = closeBtnRef?.current as any;
+    // useEffect(() => {
+    //     const handleClickOutside = (e: MouseEvent) => {
+    //         const a = modalRef?.current as any;
+    //         const b = closeBtnRef?.current as any;
 
-            if (a && !a.contains(e?.target) ||
-                b && !b.contains(e?.target)
-            ) {
-                setShowModal(false);
-            }
-        }
+    //         if (a && !a.contains(e?.target) ||
+    //             b && !b.contains(e?.target)
+    //         ) {
+    //             setShowModal(false);
+    //         }
+    //     }
 
-        document.addEventListener('mousedown', handleClickOutside);
+    //     document.addEventListener('mousedown', handleClickOutside);
 
-        return () => document.removeEventListener('mousedown', handleClickOutside);
-    });
+    //     return () => document.removeEventListener('mousedown', handleClickOutside);
+    // });
 
     return (
         <div className='text-white fixed w-full h-full pt-14 z-50 top-0 flex justify-center     max-sm:pt-2' style={{ backgroundColor: 'rgb(0, 0, 0, 0.7)' }}>
@@ -59,7 +59,11 @@ function Modal({ setShowModal, modalDetails }: {
                         <h1 className='text-4xl font-semibold mb-4'>{modalDetails.movieName}</h1>
 
                         <div className='flex gap-2'>
-                            <button className='text-xl font-bold h-10 w-28 gap-1 rounded justify-center flex items-center bg-white text-black'>
+                            <button onClick={() => {
+                                setShowVideoPlayer(true);
+                                setPlayerMovieName(modalDetails.movieName);
+                            }}
+                                className='text-xl font-bold h-10 w-28 gap-1 rounded justify-center flex items-center bg-white text-black'>
                                 <TbPlayerPlayFilled />
                                 Play
                             </button>

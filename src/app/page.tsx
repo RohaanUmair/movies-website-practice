@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setLikedMovies } from "@/states/movies/moviesSlice";
 import axios from "axios";
+import VideoPlayer from "@/components/home-page/VideoPlayer";
 
 
 
@@ -23,6 +24,9 @@ export default function Home() {
 
   const accType = useSelector((state: RootState) => state.user.userAccType);
   const email = useSelector((state: RootState) => state.user.userEmail);
+
+  const [showVideoPlayer, setShowVideoPlayer] = useState<boolean>(false);
+  const [playerMovieName, setPlayerMovieName] = useState<string>('');
 
   useEffect(() => {
     if (!accType || !email) return;
@@ -48,10 +52,15 @@ export default function Home() {
   return (
     <div className={`relative min-h-screen bg-zinc-950 ${showModal && 'overflow-hidden h-screen'}`}>
       <Header />
-      <MovieOverviewSec setShowModal={setShowModal} setModalDetails={setModalDetails} />
-
       {
-        showModal && <Modal modalDetails={modalDetails} setShowModal={setShowModal} />
+        showModal && <Modal setPlayerMovieName={setPlayerMovieName} setShowVideoPlayer={setShowVideoPlayer} modalDetails={modalDetails} setShowModal={setShowModal} />
+      }
+      {
+        showVideoPlayer ? (
+          <VideoPlayer playerMovieName={playerMovieName} setShowVideoPlayer={setShowVideoPlayer} src={'/v-player-vid.mp4'} />
+        ) : (
+          <MovieOverviewSec setPlayerMovieName={setPlayerMovieName} setShowVideoPlayer={setShowVideoPlayer} setShowModal={setShowModal} setModalDetails={setModalDetails} />
+        )
       }
     </div>
   );

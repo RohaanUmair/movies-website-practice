@@ -13,11 +13,13 @@ import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 
 
-function MoviesList({ title, numOfMovies, setShowModal, setModalDetails }: {
+function MoviesList({ title, numOfMovies, setShowModal, setModalDetails, setPlayerMovieName, setShowVideoPlayer }: {
     title: string, numOfMovies: number, setShowModal: Dispatch<SetStateAction<boolean>>, setModalDetails: Dispatch<SetStateAction<{
         movieName: string;
         movieDesc: string;
     }>>;
+    setPlayerMovieName: Dispatch<SetStateAction<string>>;
+    setShowVideoPlayer: Dispatch<SetStateAction<boolean>>;
 }) {
     const [hoveredMovieTitle, setHoveredMovieTitle] = useState<string>('');
 
@@ -75,7 +77,11 @@ function MoviesList({ title, numOfMovies, setShowModal, setModalDetails }: {
                                         <div className='w-full h-full bg-zinc-900 p-4'>
 
                                             <div className='flex gap-2 mb-3'>
-                                                <button className='text-xl font-bold h-10 rounded-full w-10 gap-1 justify-center flex items-center bg-white text-black'>
+                                                <button onClick={() => {
+                                                    setPlayerMovieName(movie.title);
+                                                    setShowVideoPlayer(true);
+                                                }}
+                                                    className='text-xl font-bold h-10 rounded-full w-10 gap-1 justify-center flex items-center bg-white text-black'>
                                                     <TbPlayerPlayFilled />
                                                 </button>
 
@@ -86,7 +92,7 @@ function MoviesList({ title, numOfMovies, setShowModal, setModalDetails }: {
                                                 <div
                                                     className='border rounded-full w-10 h-10 flex cursor-pointer justify-center items-center text-white bg-zinc-800 text-[22px]'
                                                     onClick={() => {
-                                                        handleLikeMovie(movie.title)
+                                                        handleLikeMovie(movie.title);
                                                     }}
                                                 >
                                                     <HiOutlineHandThumbUp />

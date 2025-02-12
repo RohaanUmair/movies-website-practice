@@ -9,11 +9,12 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/states/store';
 import { MovieData } from '@/states/movies/moviesSlice';
 
-function MovieOverviewSec({ setShowModal, setModalDetails }: {
+function MovieOverviewSec({ setShowModal, setModalDetails, setShowVideoPlayer, setPlayerMovieName }: {
     setShowModal: Dispatch<SetStateAction<boolean>>, setModalDetails: Dispatch<SetStateAction<{
         movieName: string;
         movieDesc: string;
-    }>>;
+    }>>, setShowVideoPlayer: Dispatch<SetStateAction<boolean>>;
+    setPlayerMovieName: Dispatch<SetStateAction<string>>;
 }) {
     const movies: MovieData[] = useSelector((state: RootState) => state.movies.apiData);
 
@@ -60,7 +61,10 @@ function MovieOverviewSec({ setShowModal, setModalDetails }: {
                 <div className='flex mt-5 justify-between       max-xs:mt-2'>
 
                     <div className='flex gap-4      max-md:gap-2'>
-                        <button className='flex items-center w-32 h-[52px] rounded justify-center text-xl text-black font-semibold bg-white gap-2         max-md:text-lg max-md:w-24 max-md:h-[40px] max-xs:text-[15px] max-xs:gap-1 max-xs:w-20 max-xs:h-[33px]'>
+                        <button onClick={() => {
+                            setShowVideoPlayer(true);
+                            setPlayerMovieName(movies[0].title);
+                        }} className='flex items-center w-32 h-[52px] rounded justify-center text-xl text-black font-semibold bg-white gap-2         max-md:text-lg max-md:w-24 max-md:h-[40px] max-xs:text-[15px] max-xs:gap-1 max-xs:w-20 max-xs:h-[33px]'>
                             <IoMdPlay className='text-3xl       max-md:text-2xl max-xs:text-lg' />
                             Play
                         </button>
@@ -91,7 +95,7 @@ function MovieOverviewSec({ setShowModal, setModalDetails }: {
             </div>
 
             <div className='pl-12 mt-12 z-20 relative flex flex-col gap-12 overflow-visible      max-xs:gap-6 max-xs:pl-6 max-xs:mt-10'>
-                <MoviesList setModalDetails={setModalDetails} setShowModal={setShowModal} numOfMovies={6} title="Today's Top Picks for You" />
+                <MoviesList setShowVideoPlayer={setShowVideoPlayer} setPlayerMovieName={setPlayerMovieName} setModalDetails={setModalDetails} setShowModal={setShowModal} numOfMovies={6} title="Today's Top Picks for You" />
                 {/* <MoviesList setModalDetails={setModalDetails} apiData={apiData.slice(8, 10)} setShowModal={setShowModal} numOfMovies={3} title='Continue Watching for Hamza Malik' /> */}
                 <NumberedMovieList setModalDetails={setModalDetails} apiData={movies.slice(10, 20)} numOfMovies={10} setShowModal={setShowModal} title='Top 10 Shows Today' />
             </div>
