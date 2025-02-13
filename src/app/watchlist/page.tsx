@@ -1,51 +1,37 @@
 'use client';
 import NumberedMovieListPoster from '@/components/home-page/NumberedMovieListPoster';
-import { MovieData, setApiData, setDislikedMovies, setLikedMovies } from '@/states/movies/moviesSlice';
+import { MovieData, setApiData, setWatchlistMovies } from '@/states/movies/moviesSlice';
 import { AppDispatch, RootState } from '@/states/store';
 import Image from 'next/image'
 import React, { useEffect } from 'react'
-import { BiSolidHeart } from 'react-icons/bi'
 import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'js-cookie'
 import axios from 'axios';
-import { FcDislike } from 'react-icons/fc';
+import { LuListVideo } from 'react-icons/lu';
 
-export default function LikedMoviesPage() {
+export default function WatchlistPage() {
     const movies: MovieData[] = useSelector((state: RootState) => state.movies.apiData);
 
-    const likedMoviesNames = useSelector((state: RootState) => state.movies.likedMovies);
-    const dislikedMoviesNames = useSelector((state: RootState) => state.movies.disLikedMovies);
+    const watchlistedMoviesNames = useSelector((state: RootState) => state.movies.watchlistMovies);
 
-    const likedMovies = movies.filter((movie) => likedMoviesNames.includes(movie.title));
-    const dislikedMovies = movies.filter((movie) => dislikedMoviesNames.includes(movie.title));
+    const watchlistedMovies = movies.filter((movie) => watchlistedMoviesNames.includes(movie.title));
 
     const dispatch = useDispatch<AppDispatch>();
 
     const email = Cookies.get('userEmail');
 
-    // async function setData() {
-    //     const likedMoviesArr = likedMoviesNames;
-    //     await axios.put('/api/like-movie', { email, likedMoviesArr })
-    // }
     const accType = Cookies.get('accType');
 
 
     useEffect(() => {
         if (movies.length == 0) {
-            axios.get('/api/like-movie', {
+            axios.get('/api/watchlist-movie', {
                 params: { email, accType }
             })
                 .then((data) => {
-                    dispatch(setLikedMovies(data.data.data.likedMoviesArr))
+                    console.log(data)
+                    dispatch(setWatchlistMovies(data.data.data.watchlistedMoviesArr))
                 })
-
-            axios.get('/api/dislike-movie', {
-                params: { email, accType }
-            })
-                .then((data) => {
-                    dispatch(setDislikedMovies(data.data.data.dislikedMoviesArr))
-                })
-
 
             const options = {
                 method: 'GET',
@@ -54,13 +40,13 @@ export default function LikedMoviesPage() {
                     Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhZmJjMDM5N2MyN2RkYjJmM2U4ODI4N2U1NTU5NTUyMSIsIm5iZiI6MTczODU4MDE1MC43OTAwMDAyLCJzdWIiOiI2N2EwYTBiNmU5OWRmMjNhOWYyNjc1MjEiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.dG7wxvB4UCX128gdM4dJ6eO84r0DNYe0jzuk3orNCvQ'
                 }
             };
-            fetch('https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1', options)
+            fetch('https://api.themoviedb.org/3/movie/now_playing?language=en-USWatchlistPpage=1', options)
                 .then(res => res.json())
                 .then(res => dispatch(setApiData(res.results)))
                 .catch(err => console.error(err));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [likedMoviesNames, dislikedMoviesNames]);
+    }, [watchlistedMoviesNames]);
 
     return (
         <div className='px-40 w-full h-screen flex flex-col'>
@@ -78,33 +64,13 @@ export default function LikedMoviesPage() {
 
             <div className='w-full h-full text-white z-50 border-t border-[#333] py-1'>
                 <h1 className='flex text-4xl font-semibold items-center gap-4'>
-                    <BiSolidHeart className='text-rose-600 text-5xl' />
-                    Liked Movies
+                    <LuListVideo className='text-rose-600 text-5xl' />
+                    Watchlist
                 </h1>
 
-                <div className='flex gap-4 flex-wrap mt-2'>
+                <div className='flex gap-4 flex-wrap mt-8'>
                     {
-                        likedMovies.map((movie, i: number) => {
-                            return (
-                                <div className='relative' key={i}>
-                                    <NumberedMovieListPoster movieName={movie.title} movieDesc={movie.overview} movieImg={movie.backdrop_path} />
-                                    <h2 className='absolute bottom-0'>{movie.title}</h2>
-                                </div>
-                            )
-                        })
-                    }
-                </div>
-            </div>
-
-            <div className='w-full h-full text-white z-50 border-t border-[#333] py-1'>
-                <h1 className='flex text-4xl font-semibold items-center gap-4'>
-                    <FcDislike className='text-rose-600 text-5xl' />
-                    Disliked Movies
-                </h1>
-
-                <div className='flex gap-4 flex-wrap mt-2'>
-                    {
-                        dislikedMovies.map((movie, i: number) => {
+                        watchlistedMovies.map((movie, i: number) => {
                             return (
                                 <div className='relative' key={i}>
                                     <NumberedMovieListPoster movieName={movie.title} movieDesc={movie.overview} movieImg={movie.backdrop_path} />

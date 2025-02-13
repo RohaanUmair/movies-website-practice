@@ -1,4 +1,4 @@
-import { addDislikedMovie, addLikedMovie } from '@/states/movies/moviesSlice';
+import { addDislikedMovie, addLikedMovie, addWatchlistedMovie } from '@/states/movies/moviesSlice';
 import { RootState } from '@/states/store';
 import axios from 'axios';
 import { useRef, useState, useEffect, Dispatch, SetStateAction } from 'react';
@@ -145,6 +145,7 @@ const VideoPlayer = ({ src, setShowVideoPlayer, playerMovieName }: { src: string
     const likedMoviesArr = useSelector((state: RootState) => state.movies.likedMovies);
     const email = useSelector((state: RootState) => state.user.userEmail)
     const dislikedMoviesArr = useSelector((state: RootState) => state.movies.disLikedMovies);
+    const watchlistedMoviesArr = useSelector((state: RootState) => state.movies.watchlistMovies);
 
 
 
@@ -158,12 +159,16 @@ const VideoPlayer = ({ src, setShowVideoPlayer, playerMovieName }: { src: string
         toast.success('Saved to Disliked Movies');
     }
 
+    const handleWatchlistMovie = async (title: string) => {
+        dispatch(addWatchlistedMovie(title));
+        toast.success('Saved to Watchlist');
+    }
+
     const accType = useSelector((state: RootState) => state.user.userAccType);
 
     async function abcd() {
         await axios.put('/api/like-movie', { email, accType, likedMoviesArr })
     }
-
     useEffect(() => {
         abcd();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -173,11 +178,19 @@ const VideoPlayer = ({ src, setShowVideoPlayer, playerMovieName }: { src: string
     async function abcde() {
         await axios.put('/api/dislike-movie', { email, accType, dislikedMoviesArr })
     }
-
     useEffect(() => {
         abcde();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dislikedMoviesArr]);
+
+
+    async function abcdef() {
+        await axios.put('/api/watchlist-movie', { email, accType, watchlistedMoviesArr })
+    }
+    useEffect(() => {
+        abcdef();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [watchlistedMoviesArr]);
 
 
     const [isIdle, setIsIdle] = useState<boolean>(false);
@@ -202,7 +215,10 @@ const VideoPlayer = ({ src, setShowVideoPlayer, playerMovieName }: { src: string
                 !lockedMode && (
                     <>
                         <div className='absolute top-10 flex left-1/2 gap-3 -translate-x-1/2 z-[99999999999]'>
-                            <div className='border rounded-full w-14 h-14 flex cursor-pointer justify-center items-center text-white bg-zinc-800 text-[39px]'>
+                            <div onClick={() => {
+                                handleWatchlistMovie(playerMovieName);
+                            }}
+                                className='border rounded-full w-14 h-14 flex cursor-pointer justify-center items-center text-white bg-zinc-800 text-[39px]  hover:scale-110 z-[9999999999]'>
                                 <GoPlus />
                             </div>
 

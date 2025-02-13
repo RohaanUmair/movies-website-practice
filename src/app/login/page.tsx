@@ -1,4 +1,3 @@
-import Footer from '@/components/login-page/Footer';
 import LoginOverlay from '@/components/login-page/LoginOverlay';
 import Image from 'next/image';
 import React from 'react'

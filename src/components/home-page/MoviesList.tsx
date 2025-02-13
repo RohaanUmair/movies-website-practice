@@ -3,13 +3,14 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import MovieListPoster from './MovieListPoster';
 import Image from 'next/image';
 import { TbPlayerPlayFilled } from 'react-icons/tb';
-import { HiMiniHandThumbDown, HiMiniHandThumbUp } from 'react-icons/hi2';
+import { HiMiniHandThumbUp } from 'react-icons/hi2';
 import { LiaVolumeOffSolid } from 'react-icons/lia';
 import { AppDispatch, RootState } from '@/states/store';
 import { useDispatch, useSelector } from 'react-redux';
-import { addDislikedMovie, addLikedMovie, MovieData } from '@/states/movies/moviesSlice';
+import { addLikedMovie, addWatchlistedMovie, MovieData } from '@/states/movies/moviesSlice';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
+import { GoPlus } from 'react-icons/go';
 
 
 function MoviesList({ title, numOfMovies, setShowModal, setModalDetails, setPlayerMovieName, setShowVideoPlayer }: {
@@ -29,6 +30,7 @@ function MoviesList({ title, numOfMovies, setShowModal, setModalDetails, setPlay
 
     const likedMoviesArr = useSelector((state: RootState) => state.movies.likedMovies);
     const dislikedMoviesArr = useSelector((state: RootState) => state.movies.disLikedMovies);
+    const watchlistedMoviesArr = useSelector((state: RootState) => state.movies.watchlistMovies);
 
     const email = useSelector((state: RootState) => state.user.userEmail)
 
@@ -39,10 +41,17 @@ function MoviesList({ title, numOfMovies, setShowModal, setModalDetails, setPlay
         setHoveredMovieTitle('');
     }
 
-    const handleDislikeMovie = async (title: string) => {
-        dispatch(addDislikedMovie(title));
-        toast.success('Saved to Disliked Movies');
-        console.log(dislikedMoviesArr);
+    // const handleDislikeMovie = async (title: string) => {
+    //     dispatch(addDislikedMovie(title));
+    //     toast.success('Saved to Disliked Movies');
+    //     console.log(dislikedMoviesArr);
+    //     setHoveredMovieTitle('');
+    // }
+
+    const handleWatchlistMovie = async (title: string) => {
+        dispatch(addWatchlistedMovie(title));
+        toast.success('Saved to Watchlist');
+        console.log(watchlistedMoviesArr);
         setHoveredMovieTitle('');
     }
 
@@ -51,7 +60,6 @@ function MoviesList({ title, numOfMovies, setShowModal, setModalDetails, setPlay
     async function abcd() {
         await axios.put('/api/like-movie', { email, accType, likedMoviesArr })
     }
-
     useEffect(() => {
         abcd();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -61,11 +69,19 @@ function MoviesList({ title, numOfMovies, setShowModal, setModalDetails, setPlay
     async function abcde() {
         await axios.put('/api/dislike-movie', { email, accType, dislikedMoviesArr })
     }
-
     useEffect(() => {
         abcde();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dislikedMoviesArr]);
+
+
+    async function abcdef() {
+        await axios.put('/api/watchlist-movie', { email, accType, watchlistedMoviesArr })
+    }
+    useEffect(() => {
+        abcdef();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [watchlistedMoviesArr]);
 
     return (
         <div className='flex flex-col'>
@@ -102,8 +118,8 @@ function MoviesList({ title, numOfMovies, setShowModal, setModalDetails, setPlay
                                                     <TbPlayerPlayFilled />
                                                 </button>
 
-                                                <div onClick={() => handleDislikeMovie(movie.title)} className='border hover:scale-110 rounded-full w-10 h-10 flex cursor-pointer justify-center items-center text-white bg-zinc-800 text-[22px]'>
-                                                    <HiMiniHandThumbDown />
+                                                <div onClick={() => handleWatchlistMovie(movie.title)} className='hover:scale-110 border rounded-full w-10 h-10 flex cursor-pointer justify-center items-center text-white bg-zinc-800 text-3xl'>
+                                                    <GoPlus />
                                                 </div>
 
                                                 <div

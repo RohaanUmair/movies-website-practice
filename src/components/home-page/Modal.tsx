@@ -1,5 +1,5 @@
 'use client';
-import React, { Dispatch, SetStateAction, useRef } from 'react'
+import React, { Dispatch, SetStateAction, useEffect, useRef } from 'react'
 import { BsChatSquareText } from 'react-icons/bs';
 import { GoPlus } from 'react-icons/go';
 import { HiMiniHandThumbUp } from 'react-icons/hi2';
@@ -7,6 +7,11 @@ import { IoIosClose } from 'react-icons/io';
 import { TbPlayerPlayFilled } from 'react-icons/tb';
 import MovieCard from '../modal/MovieCard';
 import Image from 'next/image';
+import toast from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/states/store';
+import { addDislikedMovie, addLikedMovie, addWatchlistedMovie } from '@/states/movies/moviesSlice';
+import axios from 'axios';
 
 function Modal({ setShowModal, modalDetails, setShowVideoPlayer, setPlayerMovieName }: {
     setShowModal: Dispatch<SetStateAction<boolean>>, modalDetails: {
@@ -34,6 +39,42 @@ function Modal({ setShowModal, modalDetails, setShowVideoPlayer, setPlayerMovieN
 
     //     return () => document.removeEventListener('mousedown', handleClickOutside);
     // });
+    const dispatch = useDispatch();
+    const likedMoviesArr = useSelector((state: RootState) => state.movies.likedMovies);
+    const email = useSelector((state: RootState) => state.user.userEmail)
+    const dislikedMoviesArr = useSelector((state: RootState) => state.movies.disLikedMovies);
+    const watchlistedMoviesArr = useSelector((state: RootState) => state.movies.watchlistMovies);
+
+
+
+    const handleLikeMovie = async (title: string) => {
+        dispatch(addLikedMovie(title));
+        toast.success('Saved to Liked Movies');
+    }
+
+    const handleWatchlistMovie = async (title: string) => {
+        dispatch(addWatchlistedMovie(title));
+        toast.success('Saved to Watchlist');
+    }
+
+    const accType = useSelector((state: RootState) => state.user.userAccType);
+
+    async function abcd() {
+        await axios.put('/api/like-movie', { email, accType, likedMoviesArr })
+    }
+    useEffect(() => {
+        abcd();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [likedMoviesArr]);
+
+
+    async function abcdef() {
+        await axios.put('/api/watchlist-movie', { email, accType, watchlistedMoviesArr })
+    }
+    useEffect(() => {
+        abcdef();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [watchlistedMoviesArr]);
 
     return (
         <div className='text-white fixed w-full h-full pt-14 z-50 top-0 flex justify-center     max-sm:pt-2' style={{ backgroundColor: 'rgb(0, 0, 0, 0.7)' }}>
@@ -63,16 +104,19 @@ function Modal({ setShowModal, modalDetails, setShowVideoPlayer, setPlayerMovieN
                                 setShowVideoPlayer(true);
                                 setPlayerMovieName(modalDetails.movieName);
                             }}
-                                className='text-xl font-bold h-10 w-28 gap-1 rounded justify-center flex items-center bg-white text-black'>
+                                className='text-xl hover:scale-110 font-bold h-10 w-28 gap-1 rounded justify-center flex items-center bg-white text-black'>
                                 <TbPlayerPlayFilled />
                                 Play
                             </button>
 
-                            <div className='border rounded-full w-10 h-10 flex cursor-pointer justify-center items-center text-3xl' style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)' }}>
+                            <div onClick={() => {
+                                handleWatchlistMovie(modalDetails.movieName);
+                            }}
+                                className='border hover:scale-110 rounded-full w-10 h-10 flex cursor-pointer justify-center items-center text-3xl' style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)' }}>
                                 <GoPlus />
                             </div>
 
-                            <div className='border rounded-full w-10 h-10 flex cursor-pointer justify-center items-center text-[22px]' style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)' }}>
+                            <div onClick={() => handleLikeMovie(modalDetails.movieName)} className='border hover:scale-110 rounded-full w-10 h-10 flex cursor-pointer justify-center items-center text-[22px]' style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)' }}>
                                 <HiMiniHandThumbUp />
                             </div>
                         </div>

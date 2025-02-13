@@ -147,7 +147,10 @@ function Header() {
                                         <li className={liStyles}><BiHeart className='text-2xl' />Liked Movies</li>
                                     </Link>
 
-                                    <li className={liStyles}><MdLiveTv className='text-2xl' />Watchlist</li>
+                                    <Link href={'/watchlist'}>
+                                        <li className={liStyles}><MdLiveTv className='text-2xl' />Watchlist</li>
+                                    </Link>
+
                                     <li className={liStyles}><IoMdHelpCircleOutline className='text-2xl' />Help Center</li>
                                     <li
                                         className='hover:bg-zinc-700 cursor-pointer flex items-center justify-center gap-2 border-t py-4   '
