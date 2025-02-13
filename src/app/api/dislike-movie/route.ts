@@ -21,7 +21,7 @@ export async function PUT(req: NextRequest) {
         return NextResponse.json({ message: 'Movie Added' });
     } catch (error) {
         console.log(error);
-        return NextResponse.json({ message: 'Error liking movie' });
+        return NextResponse.json({ message: 'Error disliking movie' });
     }
 }
 

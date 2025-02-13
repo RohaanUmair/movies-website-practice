@@ -1,5 +1,5 @@
 'use client';
-import React, { Dispatch, SetStateAction, useEffect, useRef } from 'react'
+import React, { Dispatch, SetStateAction, useRef } from 'react'
 import { BsChatSquareText } from 'react-icons/bs';
 import { GoPlus } from 'react-icons/go';
 import { HiMiniHandThumbUp } from 'react-icons/hi2';

@@ -3,7 +3,6 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import MovieListPoster from './MovieListPoster';
 import Image from 'next/image';
 import { TbPlayerPlayFilled } from 'react-icons/tb';
-import { GoPlus } from 'react-icons/go';
 import { HiMiniHandThumbDown, HiMiniHandThumbUp } from 'react-icons/hi2';
 import { LiaVolumeOffSolid } from 'react-icons/lia';
 import { AppDispatch, RootState } from '@/states/store';
@@ -99,16 +98,16 @@ function MoviesList({ title, numOfMovies, setShowModal, setModalDetails, setPlay
                                                     setPlayerMovieName(movie.title);
                                                     setShowVideoPlayer(true);
                                                 }}
-                                                    className='text-xl font-bold h-10 rounded-full w-10 gap-1 justify-center flex items-center bg-white text-black'>
+                                                    className='hover:scale-110 text-xl font-bold h-10 rounded-full w-10 gap-1 justify-center flex items-center bg-white text-black'>
                                                     <TbPlayerPlayFilled />
                                                 </button>
 
-                                                <div className='border rounded-full w-10 h-10 flex cursor-pointer justify-center items-center text-white bg-zinc-800 text-3xl'>
+                                                <div onClick={() => handleDislikeMovie(movie.title)} className='border hover:scale-110 rounded-full w-10 h-10 flex cursor-pointer justify-center items-center text-white bg-zinc-800 text-[22px]'>
                                                     <HiMiniHandThumbDown />
                                                 </div>
 
                                                 <div
-                                                    className='border rounded-full w-10 h-10 flex cursor-pointer justify-center items-center text-white bg-zinc-800 text-[22px]'
+                                                    className='border hover:scale-110 rounded-full w-10 h-10 flex cursor-pointer justify-center items-center text-white bg-zinc-800 text-[22px]'
                                                     onClick={() => {
                                                         handleLikeMovie(movie.title);
                                                     }}
