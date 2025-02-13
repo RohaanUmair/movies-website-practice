@@ -48,7 +48,7 @@ function SignupOverlay() {
         try {
             const res2 = await axios.post('/api/verification-email', { to: email, text });
             console.log(res2);
-            
+
             if (res2.data.message == 'User with this Email already exists') {
                 toast.error(res2.data.message, { id: toastId })
             } else {
@@ -176,7 +176,9 @@ function SignupOverlay() {
                 )
             }
 
-            <Toaster />
+            <Toaster containerStyle={{
+                zIndex: 9999999999999999
+            }} />
         </div>
     )
 }

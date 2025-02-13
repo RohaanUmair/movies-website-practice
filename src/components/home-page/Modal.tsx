@@ -10,7 +10,7 @@ import Image from 'next/image';
 import toast from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/states/store';
-import { addDislikedMovie, addLikedMovie, addWatchlistedMovie } from '@/states/movies/moviesSlice';
+import { addLikedMovie, addWatchlistedMovie } from '@/states/movies/moviesSlice';
 import axios from 'axios';
 
 function Modal({ setShowModal, modalDetails, setShowVideoPlayer, setPlayerMovieName }: {
@@ -42,7 +42,6 @@ function Modal({ setShowModal, modalDetails, setShowVideoPlayer, setPlayerMovieN
     const dispatch = useDispatch();
     const likedMoviesArr = useSelector((state: RootState) => state.movies.likedMovies);
     const email = useSelector((state: RootState) => state.user.userEmail)
-    const dislikedMoviesArr = useSelector((state: RootState) => state.movies.disLikedMovies);
     const watchlistedMoviesArr = useSelector((state: RootState) => state.movies.watchlistMovies);
 
 

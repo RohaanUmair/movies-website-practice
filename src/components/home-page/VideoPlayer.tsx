@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 const VideoPlayer = ({ src, setShowVideoPlayer, playerMovieName }: { src: string, setShowVideoPlayer: Dispatch<SetStateAction<boolean>>, playerMovieName: string }) => {
     const videoRef = useRef<HTMLVideoElement | null>(null);
     const intervalRef = useRef<any>(null);
-    const [isPlaying, setIsPlaying] = useState<boolean>(false);
+    const [isPlaying, setIsPlaying] = useState<boolean>(true);
     const [progress, setProgress] = useState<number>(0);
     const [volume, setVolume] = useState<number>(1);
     const [isMuted, setIsMuted] = useState<boolean>(false);
@@ -52,6 +52,10 @@ const VideoPlayer = ({ src, setShowVideoPlayer, playerMovieName }: { src: string
 
         if (video) {
             video.addEventListener('ended', handleVideoEnd);
+        }
+
+        if (videoRef?.current?.paused) {
+            videoRef.current.play();
         }
 
         return () => {
@@ -137,8 +141,8 @@ const VideoPlayer = ({ src, setShowVideoPlayer, playerMovieName }: { src: string
 
 
     const time = (videoRef.current?.duration as number) - (videoRef.current?.currentTime as number);
-    const timeMins = Math.floor(time / 60);
-    const timeSecs = Math.floor(time % 60);
+    const timeMins = Math.floor(time / 60) || 0;
+    const timeSecs = Math.floor(time % 60) || 0;
 
 
     const dispatch = useDispatch();
@@ -326,17 +330,19 @@ const VideoPlayer = ({ src, setShowVideoPlayer, playerMovieName }: { src: string
                             </div>
                         ) : (
                             <>
-                                <input
-                                    className='accent-red-600 outline-none h-[6px] border-none opacity-85'
-                                    type='range'
-                                    min='0'
-                                    max='100'
-                                    value={progress}
-                                    onChange={handleSeek}
-                                    step={0.01}
-                                />
+                                <div className='flex items-center w-full gap-2'>
+                                    <input
+                                        className='accent-red-600 outline-none w-full h-[6px] border-none opacity-85'
+                                        type='range'
+                                        min='0'
+                                        max='100'
+                                        value={progress}
+                                        onChange={handleSeek}
+                                        step={0.01}
+                                    />
 
-                                <p className='text-sm font-sans'>{`${timeMins.toString().padStart(2, '0')}:${timeSecs.toString().padStart(2, '0')}`}</p>
+                                    <p className='text-sm font-sans'>{`${timeMins.toString().padStart(2, '0')}:${timeSecs.toString().padStart(2, '0')}`}</p>
+                                </div>
 
                                 <div className='flex justify-center'>
                                     <div className='flex gap-5 font-semibold'>
@@ -372,7 +378,9 @@ const VideoPlayer = ({ src, setShowVideoPlayer, playerMovieName }: { src: string
                 </div>
             )}
 
-            <Toaster />
+            <Toaster containerStyle={{
+                zIndex: 9999999999999999
+            }} />
         </div>
     );
 };

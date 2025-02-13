@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setLikedMovies } from "@/states/movies/moviesSlice";
 import axios from "axios";
 import VideoPlayer from "@/components/home-page/VideoPlayer";
+import { Toaster } from "react-hot-toast";
 
 
 
@@ -50,11 +51,12 @@ export default function Home() {
   if (!accType) return <SelectUser />
 
   return (
-    <div className={`relative min-h-screen bg-zinc-950 ${showModal && 'overflow-hidden h-screen'}`}>
+    <div className={`relative min-h-screen bg-zinc-950 ${showModal && 'overflow-hidden h-screen'} ${showVideoPlayer && '!overflow-hidden h-screen'}`}>
       <Header />
       {
-        showModal && <Modal setPlayerMovieName={setPlayerMovieName} setShowVideoPlayer={setShowVideoPlayer} modalDetails={modalDetails} setShowModal={setShowModal} />
-      }
+        showModal && (
+          <Modal setPlayerMovieName={setPlayerMovieName} setShowVideoPlayer={setShowVideoPlayer} modalDetails={modalDetails} setShowModal={setShowModal} />
+        )}
       {
         showVideoPlayer ? (
           <VideoPlayer playerMovieName={playerMovieName} setShowVideoPlayer={setShowVideoPlayer} src={'/v-player-vid.mp4'} />
@@ -62,6 +64,7 @@ export default function Home() {
           <MovieOverviewSec setPlayerMovieName={setPlayerMovieName} setShowVideoPlayer={setShowVideoPlayer} setShowModal={setShowModal} setModalDetails={setModalDetails} />
         )
       }
+      <Toaster containerStyle={{zIndex: 9999999999999}} />
     </div>
   );
 };

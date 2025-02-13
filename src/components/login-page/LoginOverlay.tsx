@@ -91,7 +91,9 @@ function LoginOverlay() {
 
             </form>
 
-            <Toaster />
+            <Toaster containerStyle={{
+                zIndex: 9999999999999999
+            }} />
         </div>
     )
 }

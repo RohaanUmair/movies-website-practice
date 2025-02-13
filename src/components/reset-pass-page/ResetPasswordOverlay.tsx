@@ -164,7 +164,9 @@ function ResetPasswordOverlay() {
             )}
 
 
-            <Toaster />
+            <Toaster containerStyle={{
+                zIndex: 9999999999999999
+            }} />
         </div>
     )
 }

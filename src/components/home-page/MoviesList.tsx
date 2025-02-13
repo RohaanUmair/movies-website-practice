@@ -150,7 +150,9 @@ function MoviesList({ title, numOfMovies, setShowModal, setModalDetails, setPlay
                 }
             </div>
 
-            <Toaster />
+            <Toaster containerStyle={{
+                zIndex: 9999999999999999
+            }} />
         </div>
     );
 }

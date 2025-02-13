@@ -1,3 +1,4 @@
+import Footer from '@/components/login-page/Footer';
 import LoginOverlay from '@/components/login-page/LoginOverlay';
 import Image from 'next/image';
 import React from 'react'
@@ -21,6 +22,8 @@ function LoginPage() {
             <div className='z-20'>
                 <LoginOverlay />
             </div>
+
+            <Footer />
         </div>
     )
 }

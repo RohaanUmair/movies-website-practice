@@ -13,7 +13,11 @@ function page() {
                 <Sidebar />
                 <MainContent />
             </div>
-            <Toaster />
+            <Toaster toastOptions={{
+                style: {
+                    zIndex: 99999999999999
+                }
+            }} />
         </div>
     )
 }
