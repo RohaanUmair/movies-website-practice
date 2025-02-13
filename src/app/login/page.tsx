@@ -22,8 +22,6 @@ function LoginPage() {
             <div className='z-20'>
                 <LoginOverlay />
             </div>
-
-            <Footer />
         </div>
     )
 }

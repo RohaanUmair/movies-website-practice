@@ -135,11 +135,10 @@ const VideoPlayer = ({ src, setShowVideoPlayer, playerMovieName }: { src: string
         setIsMuted(newVolume === 0);
     };
 
-    const durationMins = Math.floor(videoRef.current?.duration as number / 60) || 0;
-    const durationSecs = Math.floor(videoRef.current?.duration as number % 60) || 0;
 
-    const curDurationMins = Math.floor(videoRef.current?.currentTime as number / 60) || 0;
-    const curDurationSecs = Math.floor(videoRef.current?.currentTime as number % 60) || 0;
+    const time = (videoRef.current?.duration as number) - (videoRef.current?.currentTime as number);
+    const timeMins = Math.floor(time / 60);
+    const timeSecs = Math.floor(time % 60);
 
 
     const dispatch = useDispatch();
@@ -321,9 +320,7 @@ const VideoPlayer = ({ src, setShowVideoPlayer, playerMovieName }: { src: string
                                     step={0.01}
                                 />
 
-                                <p className='text-sm font-sans'>{`
-                                ${curDurationMins.toString().padStart(2, '0')}:${curDurationSecs.toString().padStart(2, '0')}/${durationMins.toString().padStart(2, '0')}:${durationSecs.toString().padStart(2, '0')}
-                            `}</p>
+                                <p className='text-sm font-sans'>{`${timeMins.toString().padStart(2, '0')}:${timeSecs.toString().padStart(2, '0')}`}</p>
 
                                 <div className='flex justify-center'>
                                     <div className='flex gap-5 font-semibold'>
