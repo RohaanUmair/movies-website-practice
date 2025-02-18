@@ -19,8 +19,8 @@ function LoginOverlay() {
 
         try {
             const res = await axios.post('/api/login', { email, password });
-        
-            if (res.status === 200) { 
+
+            if (res.status === 200) {
                 console.log('Logged in');
                 router.push('/');
             } else {
@@ -32,7 +32,7 @@ function LoginOverlay() {
         } finally {
             setIsSubmitting(false);
         }
-        
+
 
     };
 
@@ -43,9 +43,10 @@ function LoginOverlay() {
                 onSubmit={handleSubmit}
             >
 
-                <h2 className='text-white text-4xl font-bold mb-5'>Login</h2>
+                <h2 className='text-white text-4xl font-bold mb-5' id='login-text'>Login</h2>
 
                 <input
+                    id='login-email'
                     className='h-14 bg-zinc-900 rounded border border-[#777] px-4 text-[#ccc]'
                     type="email"
                     placeholder='Email or mobile number'
@@ -55,6 +56,7 @@ function LoginOverlay() {
                 />
 
                 <input
+                    id='login-pass'
                     className='h-14 bg-zinc-900 rounded border border-[#777] px-4 text-[#ccc]'
                     type="password"
                     placeholder='Passwords'
@@ -69,7 +71,7 @@ function LoginOverlay() {
                         <SyncLoader color="#fff" size={8} />
                     </button>
                 ) : (
-                    <button className='h-10 flex bg-red-600 hover:bg-red-700 active:bg-red-500 rounded text-white font-semibold justify-center items-center'>
+                    <button id='login-btn' className='h-10 flex bg-red-600 hover:bg-red-700 active:bg-red-500 rounded text-white font-semibold justify-center items-center'>
                         Login In
                     </button>
                 )}
