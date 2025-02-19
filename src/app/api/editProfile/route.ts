@@ -43,7 +43,7 @@ export async function PUT(req: NextRequest) {
 
 
         const updatedUserData = await User.findOne({ email });
-
+        
         const accAvatars = updatedUserData.accNames.map(acc => ({
             accName: acc,
             avatar: updatedUserData.avatars?.find(av => av.accName === acc)?.avatar || null

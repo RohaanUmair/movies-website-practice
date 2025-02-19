@@ -51,7 +51,7 @@ describe('template spec', () => {
     cy.clearCookies()
     cy.visit('localhost:3000/signup')
 
-    cy.intercept('GET', '/api/like-movie', {
+    cy.intercept('GET', '/api/like-movie*', {
       statusCode: 200,
       body: {
         "data": {
@@ -754,6 +754,7 @@ describe('template spec', () => {
       .trigger('mousemove')
     cy.get('#video-player-dislike-btn')
       .click()
+    cy.wait('@getLikedMovieAPI')
 
 
     cy.get('.video-player')
@@ -940,10 +941,94 @@ describe('template spec', () => {
     cy.wait('@getProfilesAPI2')
 
 
-    
+    cy.intercept('PUT', '/api/delProfile', {
+      statusCode: 200,
+      body: {
+        "message": "accName Deleted",
+        "data": {
+          "_id": "1234567890asdfghjkl12345678",
+          "username": "TestUser",
+          "email": "abcd@email.com",
+          "password": "$2b$10$OU6KkdBAHCwCLt96Z1BsOOCMakZ.xhuEgpov7Cpe4lfu5NpWoqOWu",
+          "accNames": [
+            "kids",
+            "Profile 2",
+          ],
+          "avatars": [
+            {
+              "accName": "Profile 2",
+              "avatar": 1,
+              "_id": "67b5eece74abd6fb0ac1d6ec"
+            },
+          ],
+          "__v": 0
+        }
+      }
+    }).as('delProfileAPI')
 
 
+    cy.get('#profile-2 #del-profile-btn')
+      .click()
+
+    cy.get('.swal2-confirm')
+      .wait(1000)
+      .click()
+
+    cy.wait('@delProfileAPI')
     cy.wait(1500)
 
+
+    cy.intercept('PUT', '/api/editProfile', {
+      statusCode: 200,
+      body: {
+        "message": "accName Updated",
+        "data": {
+          "_id": "1234567890asdfghjkl12345678",
+          "username": "TestUser",
+          "email": "abcd@email.com",
+          "password": "$2b$10$OU6KkdBAHCwCLt96Z1BsOOCMakZ.xhuEgpov7Cpe4lfu5NpWoqOWu",
+          "accNames": [
+            "kids",
+            "Edited"
+          ],
+          "avatars": [
+            {
+              "accName": "Profile 2",
+              "avatar": 1,
+              "_id": "67b5eece74abd6fb0ac1d6ec"
+            }
+          ],
+          "__v": 0
+        }
+      }
+    }).as('editProfileAPI')
+
+
+    cy.get('#profile-1 #edit-profile-btn')
+      .click()
+      .wait(1000)
+
+    cy.get('#edit-profile-avatar2')
+      .click()
+
+    cy.get('#edit-profile-inp')
+      .type('Edited')
+
+    cy.get('#edit-profile-save-btn')
+      .wait(1000)
+      .click()
+
+    cy.setCookie('accAvatars', JSON.stringify([{ accName: "kids", avatar: null }, { accName: "Edited", avatar: 1 }]))
+
+    cy.wait('@editProfileAPI')
+
+
+    cy.get('#open-menu-btn')
+      .trigger('mouseover')
+
+    cy.wait(1000)
+
+    cy.get('#watchlisted-movies-page-btn')
+      .click()
   })
 })

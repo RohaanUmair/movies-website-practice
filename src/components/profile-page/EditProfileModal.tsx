@@ -27,7 +27,7 @@ function EditProfileModal({ selectedAvatar, setSelectedAvatar, editedProfileName
                         />
                     </div>
 
-                    <div className={`h-12 w-12 flex justify-center items-center border-blue-500 rounded-full ${selectedAvatar == 2 && ' border-2 '}`} onClick={() => setSelectedAvatar(2)}>
+                    <div id="edit-profile-avatar2" className={`h-12 w-12 flex justify-center items-center border-blue-500 rounded-full ${selectedAvatar == 2 && ' border-2 '}`} onClick={() => setSelectedAvatar(2)}>
                         <Image
                             layout="omit"
                             width={100}
@@ -64,6 +64,7 @@ function EditProfileModal({ selectedAvatar, setSelectedAvatar, editedProfileName
 
                 <h2 className="text-white text-2xl mb-4">Edit Profile Name</h2>
                 <input
+                    id="edit-profile-inp"
                     type="text"
                     placeholder="Profile Name"
                     value={editedProfileName}
@@ -81,6 +82,7 @@ function EditProfileModal({ selectedAvatar, setSelectedAvatar, editedProfileName
                         Cancel
                     </button>
                     <button
+                        id="edit-profile-save-btn"
                         onClick={() => {
                             handleEditProfile();
                             setSelectedAvatar(null);

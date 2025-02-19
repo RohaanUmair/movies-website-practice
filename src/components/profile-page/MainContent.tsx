@@ -235,7 +235,7 @@ function MainContent() {
 
                     {accNames?.slice(1).map((accName, index: number) => {
                         return (
-                            <div className="flex flex-col  border-t" key={accName}>
+                            <div className="flex flex-col  border-t" key={accName} id={`profile-${index + 1}`}>
                                 <div className="flex justify-between items-center">
                                     <div className="flex items-center gap-4 py-4">
                                         <div className="w-10 h-10 bg-blue-500 rounded-full">{avatars[index + 1] == null ? (
@@ -252,8 +252,10 @@ function MainContent() {
                                             <button onClick={() => {
                                                 setToBeUpdatedName(accName);
                                                 setShowEditProfileModal(true);
-                                            }} className="bg-green-500 px-3 py-1 hover:bg-green-600 active:bg-green-400">Edit</button>
-                                            <button onClick={() => handleDeleteProfile(accName)} className="bg-red-500 px-3 py-1 hover:bg-red-600 active:bg-red-400">delete</button>
+                                            }} 
+                                            id="edit-profile-btn"
+                                            className="bg-green-500 px-3 py-1 hover:bg-green-600 active:bg-green-400">Edit</button>
+                                            <button id="del-profile-btn" onClick={() => handleDeleteProfile(accName)} className="bg-red-500 px-3 py-1 hover:bg-red-600 active:bg-red-400">delete</button>
                                         </div>
                                     )}
                                 </div>
