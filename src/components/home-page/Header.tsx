@@ -113,7 +113,7 @@ function Header() {
                             <div className='w-56 h-fit absolute top-0 right-0 pt-10'>
                                 <ul className='text-white cursor-default overflow-hidden text-sm pt-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)' }}>
                                     {accNames[1] && (
-                                        <li className={liStyles} onClick={() =>
+                                        <li id='change-profile-btn' className={liStyles} onClick={() =>
                                             accType == 'kids' ? (
                                                 handleAccTypeChange(accNames[1])
                                             ) : (
@@ -153,6 +153,7 @@ function Header() {
 
                                     <li className={liStyles}><IoMdHelpCircleOutline className='text-2xl' />Help Center</li>
                                     <li
+                                        id='logout-btn'
                                         className='hover:bg-zinc-700 cursor-pointer flex items-center justify-center gap-2 border-t py-4   '
                                         onClick={handleLogout}
                                     >

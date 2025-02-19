@@ -16,7 +16,7 @@ function EditProfileModal({ selectedAvatar, setSelectedAvatar, editedProfileName
             <div className="bg-zinc-900 p-8 rounded-lg w-full max-w-md">
                 <h2 className="text-white text-2xl mb-4">Select Avatar</h2>
                 <div className="flex gap-4 mb-3">
-                    <div className={`h-12 w-12 flex justify-center items-center border-blue-500 rounded-full ${selectedAvatar == 1 && ' border-2 '}`} onClick={() => setSelectedAvatar(1)}>
+                    <div id="edit-profile-avatar1" className={`h-12 w-12 flex justify-center items-center border-blue-500 rounded-full ${selectedAvatar == 1 && ' border-2 '}`} onClick={() => setSelectedAvatar(1)}>
                         <Image
                             layout="omit"
                             width={100}
@@ -27,7 +27,7 @@ function EditProfileModal({ selectedAvatar, setSelectedAvatar, editedProfileName
                         />
                     </div>
 
-                    <div id="edit-profile-avatar2" className={`h-12 w-12 flex justify-center items-center border-blue-500 rounded-full ${selectedAvatar == 2 && ' border-2 '}`} onClick={() => setSelectedAvatar(2)}>
+                    <div className={`h-12 w-12 flex justify-center items-center border-blue-500 rounded-full ${selectedAvatar == 2 && ' border-2 '}`} onClick={() => setSelectedAvatar(2)}>
                         <Image
                             layout="omit"
                             width={100}

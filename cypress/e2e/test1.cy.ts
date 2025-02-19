@@ -590,7 +590,7 @@ describe('template spec', () => {
       .should('exist')
       .click()
 
-    cy.wait(1500)
+    cy.wait(800)
     cy.get('#cancel-add-profile-btn')
       .click()
 
@@ -1008,7 +1008,7 @@ describe('template spec', () => {
       .click()
       .wait(1000)
 
-    cy.get('#edit-profile-avatar2')
+    cy.get('#edit-profile-avatar1')
       .click()
 
     cy.get('#edit-profile-inp')
@@ -1028,7 +1028,33 @@ describe('template spec', () => {
 
     cy.wait(1000)
 
-    cy.get('#watchlisted-movies-page-btn')
+    cy.get('#change-profile-btn')
       .click()
+
+    cy.wait(2000)
+
+    
+    cy.intercept('POST', '/api/logout', {
+      statusCode: 200,
+      body: { message: 'Logged out' }
+    }).as('logoutAPI')
+
+
+    cy.get('#open-menu-btn')
+      .trigger('mouseover')
+
+    cy.wait(1000)
+
+    cy.get('#logout-btn')
+      .trigger('mouseenter')
+      .wait(750)
+      .click()
+
+    cy.clearCookies()
+    cy.wait('@logoutAPI')
+
+    cy.visit('localhost:3000')
+
+    cy.wait(2000)
   })
 })
