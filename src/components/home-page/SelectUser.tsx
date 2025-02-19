@@ -55,14 +55,6 @@ function SelectUser() {
     }, []);
 
 
-    if (!username) {
-        return (
-            <div className='h-screen w-full bg-black flex justify-center items-center'>
-                <div className="w-16 h-16 border-4 border-t-4 border-gray-200 rounded-full animate-spin border-t-blue-500"></div>
-            </div>
-        )
-    }
-
     const handleSelectAccType = (type: string) => {
         Cookies.set('accType', type);
         dispatch(setUserAccType(type));
@@ -104,13 +96,19 @@ function SelectUser() {
     };
 
 
-
+    if (!username) {
+        return (
+            <div className='h-screen w-full bg-black flex justify-center items-center'>
+                <div className="w-16 h-16 border-4 border-t-4 border-gray-200 rounded-full animate-spin border-t-blue-500"></div>
+            </div>
+        )
+    }
 
     return (
         <div className="h-screen w-screen bg-zinc-950 flex justify-center items-center">
             <div className="flex flex-col items-center justify-center gap-8">
 
-                <h1 className="text-white text-6xl max-sm:text-4xl max-sm:font-bold">{"Who's watching?"}</h1>
+                <h1 id='select-user-heading' className="text-white text-6xl max-sm:text-4xl max-sm:font-bold">{"Who's watching?"}</h1>
 
                 <div className="flex gap-6 max-sm:gap-3">
 
@@ -118,7 +116,7 @@ function SelectUser() {
                         return (
                             <div key={accName}>
                                 {accName === 'kids' ? (
-                                    <div onClick={() => handleSelectAccType('kids')} className="flex flex-col items-center gap-2 cursor-pointer hover:scale-105 transition-all duration-200">
+                                    <div id='kids-acc' onClick={() => handleSelectAccType('kids')} className="flex flex-col items-center gap-2 cursor-pointer hover:scale-105 transition-all duration-200">
                                         <div className="w-36 h-36 rounded flex overflow-hidden relative max-sm:w-28 max-sm:h-28">
                                             <div className="absolute w-full h-full backdrop-blur-sm flex justify-center items-center"><h4 className="text-5xl font-bold text-white max-sm:text-4xl">kids</h4></div>
                                             <div className="w-[20%] h-full bg-gradient-to-b from-green-500 to-purple-500"></div>
@@ -151,6 +149,7 @@ function SelectUser() {
 
                     {accNames?.length < 5 && (
                         <div
+                            id='add-profile-btn'
                             className="flex flex-col items-center gap-2 cursor-pointer hover:scale-105 transition-all duration-200"
                             onClick={() => setShowAddProfileModal(true)}
                         >
@@ -176,6 +175,7 @@ function SelectUser() {
                             />
                             <div className="flex justify-end gap-4">
                                 <button
+                                    id='cancel-add-profile-btn'
                                     onClick={() => setShowAddProfileModal(false)}
                                     className="px-4 py-2 text-gray-300 hover:text-white transition-colors"
                                 >

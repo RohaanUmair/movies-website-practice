@@ -85,6 +85,7 @@ function SignupOverlay() {
                         <h2 className='text-white text-4xl font-bold mb-5       max-xs:text-3xl'>Create Account</h2>
 
                         <input
+                            id='otp-email'
                             className='h-14 bg-zinc-900 rounded border border-[#777] px-4 text-[#ccc]'
                             type="email"
                             placeholder='Email'
@@ -94,6 +95,7 @@ function SignupOverlay() {
 
                         <div className='flex'>
                             <input
+                                id='otp'
                                 className='h-14 bg-zinc-900 rounded-l border-y border-l border-[#777] px-4 text-[#ccc]'
                                 type="password"
                                 placeholder='Enter OTP'
@@ -105,7 +107,7 @@ function SignupOverlay() {
                             {isOTPSent ? (
                                 <button disabled className='disabled:cursor-not-allowed disabled:bg-red-900 w-full h-14 rounded-r border-r border-t border-b bg-red-500 text-white hover:bg-red-600 active:bg-red-400' onClick={handleSendOTP}>Send OTP</button>
                             ) : (
-                                <button className='w-full h-14 rounded-r border-r border-t border-b bg-red-500 text-white hover:bg-red-600 active:bg-red-400' onClick={handleSendOTP}>Send OTP</button>
+                                <button id='send-otp-btn' className='w-full h-14 rounded-r border-r border-t border-b bg-red-500 text-white hover:bg-red-600 active:bg-red-400' onClick={handleSendOTP}>Send OTP</button>
                             )}
 
                         </div>

@@ -43,7 +43,7 @@ function MovieOverviewSec({ setShowModal, setModalDetails, setShowVideoPlayer, s
             <div className='z-10 mt-56 ml-14 text-white relative        max-md:mt-24 max-md:ml-8 max-xs:ml-4 max-xs:mt-36'>
 
                 <div className='flex gap-4      max-xs:gap-2'>
-                    <div className={`w-28 h-28 rounded-2xl bg-[url("https://image.tmdb.org/t/p/w500/zOpe0eHsq0A2NvNyBbtT6sj53qV.jpg")] bg-cover bg-center         max-md:w-24 max-md:h-24 max-xs:w-20 max-xs:h-20`} style={{ boxShadow: '1px 1px 25px 2px #111' }}></div>
+                    <div className={`w-28 h-28 rounded-2xl bg-[url("https://image.tmdb.org/t/p/w500${movies[0].backdrop_path}")] bg-cover bg-center         max-md:w-24 max-md:h-24 max-xs:w-20 max-xs:h-20`} style={{ boxShadow: '1px 1px 25px 2px #111' }}></div>
                     <div className='flex flex-col h-28 justify-center       max-md:h-24 max-xs:h-20'>
                         <h3 className='flex items-center font-mono tracking-widest gap-1'><span className='text-3xl text-[#ff0000] font-bold'>N</span> MOVIE</h3>
                         <h4 className='text-[22px] font-bold        max-md:text-xl max-xs:text-base'>{movies[0].title}</h4>
@@ -76,6 +76,7 @@ function MovieOverviewSec({ setShowModal, setModalDetails, setShowVideoPlayer, s
                                 movieDesc: movies[0].overview
                             })
                         }}
+                            id='more-info-btn'
                             className='flex items-center w-40 h-[52px] rounded justify-center text-lg font-semibold gap-2       max-md:text-lg max-md:w-36 max-md:font-normal max-md:h-[40px] max-xs:text-[15px] max-xs:gap-1 max-xs:h-[33px] max-xs:w-28' style={{ backgroundColor: 'rgba(255, 255, 255, 0.3)' }}>
                             <MdInfoOutline className='text-3xl max-xs:text-lg' />
                             More info

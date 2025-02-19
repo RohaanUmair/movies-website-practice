@@ -89,20 +89,21 @@ function Modal({ setShowModal, modalDetails, setShowVideoPlayer, setPlayerMovieN
                         muted
                     />
 
-                    <div ref={closeBtnRef} onClick={() => setShowModal(false)} className='p-1 rounded-full absolute right-4 top-4 cursor-pointer' style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+                    <div id='modal-close-btn' ref={closeBtnRef} onClick={() => setShowModal(false)} className='p-1 rounded-full absolute right-4 top-4 cursor-pointer' style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
                         <IoIosClose className=' rounded-full text-4xl' />
                     </div>
 
                     <div className='absolute bottom-10 left-10'>
                         <h6 className='text-[#ff0000] text-3xl flex items-center font-bold translate-y-3 -translate-x-2'>N <span className='text-[12px] font-normal text-[#aaa]'>FILM</span></h6>
 
-                        <h1 className='text-4xl font-semibold mb-4'>{modalDetails.movieName}</h1>
+                        <h1 id='modal-movie-name' className='text-4xl font-semibold mb-4'>{modalDetails.movieName}</h1>
 
                         <div className='flex gap-2'>
                             <button onClick={() => {
                                 setShowVideoPlayer(true);
                                 setPlayerMovieName(modalDetails.movieName);
                             }}
+                                id='modal-play-btn'
                                 className='text-xl hover:scale-110 font-bold h-10 w-28 gap-1 rounded justify-center flex items-center bg-white text-black'>
                                 <TbPlayerPlayFilled />
                                 Play
@@ -111,11 +112,12 @@ function Modal({ setShowModal, modalDetails, setShowVideoPlayer, setPlayerMovieN
                             <div onClick={() => {
                                 handleWatchlistMovie(modalDetails.movieName);
                             }}
+                                id='modal-watchlist-btn'
                                 className='border hover:scale-110 rounded-full w-10 h-10 flex cursor-pointer justify-center items-center text-3xl' style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)' }}>
                                 <GoPlus />
                             </div>
 
-                            <div onClick={() => handleLikeMovie(modalDetails.movieName)} className='border hover:scale-110 rounded-full w-10 h-10 flex cursor-pointer justify-center items-center text-[22px]' style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)' }}>
+                            <div id='modal-like-btn' onClick={() => handleLikeMovie(modalDetails.movieName)} className='border hover:scale-110 rounded-full w-10 h-10 flex cursor-pointer justify-center items-center text-[22px]' style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)' }}>
                                 <HiMiniHandThumbUp />
                             </div>
                         </div>

@@ -91,7 +91,7 @@ function MoviesList({ title, numOfMovies, setShowModal, setModalDetails, setPlay
                 {
                     movies.map((movie, index: number) => {
                         return (
-                            <div key={index} onMouseLeave={() => setHoveredMovieTitle('')}>
+                            <div id={`poster-${index}`} key={index} onMouseLeave={() => setHoveredMovieTitle('')}>
                                 <MovieListPoster setHoveredMovieTitle={setHoveredMovieTitle} setModalDetails={setModalDetails} movieName={movie.title} movieImg={movie.backdrop_path} setShowModal={setShowModal} movieDesc={movie.overview} key={movie.title} />
                                 {movie.title == hoveredMovieTitle && (
                                     <div style={{ boxShadow: '2px 2px 6px 3px #111' }} className='rounded overflow-hidden w-80 flex flex-col absolute -top-52 z-50'>
@@ -118,7 +118,7 @@ function MoviesList({ title, numOfMovies, setShowModal, setModalDetails, setPlay
                                                     <TbPlayerPlayFilled />
                                                 </button>
 
-                                                <div onClick={() => handleWatchlistMovie(movie.title)} className='hover:scale-110 border rounded-full w-10 h-10 flex cursor-pointer justify-center items-center text-white bg-zinc-800 text-3xl'>
+                                                <div id='poster-watchlist-movie-btn' onClick={() => handleWatchlistMovie(movie.title)} className='hover:scale-110 border rounded-full w-10 h-10 flex cursor-pointer justify-center items-center text-white bg-zinc-800 text-3xl'>
                                                     <GoPlus />
                                                 </div>
 

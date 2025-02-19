@@ -91,7 +91,7 @@ function Header() {
                     <h6>{accType}</h6>
                     <FaRegBell className="text-3xl      max-md:text-2xl max-sm:text-xl" />
                     <FiMenu className='lg:hidden text-2xl       max-sm:text-[22px]' />
-                    <div className="flex items-center relative gap-1" onMouseEnter={() => setShowMenu(true)} onMouseLeave={() => setShowMenu(false)}>
+                    <div id='open-menu-btn' className="flex items-center relative gap-1" onMouseEnter={() => setShowMenu(true)} onMouseLeave={() => setShowMenu(false)}>
                         {accType !== 'kids' ? (
                             <div className="w-10 h-10 bg-blue-500 rounded-full flex       max-sm:w-6 max-sm:h-6">
                                 {avatar !== null && (
@@ -144,7 +144,7 @@ function Header() {
                                     </Link>
 
                                     <Link href={'/liked-movies'}>
-                                        <li className={liStyles}><BiHeart className='text-2xl' />Liked Movies</li>
+                                        <li id='liked-movies-page-btn' className={liStyles}><BiHeart className='text-2xl' />Liked Movies</li>
                                     </Link>
 
                                     <Link href={'/watchlist'}>
