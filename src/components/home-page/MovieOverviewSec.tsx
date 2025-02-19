@@ -64,7 +64,9 @@ function MovieOverviewSec({ setShowModal, setModalDetails, setShowVideoPlayer, s
                         <button onClick={() => {
                             setShowVideoPlayer(true);
                             setPlayerMovieName(movies[0].title);
-                        }} className='flex items-center w-32 h-[52px] rounded justify-center text-xl text-black font-semibold bg-white gap-2         max-md:text-lg max-md:w-24 max-md:h-[40px] max-xs:text-[15px] max-xs:gap-1 max-xs:w-20 max-xs:h-[33px]'>
+                        }}
+                            id='play-movie-btn'
+                            className='flex items-center w-32 h-[52px] rounded justify-center text-xl text-black font-semibold bg-white gap-2         max-md:text-lg max-md:w-24 max-md:h-[40px] max-xs:text-[15px] max-xs:gap-1 max-xs:w-20 max-xs:h-[33px]'>
                             <IoMdPlay className='text-3xl       max-md:text-2xl max-xs:text-lg' />
                             Play
                         </button>

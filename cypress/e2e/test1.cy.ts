@@ -51,6 +51,21 @@ describe('template spec', () => {
     cy.clearCookies();
     cy.visit('localhost:3000/signup')
 
+    cy.intercept('GET', '/api/like-movie', {
+      statusCode: 200,
+      body: {
+        "data": {
+          "_id": "1234567890asdfghjkl12345678",
+          "email": "abcd@email.com",
+          "accType": "kids",
+          "__v": 0,
+          "likedMoviesArr": [
+            "Captain America: Brave New World"
+          ]
+        }
+      }
+    }).as('getLikedMovieAPI')
+
 
     cy.get('#otp-email')
       .should('exist')
@@ -596,6 +611,8 @@ describe('template spec', () => {
     }).as('watchlistMovieAPI');
 
 
+
+
     cy.get('#kids-acc')
       .click()
 
@@ -627,7 +644,8 @@ describe('template spec', () => {
       .click()
 
 
-    cy.get('#more-info-btn')
+    cy.scrollTo('bottom')
+    cy.get('#poster-2')
       .click()
 
     cy.get('#modal-like-btn')
@@ -642,7 +660,7 @@ describe('template spec', () => {
 
     cy.get('#open-menu-btn')
       .trigger('mouseover')
-      
+
     cy.wait(1000)
 
     cy.get('#liked-movies-page-btn')
@@ -652,7 +670,101 @@ describe('template spec', () => {
     cy.wait(1500)
     cy.go('back')
 
+    cy.wait(1000)
 
-  
+
+    cy.scrollTo('bottom')
+    // cy.wait('@getLikedMovieAPI')
+
+    cy.get('#poster-2')
+      .trigger('mouseover')
+
+    cy.wait(1000)
+    cy.get('#poster-0')
+      .trigger('mouseover')
+    cy.get('#poster-0')
+      .trigger('mouseout')
+
+    cy.get('#play-movie-btn')
+      .click()
+
+    cy.wait(1000)
+
+    cy.get('#play-pause-btn')
+      .click()
+
+    cy.wait(750)
+    cy.get('.video-player')
+      .trigger('mousemove')
+    cy.get('#play-pause-btn')
+      .click()
+
+    cy.get('#forward-btn')
+      .click()
+      .wait(500)
+      .click()
+      .wait(500)
+      .click()
+
+
+    cy.get('.video-player')
+      .trigger('mousemove')
+    cy.get('#video-player-volume-inp')
+      .invoke('val', 0.5)
+      .invoke('val', 0.6)
+      .invoke('val', 0.7)
+      .invoke('val', 0.8)
+      .invoke('val', 0.5)
+      .invoke('val', 0.6)
+      .invoke('val', 0.7)
+      .invoke('val', 0.8)
+      .trigger('input')
+      .trigger('change')
+
+
+    cy.get('.video-player')
+      .trigger('mousemove')
+    cy.get('#video-player-lock-btn')
+      .click()
+
+    cy.wait(2000)
+    cy.get('.video-player')
+      .trigger('mousemove')
+    cy.get('#video-player-lock-btn')
+      .click()
+
+
+    cy.get('.video-player')
+      .trigger('mousemove')
+    cy.get('#video-player-speed-btn')
+      .click()
+
+    cy.get('.video-player')
+      .trigger('mousemove')
+    cy.get('#video-player-speed-inp')
+      .invoke('val', 1.25)
+      .trigger('input')
+      .trigger('change')
+
+    cy.get('.video-player')
+      .trigger('mousemove')
+    cy.get('#video-player-speed-close-btn')
+      .click()
+
+
+    cy.get('.video-player')
+      .trigger('mousemove')
+    cy.get('#video-player-dislike-btn')
+      .click()
+
+
+    cy.get('.video-player')
+      .trigger('mousemove')
+    cy.wait(750)
+    cy.get('.video-player')
+      .trigger('mousemove')
+
+    cy.get('#video-player-close-btn')
+      .click()
   })
 })

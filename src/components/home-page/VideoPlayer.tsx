@@ -227,6 +227,7 @@ const VideoPlayer = ({ src, setShowVideoPlayer, playerMovieName }: { src: string
                             </div>
 
                             <div
+                                id='video-player-dislike-btn'
                                 className='border rounded-full w-14 h-14 flex cursor-pointer justify-center items-center text-white bg-zinc-800 text-3xl hover:scale-110 z-[9999999999]'
                                 onClick={() => {
                                     handleDislikeMovie(playerMovieName);
@@ -250,16 +251,16 @@ const VideoPlayer = ({ src, setShowVideoPlayer, playerMovieName }: { src: string
                             <h2 className='text-white font-semibold'>{playerMovieName}</h2>
                         </div>
 
-                        <IoIosClose onClick={() => setShowVideoPlayer(false)} className='absolute z-[99999999999] right-0 text-white text-5xl hover:bg-zinc-700 rounded-full cursor-pointer top-0 active:bg-zinc-500' />
+                        <IoIosClose id='video-player-close-btn' onClick={() => setShowVideoPlayer(false)} className='absolute z-[99999999999] right-0 text-white text-5xl hover:bg-zinc-700 rounded-full cursor-pointer top-0 active:bg-zinc-500' />
 
                         <div className='absolute top-1/2 left-1/2 z-[99999999999] text-white text-6xl -translate-x-1/2 -translate-y-1/2 flex justify-evenly w-full'>
                             <MdReplay10 onClick={handleRewind} className='text-8xl cursor-pointer' />
 
-                            <button onClick={togglePlayPause}>
+                            <button id='play-pause-btn' onClick={togglePlayPause}>
                                 {isPlaying ? <FaPause /> : <FaPlay />}
                             </button>
 
-                            <MdForward10 onClick={handleForward} className='text-8xl cursor-pointer' />
+                            <MdForward10 id='forward-btn' onClick={handleForward} className='text-8xl cursor-pointer' />
                         </div>
 
                         <div className='flex flex-col items-center gap-32 absolute left-10 bottom-1/2'>
@@ -267,6 +268,7 @@ const VideoPlayer = ({ src, setShowVideoPlayer, playerMovieName }: { src: string
                                 {isMuted ? <FaVolumeMute /> : <FaVolumeUp />}
                             </button>
                             <input
+                                id='video-player-volume-inp'
                                 className='accent-white -rotate-90 z-[9999999999] h-full w-52'
                                 type='range'
                                 min='0'
@@ -294,7 +296,7 @@ const VideoPlayer = ({ src, setShowVideoPlayer, playerMovieName }: { src: string
             {!isIdle && (
                 <div className={`text-white flex flex-col justify-center absolute bottom-0 h-24 gap-2 w-full px-8 ${lockedMode && 'h-32 !bg-transparent'}`} style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
                     {lockedMode ? (
-                        <div className='flex justify-center flex-col items-center cursor-pointer' onClick={() => setLockedMode(false)}>
+                        <div id='video-player-lock-btn' className='flex justify-center flex-col items-center cursor-pointer' onClick={() => setLockedMode(false)}>
                             <div className='h-11 w-11 text-2xl bg-white rounded-full text-black flex justify-center items-center'>
                                 <SlLock />
                             </div>
@@ -308,6 +310,7 @@ const VideoPlayer = ({ src, setShowVideoPlayer, playerMovieName }: { src: string
                         showSpeedSelect ? (
                             <div className='flex flex-col items-center w-full gap-2'>
                                 <input
+                                    id='video-player-speed-inp'
                                     className="accent-zinc-400 outline-none w-1/2 h-2"
                                     type="range"
                                     min="0.5"
@@ -326,7 +329,7 @@ const VideoPlayer = ({ src, setShowVideoPlayer, playerMovieName }: { src: string
                                 </ul>
 
 
-                                <IoIosClose onClick={() => setShowSpeedSelect(false)} className='absolute right-52 text-5xl hover:bg-zinc-700 rounded-full cursor-pointer top-0 active:bg-zinc-500' />
+                                <IoIosClose id='video-player-speed-close-btn' onClick={() => setShowSpeedSelect(false)} className='absolute right-52 text-5xl hover:bg-zinc-700 rounded-full cursor-pointer top-0 active:bg-zinc-500' />
                             </div>
                         ) : (
                             <>
@@ -346,12 +349,12 @@ const VideoPlayer = ({ src, setShowVideoPlayer, playerMovieName }: { src: string
 
                                 <div className='flex justify-center'>
                                     <div className='flex gap-5 font-semibold'>
-                                        <div className='flex items-center text-sm gap-1 hover:bg-zinc-700 p-1 cursor-pointer' onClick={() => setShowSpeedSelect(true)}>
+                                        <div id='video-player-speed-btn' className='flex items-center text-sm gap-1 hover:bg-zinc-700 p-1 cursor-pointer' onClick={() => setShowSpeedSelect(true)}>
                                             <TbBrandSpeedtest className='text-2xl' />
                                             <h4>Speed ( {playbackSpeed}x )</h4>
                                         </div>
 
-                                        <div onClick={() => setLockedMode(true)} className='flex items-center text-sm gap-1 hover:bg-zinc-700 p-1 cursor-pointer'>
+                                        <div id='video-player-lock-btn' onClick={() => setLockedMode(true)} className='flex items-center text-sm gap-1 hover:bg-zinc-700 p-1 cursor-pointer'>
                                             <SlLockOpen className='text-2xl' />
                                             <h4>Lock</h4>
                                         </div>
