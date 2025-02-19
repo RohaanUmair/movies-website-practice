@@ -17,7 +17,7 @@ function AddProfileModal({ selectedAvatar, setSelectedAvatar, newProfileName, se
             <div className="bg-zinc-900 p-8 rounded-lg w-full max-w-md">
                 <h2 className="text-white text-2xl mb-4">Select Avatar</h2>
                 <div className="flex gap-4 mb-3">
-                    <div className={`h-12 w-12 flex justify-center items-center border-blue-500 rounded-full ${selectedAvatar == 1 && ' border-2 '}`} onClick={() => setSelectedAvatar(1)}>
+                    <div id="add-profile-avatar1" className={`h-12 w-12 flex justify-center items-center border-blue-500 rounded-full ${selectedAvatar == 1 && ' border-2 '}`} onClick={() => setSelectedAvatar(1)}>
                         <Image
                             layout="omit"
                             width={100}
@@ -39,7 +39,7 @@ function AddProfileModal({ selectedAvatar, setSelectedAvatar, newProfileName, se
                         />
                     </div>
 
-                    <div className={`h-12 w-12 flex justify-center items-center border-blue-500 rounded-full ${selectedAvatar == 3 && ' border-2 '}`} onClick={() => setSelectedAvatar(3)}>
+                    <div id="add-profile-avatar3" className={`h-12 w-12 flex justify-center items-center border-blue-500 rounded-full ${selectedAvatar == 3 && ' border-2 '}`} onClick={() => setSelectedAvatar(3)}>
                         <Image
                             layout="omit"
                             width={100}
@@ -64,6 +64,7 @@ function AddProfileModal({ selectedAvatar, setSelectedAvatar, newProfileName, se
                 </div>
                 <h2 className="text-white text-2xl mb-4">Add New Profile</h2>
                 <input
+                    id="add-profile-inp"
                     type="text"
                     placeholder="Profile Name"
                     value={newProfileName}
@@ -78,6 +79,7 @@ function AddProfileModal({ selectedAvatar, setSelectedAvatar, newProfileName, se
                         Cancel
                     </button>
                     <button
+                        id="create-profile-btn"
                         onClick={() => {
                             handleCreateProfile();
                         }}

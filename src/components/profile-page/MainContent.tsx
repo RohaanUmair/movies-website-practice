@@ -264,7 +264,7 @@ function MainContent() {
 
                     {accNames?.length !== 5 && (
                         <>
-                            <button onClick={() => setShowAddProfileModal(true)} className="bg-zinc-300 font-bold rounded w-full mx-auto h-12 hover:bg-zinc-400 active:bg-zinc-200 transition-colors">Add Profile</button>
+                            <button id="add-profile-btn" onClick={() => setShowAddProfileModal(true)} className="bg-zinc-300 font-bold rounded w-full mx-auto h-12 hover:bg-zinc-400 active:bg-zinc-200 transition-colors">Add Profile</button>
                             <p className="mx-auto my-4 text-[#777]">Add up to 5 profiles for anyone who lives with you.</p>
                         </>
                     )}

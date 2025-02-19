@@ -1,7 +1,7 @@
 describe('template spec', () => {
   beforeEach(() => {
-    Cypress.config('scrollBehavior', false);
-    cy.viewport(1180, 680);
+    Cypress.config('scrollBehavior', false)
+    cy.viewport(1180, 680)
   })
 
   // it('passes', () => {
@@ -48,7 +48,7 @@ describe('template spec', () => {
 
 
   it('Submit login form', () => {
-    cy.clearCookies();
+    cy.clearCookies()
     cy.visit('localhost:3000/signup')
 
     cy.intercept('GET', '/api/like-movie', {
@@ -60,7 +60,7 @@ describe('template spec', () => {
           "accType": "kids",
           "__v": 0,
           "likedMoviesArr": [
-            "Captain America: Brave New World"
+            "Panda Plan"
           ]
         }
       }
@@ -118,7 +118,7 @@ describe('template spec', () => {
     cy.intercept('POST', '/api/login', {
       statusCode: 200,
       body: { message: 'Logged In' }
-    }).as('loginAPI');
+    }).as('loginAPI')
 
 
     cy.get('#login-email')
@@ -131,13 +131,13 @@ describe('template spec', () => {
       .should('have.text', 'Login In')
       .click()
 
-    cy.wait('@loginAPI');
+    cy.wait('@loginAPI')
 
 
-    cy.setCookie("user", "TestUser");
-    cy.setCookie("userEmail", "abcd@email.com");
-    cy.setCookie("accNames", JSON.stringify(['kids']));
-    cy.setCookie("accAvatars", JSON.stringify([]));
+    cy.setCookie("user", "TestUser")
+    cy.setCookie("userEmail", "abcd@email.com")
+    cy.setCookie("accNames", JSON.stringify(['kids']))
+    cy.setCookie("accAvatars", JSON.stringify([]))
 
     cy.wait(1000)
 
@@ -155,7 +155,7 @@ describe('template spec', () => {
           __v: 0
         }
       }
-    }).as('getProfilesAPI');
+    }).as('getProfilesAPI')
 
     cy.visit('localhost:3000')
 
@@ -515,7 +515,7 @@ describe('template spec', () => {
             "id": 1272149,
             "original_language": "en",
             "original_title": "Bridget Jones: Mad About the Boy",
-            "overview": "Bridget Jones finally has some luck in her life; she has a great job as a screenwriter, her family and a new boyfriend; the fact that he's over twenty years her junior isn't the only thing causing problems.",
+            "overview": "Bridget Jones finally has some luck in her life she has a great job as a screenwriter, her family and a new boyfriend the fact that he's over twenty years her junior isn't the only thing causing problems.",
             "popularity": 614.838,
             "poster_path": "/taEVBdVSqYo9YeN3ycw2SosklZL.jpg",
             "release_date": "2025-02-12",
@@ -576,7 +576,7 @@ describe('template spec', () => {
     cy.wait('@moviesAPI')
 
 
-    cy.wait('@getProfilesAPI');
+    cy.wait('@getProfilesAPI')
 
     cy.wait(1000)
 
@@ -598,17 +598,17 @@ describe('template spec', () => {
     cy.intercept('PUT', '/api/like-movie', {
       statusCode: 200,
       body: { message: 'not updated' }
-    }).as('likeMovieAPI');
+    }).as('likeMovieAPI')
 
     cy.intercept('PUT', '/api/dislike-movie', {
       statusCode: 200,
       body: { message: 'not updated' }
-    }).as('dislikeMovieAPI');
+    }).as('dislikeMovieAPI')
 
     cy.intercept('PUT', '/api/watchlist-movie', {
       statusCode: 200,
       body: { message: 'not updated' }
-    }).as('watchlistMovieAPI');
+    }).as('watchlistMovieAPI')
 
 
 
@@ -743,8 +743,6 @@ describe('template spec', () => {
       .trigger('mousemove')
     cy.get('#video-player-speed-inp')
       .invoke('val', 1.25)
-      .trigger('input')
-      .trigger('change')
 
     cy.get('.video-player')
       .trigger('mousemove')
@@ -766,5 +764,186 @@ describe('template spec', () => {
 
     cy.get('#video-player-close-btn')
       .click()
+
+
+    cy.get('#open-menu-btn')
+      .trigger('mouseover')
+
+    cy.wait(1000)
+
+    cy.get('#liked-movies-page-btn')
+      .click()
+
+    cy.wait(1500)
+    cy.go('back')
+
+
+    cy.wait(1000)
+    cy.get('#more-info-btn')
+      .click()
+
+    cy.get('#modal-watchlist-btn')
+      .click()
+
+    cy.wait(750)
+    cy.get('#modal-close-btn')
+      .click()
+
+    cy.wait(1000)
+
+
+    cy.get('#open-menu-btn')
+      .trigger('mouseover')
+
+    cy.wait(1000)
+
+    cy.get('#watchlisted-movies-page-btn')
+      .click()
+
+    cy.wait(1500)
+    cy.go('back')
+
+
+    cy.get('#open-menu-btn')
+      .trigger('mouseover')
+
+    cy.wait(1000)
+
+    cy.get('#profiles-page-btn')
+      .click()
+
+    cy.wait(1000)
+
+
+    cy.intercept('PUT', '/api/addProfile', {
+      statusCode: 200,
+      body: {
+        message: "accName and avatar saved"
+      }
+    }).as('putProfileAPI')
+
+    cy.intercept('GET', '/api/addProfile', {
+      statusCode: 200,
+      body: {
+        data: {
+          "_id": "1234567890asdfghjkl12345678",
+          "username": "TestUser",
+          "email": "abcd@email.com",
+          "password": "$2b$10$OU6KkdBAHCwCLt96Z1BsOOCMakZ.xhuEgpov7Cpe4lfu5NpWoqOWu",
+          "accNames": [
+            "kids",
+            "Profile 2"
+          ],
+          "avatars": [
+            {
+              "accName": "Profile 2",
+              "avatar": 1,
+              "_id": "67b5eece74abd6fb0ac1d6ec"
+            }
+          ],
+          "__v": 0
+        }
+      }
+    }).as('getProfilesAPI')
+
+    cy.get('#add-profile-btn')
+      .trigger('mouseover')
+      .wait(750)
+      .click()
+
+    cy.contains('Select Avatar')
+
+    cy.get('#add-profile-avatar1')
+      .click()
+
+    cy.contains('Add New Profile')
+
+    cy.get('#add-profile-inp')
+      .type('Profile 2')
+
+    cy.wait(1000)
+
+    cy.setCookie('user', 'Profile 2')
+    cy.setCookie('accAvatars', JSON.stringify([
+      { accName: "kids", avatar: null },
+      { accName: "Profile 2", avatar: 1 }
+    ]));
+
+
+    cy.get('#create-profile-btn')
+      .click()
+
+    cy.wait('@putProfileAPI')
+    cy.wait('@getProfilesAPI')
+
+
+
+    cy.intercept('GET', '/api/addProfile', {
+      statusCode: 200,
+      body: {
+        data: {
+          "_id": "1234567890asdfghjkl12345678",
+          "username": "TestUser",
+          "email": "abcd@email.com",
+          "password": "$2b$10$OU6KkdBAHCwCLt96Z1BsOOCMakZ.xhuEgpov7Cpe4lfu5NpWoqOWu",
+          "accNames": [
+            "kids",
+            "Profile 2",
+            "Profile 3"
+          ],
+          "avatars": [
+            {
+              "accName": "Profile 2",
+              "avatar": 1,
+              "_id": "67b5eece74abd6fb0ac1d6ec"
+            },
+            {
+              "accName": "Profile 3",
+              "avatar": 3,
+              "_id": "67b5eece74abd6fb0ac1d6aa"
+            }
+          ],
+          "__v": 0
+        }
+      }
+    }).as('getProfilesAPI2')
+
+    cy.get('#add-profile-btn')
+      .trigger('mouseover')
+      .wait(750)
+      .click()
+
+    cy.contains('Select Avatar')
+
+    cy.get('#add-profile-avatar3')
+      .click()
+
+    cy.contains('Add New Profile')
+
+    cy.get('#add-profile-inp')
+      .type('Profile 3')
+
+    cy.wait(1000)
+
+    cy.setCookie('user', 'Profile 3')
+    cy.setCookie('accAvatars', JSON.stringify([
+      { accName: "kids", avatar: null },
+      { accName: "Profile 2", avatar: 1 },
+      { accName: "Profile 3", avatar: 3 }
+    ]));
+
+
+    cy.get('#create-profile-btn')
+      .click()
+
+    cy.wait('@putProfileAPI')
+    cy.wait('@getProfilesAPI2')
+
+
+    
+
+
+    cy.wait(1500)
+
   })
 })

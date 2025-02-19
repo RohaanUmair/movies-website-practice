@@ -140,7 +140,7 @@ function Header() {
                                     )}
 
                                     <Link href={'/profile'}>
-                                        <li className={liStyles}><TiPencil className='text-2xl' />Manage Profiles</li>
+                                        <li id='profiles-page-btn' className={liStyles}><TiPencil className='text-2xl' />Manage Profiles</li>
                                     </Link>
 
                                     <Link href={'/liked-movies'}>
@@ -148,7 +148,7 @@ function Header() {
                                     </Link>
 
                                     <Link href={'/watchlist'}>
-                                        <li className={liStyles}><MdLiveTv className='text-2xl' />Watchlist</li>
+                                        <li id='watchlisted-movies-page-btn' className={liStyles}><MdLiveTv className='text-2xl' />Watchlist</li>
                                     </Link>
 
                                     <li className={liStyles}><IoMdHelpCircleOutline className='text-2xl' />Help Center</li>
