@@ -8,10 +8,10 @@ function Sidebar() {
     const liStyles = "flex items-center cursor-pointer gap-2 font-sans font-bold text-zinc-600";
 
     return (
-        <div className="flex flex-col gap-10 w-[29%]        max-xs:w-fit">
+        <div id="profile-sidebar" className="flex flex-col gap-10 w-[29%]        max-xs:w-fit">
 
             <Link href={'/'}>
-                <button className="flex items-center text-sm font-semibold gap-2 hover:underline        max-xs:hidden"><IoIosArrowRoundBack className="text-3xl" /> Back to Movies</button>
+                <button id="back-to-movies-btn" className="flex items-center text-sm font-semibold gap-2 hover:underline        max-xs:hidden"><IoIosArrowRoundBack className="text-3xl" /> Back to Movies</button>
                 <IoIosArrowRoundBack className="text-3xl xs:hidden" />
             </Link>
 

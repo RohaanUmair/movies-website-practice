@@ -4,7 +4,7 @@ import { IoLanguage } from 'react-icons/io5'
 
 function Footer() {
     return (
-        <footer className='h-72 w-full text-[#aaa] flex justify-between pr-36 items-center      max-lg:pr-0 max-lg:!px-14 max-sm:h-full max-sm:pb-8'>
+        <footer id='footer' className='h-72 w-full text-[#aaa] flex justify-between pr-36 items-center      max-lg:pr-0 max-lg:!px-14 max-sm:h-full max-sm:pb-8'>
 
             <div className='flex w-full justify-between     max-md:text-sm max-sm:flex-col'>
                 <div className='flex flex-col gap-4'>

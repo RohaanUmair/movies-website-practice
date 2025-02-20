@@ -33,6 +33,7 @@ function MovieOverviewSec({ setShowModal, setModalDetails, setShowVideoPlayer, s
     return (
         <div>
             <video
+                id='bg-video'
                 src={vidUrl}
                 className='absolute h-screen w-full object-cover inset-0 z-10 opacity-75       max-md:h-[60dvh]'
                 autoPlay

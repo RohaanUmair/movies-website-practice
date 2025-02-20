@@ -85,7 +85,7 @@ function MoviesList({ title, numOfMovies, setShowModal, setModalDetails, setPlay
 
     return (
         <div className='flex flex-col'>
-            <h1 className='text-white font-semibold text-lg mb-2        max-xs:text-base'>{title}</h1>
+            <h1 id='movie-list-heading' className='text-white font-semibold text-lg mb-2        max-xs:text-base'>{title}</h1>
 
             <div className='flex gap-2 overflow-x-scroll w-full overflow-visible scrollbar-hide pr-8'>
                 {

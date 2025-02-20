@@ -63,7 +63,7 @@ export default function WatchlistPage() {
             <header className='h-40 flex items-center'><h1 className='z-10 text-[#ff0000] text-5xl font-semibold       max-lg:px-[10%] max-md:text-4xl'>Movies</h1></header>
 
             <div className='w-full h-full text-white z-50 border-t border-[#333] py-1'>
-                <h1 className='flex text-4xl font-semibold items-center gap-4'>
+                <h1 id='watchlist-heading' className='flex text-4xl font-semibold items-center gap-4'>
                     <LuListVideo className='text-rose-600 text-5xl' />
                     Watchlist
                 </h1>
@@ -74,7 +74,7 @@ export default function WatchlistPage() {
                             return (
                                 <div className='relative' key={i}>
                                     <NumberedMovieListPoster movieName={movie.title} movieDesc={movie.overview} movieImg={movie.backdrop_path} />
-                                    <h2 className='absolute bottom-0'>{movie.title}</h2>
+                                    <h2 id='watchlist-movie-name' className='absolute bottom-0'>{movie.title}</h2>
                                 </div>
                             )
                         })

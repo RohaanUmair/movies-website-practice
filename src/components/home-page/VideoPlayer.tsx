@@ -219,7 +219,7 @@ const VideoPlayer = ({ src, setShowVideoPlayer, playerMovieName }: { src: string
                 !lockedMode && (
                     <>
                         <div className='absolute top-10 flex left-1/2 gap-3 -translate-x-1/2 z-[99999999999]'>
-                            <div onClick={() => {
+                            <div id='video-player-watchlist-btn' onClick={() => {
                                 handleWatchlistMovie(playerMovieName);
                             }}
                                 className='border rounded-full w-14 h-14 flex cursor-pointer justify-center items-center text-white bg-zinc-800 text-[39px]  hover:scale-110 z-[9999999999]'>
@@ -237,6 +237,7 @@ const VideoPlayer = ({ src, setShowVideoPlayer, playerMovieName }: { src: string
                             </div>
 
                             <div
+                                id='video-player-like-btn'
                                 className='border rounded-full w-14 h-14 flex cursor-pointer justify-center items-center text-white bg-zinc-800 text-3xl hover:scale-110 z-[99999999999]'
                                 onClick={() => {
                                     handleLikeMovie(playerMovieName);
@@ -248,13 +249,13 @@ const VideoPlayer = ({ src, setShowVideoPlayer, playerMovieName }: { src: string
 
                         <div className='flex absolute items-center top-5 left-20'>
                             <h1 className='text-5xl font-bold text-red-600'>N</h1>
-                            <h2 className='text-white font-semibold'>{playerMovieName}</h2>
+                            <h2 id='player-movie-name' className='text-white font-semibold'>{playerMovieName}</h2>
                         </div>
 
                         <IoIosClose id='video-player-close-btn' onClick={() => setShowVideoPlayer(false)} className='absolute z-[99999999999] right-0 text-white text-5xl hover:bg-zinc-700 rounded-full cursor-pointer top-0 active:bg-zinc-500' />
 
                         <div className='absolute top-1/2 left-1/2 z-[99999999999] text-white text-6xl -translate-x-1/2 -translate-y-1/2 flex justify-evenly w-full'>
-                            <MdReplay10 onClick={handleRewind} className='text-8xl cursor-pointer' />
+                            <MdReplay10 id='rewind-btn' onClick={handleRewind} className='text-8xl cursor-pointer' />
 
                             <button id='play-pause-btn' onClick={togglePlayPause}>
                                 {isPlaying ? <FaPause /> : <FaPlay />}
@@ -335,6 +336,7 @@ const VideoPlayer = ({ src, setShowVideoPlayer, playerMovieName }: { src: string
                             <>
                                 <div className='flex items-center w-full gap-2'>
                                     <input
+                                        id='video-progress-inp'
                                         className='accent-red-600 outline-none w-full h-[6px] border-none opacity-85'
                                         type='range'
                                         min='0'

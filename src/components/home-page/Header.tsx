@@ -69,11 +69,11 @@ function Header() {
 
     return (
         <header className='h-20 flex items-center px-12 gap-8 relative z-50         max-md:px-6 max-md:h-16' style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }}>
-            <h1 className='z-10 text-[#ff0000] text-3xl font-semibold' onClick={() => console.log('avatar', avatar)}>Movies</h1>
+            <h1 id='text-movies' className='z-10 text-[#ff0000] text-3xl font-semibold'>Movies</h1>
 
             <div className="flex items-center justify-between w-full        max-lg:justify-end">
 
-                <ul className="flex gap-4 text-white font-semibold text-sm      max-lg:hidden">
+                <ul id='nav' className="flex gap-4 text-white font-semibold text-sm      max-lg:hidden">
                     <Link href={'/'}>
                         <li className='cursor-pointer font-sans font-bold'>Home</li>
                     </Link>
@@ -88,7 +88,7 @@ function Header() {
 
                 <div className="flex text-white items-center gap-4      max-sm:gap-2">
                     <GoSearch className="text-3xl       max-md:text-2xl max-sm:text-xl" />
-                    <h6>{accType}</h6>
+                    <h6 id='profile-type-text'>{accType}</h6>
                     <FaRegBell className="text-3xl      max-md:text-2xl max-sm:text-xl" />
                     <FiMenu className='lg:hidden text-2xl       max-sm:text-[22px]' />
                     <div id='open-menu-btn' className="flex items-center relative gap-1" onMouseEnter={() => setShowMenu(true)} onMouseLeave={() => setShowMenu(false)}>
@@ -107,7 +107,7 @@ function Header() {
                                 <div className="w-[20%] h-full bg-gradient-to-b from-blue-200 to-blue-500"></div>
                             </div>
                         )}
-                        <IoMdArrowDropdown className="text-2xl" />
+                        <IoMdArrowDropdown id='dropdown-arrow' className="text-2xl" />
 
                         {showMenu && (
                             <div className='w-56 h-fit absolute top-0 right-0 pt-10'>

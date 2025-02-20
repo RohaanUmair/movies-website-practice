@@ -164,9 +164,10 @@ function SelectUser() {
 
                 {showAddProfileModal && (
                     <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
-                        <div className="bg-zinc-900 p-8 rounded-lg w-full max-w-md">
-                            <h2 className="text-white text-2xl mb-4">Add New Profile</h2>
+                        <div id='add-profile-modal' className="bg-zinc-900 p-8 rounded-lg w-full max-w-md">
+                            <h2 id='add-new-profile-text' className="text-white text-2xl mb-4">Add New Profile</h2>
                             <input
+                                id='add-profile-inp'
                                 type="text"
                                 placeholder="Profile Name"
                                 value={newProfileName}
@@ -182,6 +183,7 @@ function SelectUser() {
                                     Cancel
                                 </button>
                                 <button
+                                    id='submit-add-profile-btn'
                                     onClick={() => {
                                         handleCreateProfile();
                                     }}

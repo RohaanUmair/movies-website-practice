@@ -82,7 +82,7 @@ function SignupOverlay() {
                         onSubmit={handleProceed}
                     >
 
-                        <h2 className='text-white text-4xl font-bold mb-5       max-xs:text-3xl'>Create Account</h2>
+                        <h2 id='create-acc-text' className='text-white text-4xl font-bold mb-5       max-xs:text-3xl'>Create Account</h2>
 
                         <input
                             id='otp-email'
@@ -113,12 +113,13 @@ function SignupOverlay() {
                         </div>
 
                         <button
+                            id='otp-proceed-btn'
                             className='h-10 flex justify-center items-center bg-red-600 hover:bg-red-700 active:bg-red-500 rounded text-white font-semibold'
                         >
                             Proceed
                         </button>
 
-                        <p className='text-[#aaa]'>Already have an Account? <span onClick={() => router.push('/login')} className='cursor-pointer hover:underline text-white font-semibold'>Login Now</span></p>
+                        <p className='text-[#aaa]'>Already have an Account? <span onClick={() => router.push('/login')} id='login-now-btn' className='cursor-pointer hover:underline text-white font-semibold'>Login Now</span></p>
 
                         <p className='text-[#aaa] text-sm'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Maxime tempore distinctio.  <span className='text-blue-500 cursor-pointer'>Learn more</span></p>
 

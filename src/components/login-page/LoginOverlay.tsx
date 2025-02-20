@@ -80,14 +80,14 @@ function LoginOverlay() {
 
                 <button className='h-10 bg-zinc-600 rounded text-white font-semibold'>Use a Login-In Code</button>
 
-                <p className='text-center text-white hover:underline cursor-pointer' onClick={() => router.push('/reset-password')}>Forgot password?</p>
+                <p id='forgot-pass-btn' className='text-center text-white hover:underline cursor-pointer' onClick={() => router.push('/reset-password')}>Forgot password?</p>
 
                 <div className='flex gap-3'>
                     <input type="checkbox" className='scale-150' />
                     <p className='text-white'>Remember me</p>
                 </div>
 
-                <p className='text-[#aaa]'>New to Netflix? <span onClick={() => router.push('/signup')} className='text-white font-semibold cursor-pointer hover:underline'>Sign up now.</span></p>
+                <p className='text-[#aaa]'>New to Netflix? <span onClick={() => router.push('/signup')} id='signup-now-btn' className='text-white font-semibold cursor-pointer hover:underline'>Sign up now.</span></p>
 
                 <p className='text-[#aaa] text-sm'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Maxime tempore distinctio.  <span className='text-blue-500 cursor-pointer'>Learn more</span></p>
 

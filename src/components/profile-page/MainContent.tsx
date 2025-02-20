@@ -182,8 +182,8 @@ function MainContent() {
         <>
             <div className="flex flex-col w-[65%]       max-md:w-[68%] max-xs:w-[86%]">
 
-                <h1 className="text-[35px] font-bold">Profiles</h1>
-                <h4 className="font-semibold text-zinc-700">Parental Controls and Permissions</h4>
+                <h1 id="main-heading-profiles" className="text-[35px] font-bold">Profiles</h1>
+                <h4 id="sub-heading-1" className="font-semibold text-zinc-700">Parental Controls and Permissions</h4>
 
 
                 <div className="border-2 border-zinc-200 bg-white rounded-lg">
@@ -216,7 +216,7 @@ function MainContent() {
                 </div>
 
 
-                <h4 className="font-semibold text-zinc-700 mt-6">Profile Settings</h4>
+                <h4 id="sub-heading-2" className="font-semibold text-zinc-700 mt-6">Profile Settings</h4>
                 <div className="border-2 border-zinc-200 bg-white px-6 rounded-lg flex flex-col">
                     <div className="flex flex-col">
                         <div className="flex justify-between items-center">

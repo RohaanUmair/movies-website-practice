@@ -69,14 +69,15 @@ function ResetPasswordOverlay() {
 
 
     return (
-        <div className='m-auto bg-zinc-100 w-[360px] px-10 py-10'>
+        <div id='reset-pass-box' className='m-auto bg-zinc-100 w-[360px] px-10 py-10'>
             <h1 className='text-3xl font-bold mb-2'>Reset Password</h1>
 
             {showResetPassForm ? (
-                <form className='flex flex-col mt-8 gap-4' onSubmit={handleResetPassword}>
+                <form id='new-password-form' className='flex flex-col mt-8 gap-4' onSubmit={handleResetPassword}>
                     <div>
                         <p className='text-zinc-500 tracking-tight text-sm font-semibold'>Enter new Password</p>
                         <input
+                            id='new-pass-inp1'
                             type="password"
                             placeholder='New password'
                             className='border border-zinc-300 h-10 rounded-[3px] px-4 w-full outline-none focus:ring-2 ring-blue-500 ring-offset-0'
@@ -91,6 +92,7 @@ function ResetPasswordOverlay() {
                     <div>
                         <p className='text-zinc-500 tracking-tight text-sm font-semibold'>Confirm Password</p>
                         <input
+                            id='new-pass-inp2'
                             type="password"
                             placeholder='Confirm new password'
                             className='border border-zinc-300 h-10 rounded-[3px] px-4 w-full outline-none focus:ring-2 ring-blue-500 ring-offset-0'
@@ -105,7 +107,7 @@ function ResetPasswordOverlay() {
                     {resettingPass ? (
                         <button disabled type='submit' className='disabled:bg-blue-900 cursor-not-allowed bg-blue-500 hover:bg-blue-600 active:bg-blue-400 w-full h-10 text-white'>Submit</button>
                     ) : (
-                        <button type='submit' className='bg-blue-500 hover:bg-blue-600 active:bg-blue-400 w-full h-10 text-white'>Submit</button>
+                        <button id='new-pass-submit-btn' type='submit' className='bg-blue-500 hover:bg-blue-600 active:bg-blue-400 w-full h-10 text-white'>Submit</button>
                     )}
 
                 </form>
@@ -113,9 +115,10 @@ function ResetPasswordOverlay() {
 
 
                 isOTPSent ? (
-                    <form className='flex flex-col mt-8 gap-4' onSubmit={handleSubmitOTP}>
+                    <form id='enter-otp-form' className='flex flex-col mt-8 gap-4' onSubmit={handleSubmitOTP}>
                         <p className='text-zinc-500 tracking-tight text-sm font-semibold'>Please Enter the OTP sent on your Email</p>
                         <input
+                            id='enter-otp-inp'
                             type="password"
                             placeholder='****'
                             className='border border-zinc-300 h-10 rounded-[3px] px-4 text-xl outline-none focus:ring-2 ring-blue-500 ring-offset-0'
@@ -125,7 +128,7 @@ function ResetPasswordOverlay() {
                             maxLength={4}
                         />
 
-                        <button type='submit' className='bg-blue-500 hover:bg-blue-600 active:bg-blue-400 w-full h-10 text-white'>Submit</button>
+                        <button id='submit-otp-btn' type='submit' className='bg-blue-500 hover:bg-blue-600 active:bg-blue-400 w-full h-10 text-white'>Submit</button>
                     </form>
                 ) : (
                     <>
@@ -145,6 +148,7 @@ function ResetPasswordOverlay() {
                         <form className='flex flex-col mt-8 gap-4' onSubmit={handleSubmit}>
                             <p className='text-zinc-500 tracking-tight text-sm font-semibold'>We will send you an OTP on your Email</p>
                             <input
+                                id='forgot-pass-email'
                                 type="email"
                                 placeholder='name@example.com'
                                 className='border border-zinc-300 h-10 rounded-[3px] text-sm px-4 outline-none focus:ring-2 ring-blue-500 ring-offset-0'
@@ -156,7 +160,7 @@ function ResetPasswordOverlay() {
                             {isOTPSending ? (
                                 <button disabled type='submit' className='disabled:bg-blue-900 disabled:cursor-not-allowed bg-blue-500 hover:bg-blue-600 active:bg-blue-400 w-full h-10 text-white'>Email me</button>
                             ) : (
-                                <button type='submit' className='bg-blue-500 hover:bg-blue-600 active:bg-blue-400 w-full h-10 text-white'>Email me</button>
+                                <button id='email-me-btn' type='submit' className='bg-blue-500 hover:bg-blue-600 active:bg-blue-400 w-full h-10 text-white'>Email me</button>
                             )}
                         </form>
                     </>

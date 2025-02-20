@@ -15,7 +15,7 @@ function ResetPasswordPage() {
                 />
             </div>
 
-            <header className='h-24 flex items-center'><h1 className='z-10 text-[#ff0000] text-5xl font-semibold       max-lg:px-[10%] max-md:text-4xl'>Movies</h1></header>
+            <header id='movies-header' className='h-24 flex items-center'><h1 className='z-10 text-[#ff0000] text-5xl font-semibold       max-lg:px-[10%] max-md:text-4xl'>Movies</h1></header>
 
             <div className='z-20 m-auto'>
                 <ResetPasswordOverlay />

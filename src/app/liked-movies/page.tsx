@@ -77,7 +77,7 @@ export default function LikedMoviesPage() {
             <header className='h-40 flex items-center'><h1 className='z-10 text-[#ff0000] text-5xl font-semibold       max-lg:px-[10%] max-md:text-4xl'>Movies</h1></header>
 
             <div className='w-full h-full text-white z-50 border-t border-[#333] py-1'>
-                <h1 className='flex text-4xl font-semibold items-center gap-4'>
+                <h1 id='liked-movies-heading' className='flex text-4xl font-semibold items-center gap-4'>
                     <BiSolidHeart className='text-rose-600 text-5xl' />
                     Liked Movies
                 </h1>
@@ -97,7 +97,7 @@ export default function LikedMoviesPage() {
             </div>
 
             <div className='w-full h-full text-white z-50 border-t border-[#333] py-1'>
-                <h1 className='flex text-4xl font-semibold items-center gap-4'>
+                <h1 id='disliked-movies-heading' className='flex text-4xl font-semibold items-center gap-4'>
                     <FcDislike className='text-rose-600 text-5xl' />
                     Disliked Movies
                 </h1>

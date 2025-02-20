@@ -66,6 +66,9 @@ describe('template spec', () => {
       }
     }).as('getLikedMovieAPI')
 
+    cy.get('#create-acc-text')
+      .should('exist')
+      .should('have.text', 'Create Account')
 
     cy.get('#otp-email')
       .should('exist')
@@ -73,9 +76,17 @@ describe('template spec', () => {
 
     cy.get('#otp')
       .should('exist')
+      .type('1234')
 
     cy.get('#send-otp-btn')
       .should('have.text', 'Send OTP')
+
+    cy.get('#otp-proceed-btn')
+      .should('be.visible')
+
+    cy.get('#login-now-btn')
+      .should('be.visible')
+      .should('have.text', 'Login Now')
 
 
     cy.visit('localhost:3000/login')
@@ -105,6 +116,13 @@ describe('template spec', () => {
       .clear()
 
 
+    cy.get('#forgot-pass-btn')
+      .should('be.visible')
+
+    cy.get('#signup-now-btn')
+      .should('have.text', 'Sign up now.')
+
+
     cy.get('#login-pass')
       .type('123123')
 
@@ -113,6 +131,19 @@ describe('template spec', () => {
 
     cy.get('#login-pass')
       .clear()
+
+
+    cy.get('#footer')
+      .should('be.visible')
+      .should('contain.text', 'Questions? Contact us.')
+      .should('contain.text', 'FAQ')
+      .should('contain.text', 'Cookie Preferences')
+      .should('contain.text', 'Help Center')
+      .should('contain.text', 'Corporate Information')
+      .should('contain.text', 'Terms of Use')
+      .should('contain.text', 'Privacy')
+      .should('contain.html', 'button')
+
 
 
     cy.intercept('POST', '/api/login', {
@@ -139,7 +170,7 @@ describe('template spec', () => {
     cy.setCookie("accNames", JSON.stringify(['kids']))
     cy.setCookie("accAvatars", JSON.stringify([]))
 
-    cy.wait(1000)
+    // cy.wait(1000)
 
 
     cy.intercept('GET', '/api/addProfile', {
@@ -578,7 +609,7 @@ describe('template spec', () => {
 
     cy.wait('@getProfilesAPI')
 
-    cy.wait(1000)
+    // cy.wait(1000)
 
     cy.get('#select-user-heading')
       .should('have.text', "Who's watching?")
@@ -590,9 +621,27 @@ describe('template spec', () => {
       .should('exist')
       .click()
 
-    cy.wait(800)
+    cy.get('#add-profile-modal')
+      .should('be.visible')
+
+    cy.get('#add-new-profile-text')
+      .should('have.text', 'Add New Profile')
+
+    cy.get('#add-profile-inp')
+      .should('exist')
+      .type('New Profile')
+      .clear()
+
+    cy.get('#submit-add-profile-btn')
+      .should('be.visible')
+
+    // cy.wait(800)
     cy.get('#cancel-add-profile-btn')
+      .should('be.visible')
       .click()
+
+    cy.get('#add-profile-modal')
+      .should('not.exist')
 
 
     cy.intercept('PUT', '/api/like-movie', {
@@ -622,38 +671,72 @@ describe('template spec', () => {
     cy.wait('@watchlistMovieAPI')
 
 
-    cy.wait(1000)
-    cy.get('#more-info-btn')
+    cy.get('header')
+      .should('be.visible')
+
+    cy.get('#text-movies')
+      .should('have.text', 'Movies')
+
+    cy.get('#nav')
       .should('exist')
+
+    cy.get('#profile-type-text')
+      .should('have.text', 'kids')
+
+    cy.get('#dropdown-arrow')
+      .should('be.visible')
+
+
+    cy.get('#bg-video')
+      .should('exist')
+
+    cy.get('#bg-video')
+      .should('exist')
+
+    cy.contains('Included with your membership')
+      .should('be.visible')
+
+    cy.get('#movie-list-heading')
+      .should('have.text', "Today's Top Picks for You")
+
+    cy.get('#numbered-movie-list-heading')
+      .should('have.text', "Top 10 Shows Today")
+
+    // cy.wait(1000)
+    cy.get('#more-info-btn')
+      .should('be.visible')
       .click()
 
     cy.get('#modal-movie-name')
       .should('have.text', 'Captain America: Brave New World')
 
     cy.get('#modal-play-btn')
-      .should('exist')
+      .should('be.visible')
 
     cy.get('#modal-watchlist-btn')
-      .should('exist')
+      .should('be.visible')
 
     cy.get('#modal-like-btn')
-      .should('exist')
+      .should('be.visible')
 
-    cy.wait(1000)
+    // cy.wait(1000)
     cy.get('#modal-close-btn')
+      .should('be.visible')
       .click()
 
 
     cy.scrollTo('bottom')
     cy.get('#poster-2')
+      .should('be.visible')
       .click()
 
     cy.get('#modal-like-btn')
       .click()
 
     cy.contains('Saved to Liked Movies')
+    // .should('be.visible')
 
-    cy.wait(750)
+    // cy.wait(750)
     cy.get('#modal-close-btn')
       .click()
 
@@ -661,55 +744,94 @@ describe('template spec', () => {
     cy.get('#open-menu-btn')
       .trigger('mouseover')
 
-    cy.wait(1000)
+    cy.get('#profiles-page-btn')
+      .should('be.visible')
+
+    cy.get('#liked-movies-page-btn')
+      .should('be.visible')
+
+    cy.get('#watchlisted-movies-page-btn')
+      .should('be.visible')
+
+    cy.get('#logout-btn')
+      .should('be.visible')
+
+    // cy.wait(1000)
 
     cy.get('#liked-movies-page-btn')
       .click()
 
+    cy.url()
+      .should('contain', 'liked-movie')
 
-    cy.wait(1500)
+    cy.get('#liked-movies-heading')
+      .should('contain', 'Liked Movies')
+
+    cy.get('#disliked-movies-heading')
+      .should('contain', 'Disliked Movies')
+
+    cy.contains('Panda Plan')
+
+
+    // cy.wait(1500)
     cy.go('back')
 
-    cy.wait(1000)
+    // cy.wait(1000)
 
 
     cy.scrollTo('bottom')
     // cy.wait('@getLikedMovieAPI')
 
     cy.get('#poster-2')
+      .should('be.visible')
       .trigger('mouseover')
 
-    cy.wait(1000)
+    // cy.wait(1000)
     cy.get('#poster-0')
       .trigger('mouseover')
     cy.get('#poster-0')
       .trigger('mouseout')
 
     cy.get('#play-movie-btn')
+      .should('be.visible')
       .click()
 
-    cy.wait(1000)
+    cy.get('.video-player')
+      .should('be.visible')
+
+    cy.get('.video-player')
+      .trigger('mousemove')
+    cy.get('#player-movie-name')
+      .should('have.text', 'Captain America: Brave New World')
+
+    // cy.wait(1000)
 
     cy.get('#play-pause-btn')
+      .should('exist')
       .click()
 
-    cy.wait(750)
+    // cy.wait(750)
     cy.get('.video-player')
       .trigger('mousemove')
     cy.get('#play-pause-btn')
       .click()
 
     cy.get('#forward-btn')
+      .should('exist')
       .click()
       .wait(500)
       .click()
       .wait(500)
       .click()
+
+    cy.get('#rewind-btn')
+      .should('exist')
 
 
     cy.get('.video-player')
       .trigger('mousemove')
     cy.get('#video-player-volume-inp')
+      .should('exist')
       .invoke('val', 0.5)
       .invoke('val', 0.6)
       .invoke('val', 0.7)
@@ -725,9 +847,10 @@ describe('template spec', () => {
     cy.get('.video-player')
       .trigger('mousemove')
     cy.get('#video-player-lock-btn')
+      .should('exist')
       .click()
 
-    cy.wait(2000)
+    // cy.wait(2000)
     cy.get('.video-player')
       .trigger('mousemove')
     cy.get('#video-player-lock-btn')
@@ -737,29 +860,42 @@ describe('template spec', () => {
     cy.get('.video-player')
       .trigger('mousemove')
     cy.get('#video-player-speed-btn')
+      .should('exist')
       .click()
 
     cy.get('.video-player')
       .trigger('mousemove')
     cy.get('#video-player-speed-inp')
+      .should('exist')
       .invoke('val', 1.25)
 
     cy.get('.video-player')
       .trigger('mousemove')
     cy.get('#video-player-speed-close-btn')
+      .should('exist')
       .click()
 
+
+    cy.get('#video-progress-inp')
+      .should('exist')
+
+    cy.get('#video-player-watchlist-btn')
+      .should('exist')
+
+    cy.get('#video-player-like-btn')
+      .should('exist')
 
     cy.get('.video-player')
       .trigger('mousemove')
     cy.get('#video-player-dislike-btn')
+      .should('exist')
       .click()
     cy.wait('@getLikedMovieAPI')
 
 
     cy.get('.video-player')
       .trigger('mousemove')
-    cy.wait(750)
+    // cy.wait(750)
     cy.get('.video-player')
       .trigger('mousemove')
 
@@ -770,50 +906,70 @@ describe('template spec', () => {
     cy.get('#open-menu-btn')
       .trigger('mouseover')
 
-    cy.wait(1000)
+    // cy.wait(1000)
 
     cy.get('#liked-movies-page-btn')
       .click()
 
-    cy.wait(1500)
+    cy.url()
+      .should('contain', 'liked-movie')
+
+    cy.get('#liked-movies-heading')
+      .should('contain', 'Liked Movies')
+
+    cy.get('#disliked-movies-heading')
+      .should('contain', 'Disliked Movies')
+
+    cy.contains('Panda Plan')
+    cy.contains('Captain America: Brave New World')
+
     cy.go('back')
 
 
-    cy.wait(1000)
+    // cy.wait(1000)
     cy.get('#more-info-btn')
       .click()
 
     cy.get('#modal-watchlist-btn')
       .click()
 
-    cy.wait(750)
+    // cy.wait(750)
     cy.get('#modal-close-btn')
       .click()
 
-    cy.wait(1000)
+    // cy.wait(1000)
 
 
     cy.get('#open-menu-btn')
       .trigger('mouseover')
 
-    cy.wait(1000)
+    // cy.wait(1000)
 
     cy.get('#watchlisted-movies-page-btn')
       .click()
 
-    cy.wait(1500)
+    cy.url()
+      .should('contain', 'watchlist')
+
+    cy.get('#watchlist-heading')
+      .should('have.text', 'Watchlist')
+
+    cy.get('#watchlist-movie-name')
+      .should('have.text', 'Captain America: Brave New World')
+
+    // cy.wait(1500)
     cy.go('back')
 
 
     cy.get('#open-menu-btn')
       .trigger('mouseover')
 
-    cy.wait(1000)
+    // cy.wait(1000)
 
     cy.get('#profiles-page-btn')
       .click()
 
-    cy.wait(1000)
+    // cy.wait(1000)
 
 
     cy.intercept('PUT', '/api/addProfile', {
@@ -847,12 +1003,34 @@ describe('template spec', () => {
       }
     }).as('getProfilesAPI')
 
+
+    cy.get('#profile-sidebar')
+      .should('be.visible')
+      .should('contain', 'Overview')
+      .should('contain', 'Membership')
+      .should('contain', 'Security')
+      .should('contain', 'Devices')
+
+    cy.get('#back-to-movies-btn')
+      .should('be.visible')
+      .should('contain', 'Back to Movies')
+
+    cy.get('#main-heading-profiles')
+      .should('have.text', 'Profiles')
+
+    cy.get('#sub-heading-1')
+      .should('have.text', 'Parental Controls and Permissions')
+
+    cy.get('#sub-heading-2')
+      .should('have.text', 'Profile Settings')
+
+
     cy.get('#add-profile-btn')
-      .trigger('mouseover')
-      .wait(750)
+      .should('exist')
       .click()
 
     cy.contains('Select Avatar')
+      .should('be.visible')
 
     cy.get('#add-profile-avatar1')
       .click()
@@ -862,7 +1040,7 @@ describe('template spec', () => {
     cy.get('#add-profile-inp')
       .type('Profile 2')
 
-    cy.wait(1000)
+    // cy.wait(1000)
 
     cy.setCookie('user', 'Profile 2')
     cy.setCookie('accAvatars', JSON.stringify([
@@ -924,7 +1102,7 @@ describe('template spec', () => {
     cy.get('#add-profile-inp')
       .type('Profile 3')
 
-    cy.wait(1000)
+    // cy.wait(1000)
 
     cy.setCookie('user', 'Profile 3')
     cy.setCookie('accAvatars', JSON.stringify([
@@ -968,14 +1146,16 @@ describe('template spec', () => {
 
 
     cy.get('#profile-2 #del-profile-btn')
+      .should('be.visible')
       .click()
 
     cy.get('.swal2-confirm')
-      .wait(1000)
+      .should('exist')
+      // .wait(1000)
       .click()
 
     cy.wait('@delProfileAPI')
-    cy.wait(1500)
+    // cy.wait(1500)
 
 
     cy.intercept('PUT', '/api/editProfile', {
@@ -1005,17 +1185,21 @@ describe('template spec', () => {
 
 
     cy.get('#profile-1 #edit-profile-btn')
+      .should('be.visible')
       .click()
-      .wait(1000)
+    // .wait(1000)
 
     cy.get('#edit-profile-avatar1')
+      .should('be.visible')
       .click()
 
     cy.get('#edit-profile-inp')
+      .should('exist')
       .type('Edited')
 
     cy.get('#edit-profile-save-btn')
-      .wait(1000)
+      .should('exist')
+      // .wait(1000)
       .click()
 
     cy.setCookie('accAvatars', JSON.stringify([{ accName: "kids", avatar: null }, { accName: "Edited", avatar: 1 }]))
@@ -1026,14 +1210,13 @@ describe('template spec', () => {
     cy.get('#open-menu-btn')
       .trigger('mouseover')
 
-    cy.wait(1000)
+    // cy.wait(1000)
 
     cy.get('#change-profile-btn')
+      .should('be.visible')
       .click()
 
-    cy.wait(2000)
 
-    
     cy.intercept('POST', '/api/logout', {
       statusCode: 200,
       body: { message: 'Logged out' }
@@ -1043,11 +1226,9 @@ describe('template spec', () => {
     cy.get('#open-menu-btn')
       .trigger('mouseover')
 
-    cy.wait(1000)
+    // cy.wait(1000)
 
     cy.get('#logout-btn')
-      .trigger('mouseenter')
-      .wait(750)
       .click()
 
     cy.clearCookies()
@@ -1055,6 +1236,88 @@ describe('template spec', () => {
 
     cy.visit('localhost:3000')
 
-    cy.wait(2000)
+
+    let otp: string;
+    cy.intercept('POST', '/api/reset-pass', (req) => {
+      otp = String(req.body.text);
+      req.reply({
+        statusCode: 200,
+        body: { "message": "Email Sent" }
+      })
+    }).as('sendResetPassEmail')
+
+
+    cy.get('#forgot-pass-btn')
+      .should('exist')
+      .click()
+
+    cy.url()
+      .should('contain', 'reset-password')
+
+    cy.get('#movies-header')
+      .should('have.text', 'Movies')
+
+    cy.get('#reset-pass-box')
+      .should('be.visible')
+      .should('contain', 'Reset Password')
+      .should('contain', 'How would you like to reset your password?')
+      .should('contain', 'We will send you an OTP on your Email')
+
+    cy.get('#forgot-pass-email')
+      .should('be.visible')
+      .type('abcd@email.com')
+
+    cy.get('#email-me-btn')
+      .should('exist')
+      .should('have.text', 'Email me')
+      .click()
+
+    cy.contains('OTP Sent!')
+      .should('exist')
+
+
+    cy.wait('@sendResetPassEmail').then(() => {
+      cy.get('#enter-otp-form')
+        .should('be.visible')
+        .should('contain', 'Please Enter the OTP sent on your Email')
+
+      cy.get('#enter-otp-inp')
+        .should('exist')
+        .type(otp)
+
+      cy.get('#submit-otp-btn')
+        .should('have.text', 'Submit')
+        .click()
+    })
+
+
+    cy.intercept('PUT', '/api/reset-pass', {
+      statusCode: 200,
+      body: { message: 'Password Updated' }
+    }).as('updatePassAPI')
+
+
+    cy.get('#new-password-form')
+      .should('be.visible')
+      .should('contain', 'Enter new Password')
+      .should('contain', 'Confirm Password')
+
+
+    cy.get('#new-pass-inp1')
+      .should('exist')
+      .type('abcd1234')
+
+    cy.get('#new-pass-inp2')
+      .should('exist')
+      .type('abcd1234')
+
+    cy.get('#new-pass-submit-btn')
+      .should('exist')
+      .click()
+
+    cy.contains('Password Reset successfully')
+      .should('exist')
+
+    cy.wait('@updatePassAPI')
   })
 })
